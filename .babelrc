@@ -1,0 +1,10 @@
+{
+    "presets": [
+        "./tools/es2015Preset"
+    ],
+    "env": {
+        "cjs": {
+            "plugins": ["add-module-exports"]
+        }
+    }
+}
