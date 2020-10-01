@@ -1,1010 +1,1184 @@
 window.esdocSearchIndex = [
   [
-    "bitsharesjs/lib/chain/src/accountlogin.js~accountlogin",
+    "@revolution-populi/revpopjs/lib/chain/src/accountlogin.js~accountlogin",
     "class/lib/chain/src/AccountLogin.js~AccountLogin.html",
-    "<span>AccountLogin</span> <span class=\"search-result-import-path\">bitsharesjs/lib/chain/src/AccountLogin.js</span>",
+    "<span>AccountLogin</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/chain/src/AccountLogin.js</span>",
     "class"
   ],
   [
-    "bitsharesjs/lib/ecc/src/address.js~address",
+    "@revolution-populi/revpopjs/lib/ecc/src/address.js~address",
     "class/lib/ecc/src/address.js~Address.html",
-    "<span>Address</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/address.js</span>",
+    "<span>Address</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/address.js</span>",
     "class"
   ],
   [
-    "bitsharesjs/lib/ecc/src/aes.js~aes",
+    "@revolution-populi/revpopjs/lib/ecc/src/aes.js~aes",
     "class/lib/ecc/src/aes.js~Aes.html",
-    "<span>Aes</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/aes.js</span>",
+    "<span>Aes</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/aes.js</span>",
     "class"
   ],
   [
-    "bitsharesjs/lib/chain/src/chainstore.js~chainstore",
+    "@revolution-populi/revpopjs/lib/chain/src/chainstore.js~chainstore",
     "class/lib/chain/src/ChainStore.js~ChainStore.html",
-    "<span>ChainStore</span> <span class=\"search-result-import-path\">bitsharesjs/lib/chain/src/ChainStore.js</span>",
+    "<span>ChainStore</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/chain/src/ChainStore.js</span>",
     "class"
   ],
   [
-    "bitsharesjs/lib/chain/src/chaintypes.js~chaintypes",
+    "@revolution-populi/revpopjs/lib/chain/src/chaintypes.js~chaintypes",
     "variable/index.html#static-variable-ChainTypes",
-    "<span>ChainTypes</span> <span class=\"search-result-import-path\">bitsharesjs/lib/chain/src/ChainTypes.js</span>",
+    "<span>ChainTypes</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/chain/src/ChainTypes.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/ecc/src/ecsignature.js~ecsignature",
+    "@revolution-populi/revpopjs/lib/ecc/src/ecsignature.js~ecsignature",
     "function/index.html#static-function-ECSignature",
-    "<span>ECSignature</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/ecsignature.js</span>",
+    "<span>ECSignature</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/ecsignature.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/serializer/src/error_with_cause.js~errorwithcause",
+    "@revolution-populi/revpopjs/lib/serializer/src/error_with_cause.js~errorwithcause",
     "class/lib/serializer/src/error_with_cause.js~ErrorWithCause.html",
-    "<span>ErrorWithCause</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/error_with_cause.js</span>",
+    "<span>ErrorWithCause</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/error_with_cause.js</span>",
     "class"
   ],
   [
-    "bitsharesjs/lib/serializer/src/fastparser.js~fastparser",
+    "@revolution-populi/revpopjs/lib/serializer/src/fastparser.js~fastparser",
     "class/lib/serializer/src/FastParser.js~FastParser.html",
-    "<span>FastParser</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/FastParser.js</span>",
+    "<span>FastParser</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/FastParser.js</span>",
     "class"
   ],
   [
-    "bitsharesjs/lib/ecc/src/hash.js~hmacsha256",
+    "@revolution-populi/revpopjs/lib/ecc/src/hash.js~hmacsha256",
     "function/index.html#static-function-HmacSHA256",
-    "<span>HmacSHA256</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/hash.js</span>",
+    "<span>HmacSHA256</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/hash.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/chain/src/numberutils.js~numberutils",
+    "@revolution-populi/revpopjs/lib/chain/src/numberutils.js~numberutils",
     "variable/index.html#static-variable-NumberUtils",
-    "<span>NumberUtils</span> <span class=\"search-result-import-path\">bitsharesjs/lib/chain/src/NumberUtils.js</span>",
+    "<span>NumberUtils</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/chain/src/NumberUtils.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/chain/src/objectid.js~objectid",
+    "@revolution-populi/revpopjs/lib/chain/src/objectid.js~objectid",
     "class/lib/chain/src/ObjectId.js~ObjectId.html",
-    "<span>ObjectId</span> <span class=\"search-result-import-path\">bitsharesjs/lib/chain/src/ObjectId.js</span>",
+    "<span>ObjectId</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/chain/src/ObjectId.js</span>",
     "class"
   ],
   [
-    "bitsharesjs/lib/ecc/src/privatekey.js~privatekey",
+    "@revolution-populi/revpopjs/lib/ecc/src/privatekey.js~privatekey",
     "class/lib/ecc/src/PrivateKey.js~PrivateKey.html",
-    "<span>PrivateKey</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/PrivateKey.js</span>",
+    "<span>PrivateKey</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/PrivateKey.js</span>",
     "class"
   ],
   [
-    "bitsharesjs/lib/ecc/src/publickey.js~publickey",
+    "@revolution-populi/revpopjs/lib/ecc/src/publickey.js~publickey",
     "class/lib/ecc/src/PublicKey.js~PublicKey.html",
-    "<span>PublicKey</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/PublicKey.js</span>",
+    "<span>PublicKey</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/PublicKey.js</span>",
     "class"
   ],
   [
-    "bitsharesjs/lib/serializer/src/serializer.js~serializer",
+    "@revolution-populi/revpopjs/lib/serializer/src/serializer.js~serializer",
     "class/lib/serializer/src/serializer.js~Serializer.html",
-    "<span>Serializer</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/serializer.js</span>",
+    "<span>Serializer</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/serializer.js</span>",
     "class"
   ],
   [
-    "bitsharesjs/lib/ecc/src/signature.js~signature",
+    "@revolution-populi/revpopjs/lib/ecc/src/signature.js~signature",
     "class/lib/ecc/src/signature.js~Signature.html",
-    "<span>Signature</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/signature.js</span>",
+    "<span>Signature</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/signature.js</span>",
     "class"
   ],
   [
-    "bitsharesjs/lib/chain/src/transactionbuilder.js~transactionbuilder",
+    "@revolution-populi/revpopjs/lib/chain/src/transactionbuilder.js~transactionbuilder",
     "class/lib/chain/src/TransactionBuilder.js~TransactionBuilder.html",
-    "<span>TransactionBuilder</span> <span class=\"search-result-import-path\">bitsharesjs/lib/chain/src/TransactionBuilder.js</span>",
+    "<span>TransactionBuilder</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/chain/src/TransactionBuilder.js</span>",
     "class"
   ],
   [
-    "bitsharesjs/lib/serializer/src/types.js~types",
+    "@revolution-populi/revpopjs/lib/serializer/src/types.js~types",
     "variable/index.html#static-variable-Types",
-    "<span>Types</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/types.js</span>",
+    "<span>Types</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/types.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/serializervalidation.js~_my",
+    "@revolution-populi/revpopjs/lib/serializer/src/serializervalidation.js~_my",
     "variable/index.html#static-variable-_my",
-    "<span>_my</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/SerializerValidation.js</span>",
+    "<span>_my</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/SerializerValidation.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/chain/src/accountlogin.js~accountlogin",
+    "@revolution-populi/revpopjs/lib/chain/src/accountlogin.js~accountlogin",
     "variable/index.html#static-variable-accountLogin",
-    "<span>accountLogin</span> <span class=\"search-result-import-path\">bitsharesjs/lib/chain/src/AccountLogin.js</span>",
+    "<span>accountLogin</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/chain/src/AccountLogin.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~account_create",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~account_create",
     "variable/index.html#static-variable-account_create",
-    "<span>account_create</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>account_create</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~account_create_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~account_create_operation_fee_parameters",
     "variable/index.html#static-variable-account_create_operation_fee_parameters",
-    "<span>account_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>account_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~account_name_eq_lit_predicate",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~account_name_eq_lit_predicate",
     "variable/index.html#static-variable-account_name_eq_lit_predicate",
-    "<span>account_name_eq_lit_predicate</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>account_name_eq_lit_predicate</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~account_options",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~account_options",
     "variable/index.html#static-variable-account_options",
-    "<span>account_options</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>account_options</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~account_transfer",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~account_transfer",
     "variable/index.html#static-variable-account_transfer",
-    "<span>account_transfer</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>account_transfer</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~account_transfer_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~account_transfer_operation_fee_parameters",
     "variable/index.html#static-variable-account_transfer_operation_fee_parameters",
-    "<span>account_transfer_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>account_transfer_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~account_update",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~account_update",
     "variable/index.html#static-variable-account_update",
-    "<span>account_update</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>account_update</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~account_update_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~account_update_operation_fee_parameters",
     "variable/index.html#static-variable-account_update_operation_fee_parameters",
-    "<span>account_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>account_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~account_upgrade",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~account_upgrade",
     "variable/index.html#static-variable-account_upgrade",
-    "<span>account_upgrade</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>account_upgrade</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~account_upgrade_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~account_upgrade_operation_fee_parameters",
     "variable/index.html#static-variable-account_upgrade_operation_fee_parameters",
-    "<span>account_upgrade_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>account_upgrade_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~account_whitelist",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~account_whitelist",
     "variable/index.html#static-variable-account_whitelist",
-    "<span>account_whitelist</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>account_whitelist</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~account_whitelist_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~account_whitelist_operation_fee_parameters",
     "variable/index.html#static-variable-account_whitelist_operation_fee_parameters",
-    "<span>account_whitelist_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>account_whitelist_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~assert",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~assert",
     "variable/index.html#static-variable-assert",
-    "<span>assert</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>assert</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~assert_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~assert_operation_fee_parameters",
     "variable/index.html#static-variable-assert_operation_fee_parameters",
-    "<span>assert_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>assert_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset",
     "variable/index.html#static-variable-asset",
-    "<span>asset</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_claim_fees",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_claim_fees",
     "variable/index.html#static-variable-asset_claim_fees",
-    "<span>asset_claim_fees</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_claim_fees</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_claim_fees_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_claim_fees_operation_fee_parameters",
     "variable/index.html#static-variable-asset_claim_fees_operation_fee_parameters",
-    "<span>asset_claim_fees_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_claim_fees_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_claim_pool",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_claim_pool",
     "variable/index.html#static-variable-asset_claim_pool",
-    "<span>asset_claim_pool</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_claim_pool</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_claim_pool_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_claim_pool_operation_fee_parameters",
     "variable/index.html#static-variable-asset_claim_pool_operation_fee_parameters",
-    "<span>asset_claim_pool_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_claim_pool_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_create",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_create",
     "variable/index.html#static-variable-asset_create",
-    "<span>asset_create</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_create</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_create_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_create_operation_fee_parameters",
     "variable/index.html#static-variable-asset_create_operation_fee_parameters",
-    "<span>asset_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_fund_fee_pool",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_fund_fee_pool",
     "variable/index.html#static-variable-asset_fund_fee_pool",
-    "<span>asset_fund_fee_pool</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_fund_fee_pool</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_fund_fee_pool_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_fund_fee_pool_operation_fee_parameters",
     "variable/index.html#static-variable-asset_fund_fee_pool_operation_fee_parameters",
-    "<span>asset_fund_fee_pool_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_fund_fee_pool_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_global_settle",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_global_settle",
     "variable/index.html#static-variable-asset_global_settle",
-    "<span>asset_global_settle</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_global_settle</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_global_settle_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_global_settle_operation_fee_parameters",
     "variable/index.html#static-variable-asset_global_settle_operation_fee_parameters",
-    "<span>asset_global_settle_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_global_settle_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_issue",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_issue",
     "variable/index.html#static-variable-asset_issue",
-    "<span>asset_issue</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_issue</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_issue_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_issue_operation_fee_parameters",
     "variable/index.html#static-variable-asset_issue_operation_fee_parameters",
-    "<span>asset_issue_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_issue_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_options",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_options",
     "variable/index.html#static-variable-asset_options",
-    "<span>asset_options</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_options</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_publish_feed",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_publish_feed",
     "variable/index.html#static-variable-asset_publish_feed",
-    "<span>asset_publish_feed</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_publish_feed</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_publish_feed_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_publish_feed_operation_fee_parameters",
     "variable/index.html#static-variable-asset_publish_feed_operation_fee_parameters",
-    "<span>asset_publish_feed_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_publish_feed_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_reserve",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_reserve",
     "variable/index.html#static-variable-asset_reserve",
-    "<span>asset_reserve</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_reserve</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_reserve_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_reserve_operation_fee_parameters",
     "variable/index.html#static-variable-asset_reserve_operation_fee_parameters",
-    "<span>asset_reserve_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_reserve_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_settle",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_settle",
     "variable/index.html#static-variable-asset_settle",
-    "<span>asset_settle</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_settle</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_settle_cancel",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_settle_cancel",
     "variable/index.html#static-variable-asset_settle_cancel",
-    "<span>asset_settle_cancel</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_settle_cancel</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_settle_cancel_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_settle_cancel_operation_fee_parameters",
     "variable/index.html#static-variable-asset_settle_cancel_operation_fee_parameters",
-    "<span>asset_settle_cancel_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_settle_cancel_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_settle_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_settle_operation_fee_parameters",
     "variable/index.html#static-variable-asset_settle_operation_fee_parameters",
-    "<span>asset_settle_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_settle_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_symbol_eq_lit_predicate",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_symbol_eq_lit_predicate",
     "variable/index.html#static-variable-asset_symbol_eq_lit_predicate",
-    "<span>asset_symbol_eq_lit_predicate</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_symbol_eq_lit_predicate</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_update",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_update",
     "variable/index.html#static-variable-asset_update",
-    "<span>asset_update</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_update</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_update_bitasset",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_update_bitasset",
     "variable/index.html#static-variable-asset_update_bitasset",
-    "<span>asset_update_bitasset</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_update_bitasset</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_update_bitasset_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_update_bitasset_operation_fee_parameters",
     "variable/index.html#static-variable-asset_update_bitasset_operation_fee_parameters",
-    "<span>asset_update_bitasset_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_update_bitasset_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_update_feed_producers",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_update_feed_producers",
     "variable/index.html#static-variable-asset_update_feed_producers",
-    "<span>asset_update_feed_producers</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_update_feed_producers</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_update_feed_producers_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_update_feed_producers_operation_fee_parameters",
     "variable/index.html#static-variable-asset_update_feed_producers_operation_fee_parameters",
-    "<span>asset_update_feed_producers_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_update_feed_producers_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_update_issuer",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_update_issuer",
     "variable/index.html#static-variable-asset_update_issuer",
-    "<span>asset_update_issuer</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_update_issuer</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_update_issuer_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_update_issuer_operation_fee_parameters",
     "variable/index.html#static-variable-asset_update_issuer_operation_fee_parameters",
-    "<span>asset_update_issuer_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_update_issuer_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~asset_update_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~asset_update_operation_fee_parameters",
     "variable/index.html#static-variable-asset_update_operation_fee_parameters",
-    "<span>asset_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>asset_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~authority",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~authority",
     "variable/index.html#static-variable-authority",
-    "<span>authority</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>authority</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~balance_claim",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~balance_claim",
     "variable/index.html#static-variable-balance_claim",
-    "<span>balance_claim</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>balance_claim</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~balance_claim_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~balance_claim_operation_fee_parameters",
     "variable/index.html#static-variable-balance_claim_operation_fee_parameters",
-    "<span>balance_claim_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>balance_claim_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~bid_collateral",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~bid_collateral",
     "variable/index.html#static-variable-bid_collateral",
-    "<span>bid_collateral</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>bid_collateral</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~bid_collateral_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~bid_collateral_operation_fee_parameters",
     "variable/index.html#static-variable-bid_collateral_operation_fee_parameters",
-    "<span>bid_collateral_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>bid_collateral_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~bitasset_options",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~bitasset_options",
     "variable/index.html#static-variable-bitasset_options",
-    "<span>bitasset_options</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>bitasset_options</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~blind_input",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~blind_input",
     "variable/index.html#static-variable-blind_input",
-    "<span>blind_input</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>blind_input</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~blind_output",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~blind_output",
     "variable/index.html#static-variable-blind_output",
-    "<span>blind_output</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>blind_output</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~blind_transfer",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~blind_transfer",
     "variable/index.html#static-variable-blind_transfer",
-    "<span>blind_transfer</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>blind_transfer</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~blind_transfer_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~blind_transfer_operation_fee_parameters",
     "variable/index.html#static-variable-blind_transfer_operation_fee_parameters",
-    "<span>blind_transfer_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>blind_transfer_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~block_header",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~block_header",
     "variable/index.html#static-variable-block_header",
-    "<span>block_header</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>block_header</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~block_id_predicate",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~block_id_predicate",
     "variable/index.html#static-variable-block_id_predicate",
-    "<span>block_id_predicate</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>block_id_predicate</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~burn_worker_initializer",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~burn_worker_initializer",
     "variable/index.html#static-variable-burn_worker_initializer",
-    "<span>burn_worker_initializer</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>burn_worker_initializer</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/ecc/src/ecdsa.js~calcpubkeyrecoveryparam",
+    "@revolution-populi/revpopjs/lib/ecc/src/ecdsa.js~calcpubkeyrecoveryparam",
     "function/index.html#static-function-calcPubKeyRecoveryParam",
-    "<span>calcPubKeyRecoveryParam</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/ecdsa.js</span>",
+    "<span>calcPubKeyRecoveryParam</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/ecdsa.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~call_order_update",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~call_order_update",
     "variable/index.html#static-variable-call_order_update",
-    "<span>call_order_update</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>call_order_update</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~call_order_update_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~call_order_update_operation_fee_parameters",
     "variable/index.html#static-variable-call_order_update_operation_fee_parameters",
-    "<span>call_order_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>call_order_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~cdd_vesting_policy_initializer",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~cdd_vesting_policy_initializer",
     "variable/index.html#static-variable-cdd_vesting_policy_initializer",
-    "<span>cdd_vesting_policy_initializer</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>cdd_vesting_policy_initializer</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/chain/src/chainvalidation.js~chainvalidation",
+    "@revolution-populi/revpopjs/lib/chain/src/chainvalidation.js~chainvalidation",
     "variable/index.html#static-variable-chainValidation",
-    "<span>chainValidation</span> <span class=\"search-result-import-path\">bitsharesjs/lib/chain/src/ChainValidation.js</span>",
+    "<span>chainValidation</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/chain/src/ChainValidation.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~chain_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~chain_parameters",
     "variable/index.html#static-variable-chain_parameters",
-    "<span>chain_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>chain_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/chain/src/chainstore.js~chain_store",
+    "@revolution-populi/revpopjs/lib/chain/src/chainstore.js~chain_store",
     "variable/index.html#static-variable-chain_store",
-    "<span>chain_store</span> <span class=\"search-result-import-path\">bitsharesjs/lib/chain/src/ChainStore.js</span>",
+    "<span>chain_store</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/chain/src/ChainStore.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~committee_member_create",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~committee_member_create",
     "variable/index.html#static-variable-committee_member_create",
-    "<span>committee_member_create</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>committee_member_create</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~committee_member_create_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~committee_member_create_operation_fee_parameters",
     "variable/index.html#static-variable-committee_member_create_operation_fee_parameters",
-    "<span>committee_member_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>committee_member_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~committee_member_update",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~committee_member_update",
     "variable/index.html#static-variable-committee_member_update",
-    "<span>committee_member_update</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>committee_member_update</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~committee_member_update_global_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~committee_member_update_global_parameters",
     "variable/index.html#static-variable-committee_member_update_global_parameters",
-    "<span>committee_member_update_global_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>committee_member_update_global_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~committee_member_update_global_parameters_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~committee_member_update_global_parameters_operation_fee_parameters",
     "variable/index.html#static-variable-committee_member_update_global_parameters_operation_fee_parameters",
-    "<span>committee_member_update_global_parameters_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>committee_member_update_global_parameters_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~committee_member_update_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~committee_member_update_operation_fee_parameters",
     "variable/index.html#static-variable-committee_member_update_operation_fee_parameters",
-    "<span>committee_member_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>committee_member_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/convert.js~convert",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~content_card_create",
+    "variable/index.html#static-variable-content_card_create",
+    "<span>content_card_create</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~content_card_create_operation_fee_parameters",
+    "variable/index.html#static-variable-content_card_create_operation_fee_parameters",
+    "<span>content_card_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~content_card_remove",
+    "variable/index.html#static-variable-content_card_remove",
+    "<span>content_card_remove</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~content_card_remove_operation_fee_parameters",
+    "variable/index.html#static-variable-content_card_remove_operation_fee_parameters",
+    "<span>content_card_remove_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~content_card_update",
+    "variable/index.html#static-variable-content_card_update",
+    "<span>content_card_update</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~content_card_update_operation_fee_parameters",
+    "variable/index.html#static-variable-content_card_update_operation_fee_parameters",
+    "<span>content_card_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~content_vote_create",
+    "variable/index.html#static-variable-content_vote_create",
+    "<span>content_vote_create</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~content_vote_create_operation_fee_parameters",
+    "variable/index.html#static-variable-content_vote_create_operation_fee_parameters",
+    "<span>content_vote_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~content_vote_remove",
+    "variable/index.html#static-variable-content_vote_remove",
+    "<span>content_vote_remove</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~content_vote_remove_operation_fee_parameters",
+    "variable/index.html#static-variable-content_vote_remove_operation_fee_parameters",
+    "<span>content_vote_remove_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/convert.js~convert",
     "function/index.html#static-function-convert",
-    "<span>convert</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/convert.js</span>",
+    "<span>convert</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/convert.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~custom",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~custom",
     "variable/index.html#static-variable-custom",
-    "<span>custom</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>custom</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~custom_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~custom_operation_fee_parameters",
     "variable/index.html#static-variable-custom_operation_fee_parameters",
-    "<span>custom_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>custom_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/ecc/src/ecdsa.js~deterministicgeneratek",
+    "@revolution-populi/revpopjs/lib/ecc/src/ecdsa.js~deterministicgeneratek",
     "function/index.html#static-function-deterministicGenerateK",
-    "<span>deterministicGenerateK</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/ecdsa.js</span>",
+    "<span>deterministicGenerateK</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/ecdsa.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/chain/src/emitterinstance.js~emitter",
+    "@revolution-populi/revpopjs/lib/chain/src/emitterinstance.js~emitter",
     "function/index.html#static-function-emitter",
-    "<span>emitter</span> <span class=\"search-result-import-path\">bitsharesjs/lib/chain/src/EmitterInstance.js</span>",
+    "<span>emitter</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/chain/src/EmitterInstance.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/ecc/src/enforce_types.js~enforce",
+    "@revolution-populi/revpopjs/lib/ecc/src/enforce_types.js~enforce",
     "function/index.html#static-function-enforce",
-    "<span>enforce</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/enforce_types.js</span>",
+    "<span>enforce</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/enforce_types.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~execute_bid",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~execute_bid",
     "variable/index.html#static-variable-execute_bid",
-    "<span>execute_bid</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>execute_bid</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~execute_bid_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~execute_bid_operation_fee_parameters",
     "variable/index.html#static-variable-execute_bid_operation_fee_parameters",
-    "<span>execute_bid_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>execute_bid_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~fba_distribute",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~fba_distribute",
     "variable/index.html#static-variable-fba_distribute",
-    "<span>fba_distribute</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>fba_distribute</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~fba_distribute_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~fba_distribute_operation_fee_parameters",
     "variable/index.html#static-variable-fba_distribute_operation_fee_parameters",
-    "<span>fba_distribute_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>fba_distribute_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~fee_schedule",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~fee_schedule",
     "variable/index.html#static-variable-fee_schedule",
-    "<span>fee_schedule</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>fee_schedule</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~fill_order",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~fill_order",
     "variable/index.html#static-variable-fill_order",
-    "<span>fill_order</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>fill_order</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~fill_order_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~fill_order_operation_fee_parameters",
     "variable/index.html#static-variable-fill_order_operation_fee_parameters",
-    "<span>fill_order_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>fill_order_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/chain/src/state.js~get",
+    "@revolution-populi/revpopjs/lib/chain/src/state.js~get",
     "function/index.html#static-function-get",
-    "<span>get</span> <span class=\"search-result-import-path\">bitsharesjs/lib/chain/src/state.js</span>",
+    "<span>get</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/chain/src/state.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/chain/src/transactionhelper.js~helper",
+    "@revolution-populi/revpopjs/lib/chain/src/transactionhelper.js~helper",
     "variable/index.html#static-variable-helper",
-    "<span>helper</span> <span class=\"search-result-import-path\">bitsharesjs/lib/chain/src/TransactionHelper.js</span>",
+    "<span>helper</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/chain/src/TransactionHelper.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/ecc/src/keyutils.js~key",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~htlc_create",
+    "variable/index.html#static-variable-htlc_create",
+    "<span>htlc_create</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~htlc_create_operation_fee_parameters",
+    "variable/index.html#static-variable-htlc_create_operation_fee_parameters",
+    "<span>htlc_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~htlc_extend",
+    "variable/index.html#static-variable-htlc_extend",
+    "<span>htlc_extend</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~htlc_extend_operation_fee_parameters",
+    "variable/index.html#static-variable-htlc_extend_operation_fee_parameters",
+    "<span>htlc_extend_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~htlc_redeem",
+    "variable/index.html#static-variable-htlc_redeem",
+    "<span>htlc_redeem</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~htlc_redeem_operation_fee_parameters",
+    "variable/index.html#static-variable-htlc_redeem_operation_fee_parameters",
+    "<span>htlc_redeem_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~htlc_redeemed",
+    "variable/index.html#static-variable-htlc_redeemed",
+    "<span>htlc_redeemed</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~htlc_redeemed_operation_fee_parameters",
+    "variable/index.html#static-variable-htlc_redeemed_operation_fee_parameters",
+    "<span>htlc_redeemed_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~htlc_refund",
+    "variable/index.html#static-variable-htlc_refund",
+    "<span>htlc_refund</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~htlc_refund_operation_fee_parameters",
+    "variable/index.html#static-variable-htlc_refund_operation_fee_parameters",
+    "<span>htlc_refund_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/ecc/src/keyutils.js~key",
     "variable/index.html#static-variable-key",
-    "<span>key</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/KeyUtils.js</span>",
+    "<span>key</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/KeyUtils.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~limit_order_cancel",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~limit_order_cancel",
     "variable/index.html#static-variable-limit_order_cancel",
-    "<span>limit_order_cancel</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>limit_order_cancel</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~limit_order_cancel_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~limit_order_cancel_operation_fee_parameters",
     "variable/index.html#static-variable-limit_order_cancel_operation_fee_parameters",
-    "<span>limit_order_cancel_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>limit_order_cancel_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~limit_order_create",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~limit_order_create",
     "variable/index.html#static-variable-limit_order_create",
-    "<span>limit_order_create</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>limit_order_create</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~limit_order_create_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~limit_order_create_operation_fee_parameters",
     "variable/index.html#static-variable-limit_order_create_operation_fee_parameters",
-    "<span>limit_order_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>limit_order_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~linear_vesting_policy_initializer",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~linear_vesting_policy_initializer",
     "variable/index.html#static-variable-linear_vesting_policy_initializer",
-    "<span>linear_vesting_policy_initializer</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>linear_vesting_policy_initializer</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~memo_data",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~memo_data",
     "variable/index.html#static-variable-memo_data",
-    "<span>memo_data</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>memo_data</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/ecc/src/brainkey.js~normalize",
+    "@revolution-populi/revpopjs/lib/ecc/src/brainkey.js~normalize",
     "function/index.html#static-function-normalize",
-    "<span>normalize</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/BrainKey.js</span>",
+    "<span>normalize</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/BrainKey.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~op_wrapper",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~op_wrapper",
     "variable/index.html#static-variable-op_wrapper",
-    "<span>op_wrapper</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>op_wrapper</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~operation",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~operation",
     "variable/index.html#static-variable-operation",
-    "<span>operation</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>operation</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~override_transfer",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~override_transfer",
     "variable/index.html#static-variable-override_transfer",
-    "<span>override_transfer</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>override_transfer</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~override_transfer_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~override_transfer_operation_fee_parameters",
     "variable/index.html#static-variable-override_transfer_operation_fee_parameters",
-    "<span>override_transfer_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>override_transfer_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~price",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~permission_create",
+    "variable/index.html#static-variable-permission_create",
+    "<span>permission_create</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~permission_create_operation_fee_parameters",
+    "variable/index.html#static-variable-permission_create_operation_fee_parameters",
+    "<span>permission_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~permission_remove",
+    "variable/index.html#static-variable-permission_remove",
+    "<span>permission_remove</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~permission_remove_operation_fee_parameters",
+    "variable/index.html#static-variable-permission_remove_operation_fee_parameters",
+    "<span>permission_remove_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~personal_data_create",
+    "variable/index.html#static-variable-personal_data_create",
+    "<span>personal_data_create</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~personal_data_create_operation_fee_parameters",
+    "variable/index.html#static-variable-personal_data_create_operation_fee_parameters",
+    "<span>personal_data_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~personal_data_remove",
+    "variable/index.html#static-variable-personal_data_remove",
+    "<span>personal_data_remove</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~personal_data_remove_operation_fee_parameters",
+    "variable/index.html#static-variable-personal_data_remove_operation_fee_parameters",
+    "<span>personal_data_remove_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~price",
     "variable/index.html#static-variable-price",
-    "<span>price</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>price</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~price_feed",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~price_feed",
     "variable/index.html#static-variable-price_feed",
-    "<span>price_feed</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>price_feed</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~processed_transaction",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~processed_transaction",
     "variable/index.html#static-variable-processed_transaction",
-    "<span>processed_transaction</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>processed_transaction</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~proposal_create",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~proposal_create",
     "variable/index.html#static-variable-proposal_create",
-    "<span>proposal_create</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>proposal_create</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~proposal_create_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~proposal_create_operation_fee_parameters",
     "variable/index.html#static-variable-proposal_create_operation_fee_parameters",
-    "<span>proposal_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>proposal_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~proposal_delete",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~proposal_delete",
     "variable/index.html#static-variable-proposal_delete",
-    "<span>proposal_delete</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>proposal_delete</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~proposal_delete_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~proposal_delete_operation_fee_parameters",
     "variable/index.html#static-variable-proposal_delete_operation_fee_parameters",
-    "<span>proposal_delete_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>proposal_delete_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~proposal_update",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~proposal_update",
     "variable/index.html#static-variable-proposal_update",
-    "<span>proposal_update</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>proposal_update</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~proposal_update_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~proposal_update_operation_fee_parameters",
     "variable/index.html#static-variable-proposal_update_operation_fee_parameters",
-    "<span>proposal_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>proposal_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/ecc/src/ecdsa.js~recoverpubkey",
+    "@revolution-populi/revpopjs/lib/ecc/src/ecdsa.js~recoverpubkey",
     "function/index.html#static-function-recoverPubKey",
-    "<span>recoverPubKey</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/ecdsa.js</span>",
+    "<span>recoverPubKey</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/ecdsa.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~refund_worker_initializer",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~refund_worker_initializer",
     "variable/index.html#static-variable-refund_worker_initializer",
-    "<span>refund_worker_initializer</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>refund_worker_initializer</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/ecc/src/hash.js~ripemd160",
+    "@revolution-populi/revpopjs/lib/ecc/src/hash.js~ripemd160",
     "function/index.html#static-function-ripemd160",
-    "<span>ripemd160</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/hash.js</span>",
+    "<span>ripemd160</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/hash.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/chain/src/state.js~set",
+    "@revolution-populi/revpopjs/lib/chain/src/state.js~set",
     "function/index.html#static-function-set",
-    "<span>set</span> <span class=\"search-result-import-path\">bitsharesjs/lib/chain/src/state.js</span>",
+    "<span>set</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/chain/src/state.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/ecc/src/hash.js~sha256",
+    "@revolution-populi/revpopjs/lib/ecc/src/hash.js~sha1",
+    "function/index.html#static-function-sha1",
+    "<span>sha1</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/hash.js</span>",
+    "function"
+  ],
+  [
+    "@revolution-populi/revpopjs/lib/ecc/src/hash.js~sha256",
     "function/index.html#static-function-sha256",
-    "<span>sha256</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/hash.js</span>",
+    "<span>sha256</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/hash.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/ecc/src/hash.js~sha512",
+    "@revolution-populi/revpopjs/lib/ecc/src/hash.js~sha512",
     "function/index.html#static-function-sha512",
-    "<span>sha512</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/hash.js</span>",
+    "<span>sha512</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/hash.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/ecc/src/ecdsa.js~sign",
+    "@revolution-populi/revpopjs/lib/ecc/src/ecdsa.js~sign",
     "function/index.html#static-function-sign",
-    "<span>sign</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/ecdsa.js</span>",
+    "<span>sign</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/ecdsa.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~signed_block",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~signed_block",
     "variable/index.html#static-variable-signed_block",
-    "<span>signed_block</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>signed_block</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~signed_block_header",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~signed_block_header",
     "variable/index.html#static-variable-signed_block_header",
-    "<span>signed_block_header</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>signed_block_header</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~signed_transaction",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~signed_transaction",
     "variable/index.html#static-variable-signed_transaction",
-    "<span>signed_transaction</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>signed_transaction</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~stealth_confirmation",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~stealth_confirmation",
     "variable/index.html#static-variable-stealth_confirmation",
-    "<span>stealth_confirmation</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>stealth_confirmation</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~stealth_memo_data",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~stealth_memo_data",
     "variable/index.html#static-variable-stealth_memo_data",
-    "<span>stealth_memo_data</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>stealth_memo_data</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/template.js~template",
+    "@revolution-populi/revpopjs/lib/serializer/src/template.js~template",
     "function/index.html#static-function-template",
-    "<span>template</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/template.js</span>",
+    "<span>template</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/template.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~transaction",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~transaction",
     "variable/index.html#static-variable-transaction",
-    "<span>transaction</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>transaction</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~transfer",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~transfer",
     "variable/index.html#static-variable-transfer",
-    "<span>transfer</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>transfer</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~transfer_from_blind",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~transfer_from_blind",
     "variable/index.html#static-variable-transfer_from_blind",
-    "<span>transfer_from_blind</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>transfer_from_blind</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~transfer_from_blind_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~transfer_from_blind_operation_fee_parameters",
     "variable/index.html#static-variable-transfer_from_blind_operation_fee_parameters",
-    "<span>transfer_from_blind_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>transfer_from_blind_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~transfer_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~transfer_operation_fee_parameters",
     "variable/index.html#static-variable-transfer_operation_fee_parameters",
-    "<span>transfer_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>transfer_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~transfer_to_blind",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~transfer_to_blind",
     "variable/index.html#static-variable-transfer_to_blind",
-    "<span>transfer_to_blind</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>transfer_to_blind</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~transfer_to_blind_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~transfer_to_blind_operation_fee_parameters",
     "variable/index.html#static-variable-transfer_to_blind_operation_fee_parameters",
-    "<span>transfer_to_blind_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>transfer_to_blind_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/ecc/src/ecdsa.js~verify",
+    "@revolution-populi/revpopjs/lib/ecc/src/ecdsa.js~verify",
     "function/index.html#static-function-verify",
-    "<span>verify</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/ecdsa.js</span>",
+    "<span>verify</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/ecdsa.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/ecc/src/ecdsa.js~verifyraw",
+    "@revolution-populi/revpopjs/lib/ecc/src/ecdsa.js~verifyraw",
     "function/index.html#static-function-verifyRaw",
-    "<span>verifyRaw</span> <span class=\"search-result-import-path\">bitsharesjs/lib/ecc/src/ecdsa.js</span>",
+    "<span>verifyRaw</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/ecc/src/ecdsa.js</span>",
     "function"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~vesting_balance_create",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~vesting_balance_create",
     "variable/index.html#static-variable-vesting_balance_create",
-    "<span>vesting_balance_create</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>vesting_balance_create</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~vesting_balance_create_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~vesting_balance_create_operation_fee_parameters",
     "variable/index.html#static-variable-vesting_balance_create_operation_fee_parameters",
-    "<span>vesting_balance_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>vesting_balance_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~vesting_balance_withdraw",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~vesting_balance_withdraw",
     "variable/index.html#static-variable-vesting_balance_withdraw",
-    "<span>vesting_balance_withdraw</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>vesting_balance_withdraw</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~vesting_balance_withdraw_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~vesting_balance_withdraw_operation_fee_parameters",
     "variable/index.html#static-variable-vesting_balance_withdraw_operation_fee_parameters",
-    "<span>vesting_balance_withdraw_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>vesting_balance_withdraw_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~vesting_balance_worker_initializer",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~vesting_balance_worker_initializer",
     "variable/index.html#static-variable-vesting_balance_worker_initializer",
-    "<span>vesting_balance_worker_initializer</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>vesting_balance_worker_initializer</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~void_result",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~void_result",
     "variable/index.html#static-variable-void_result",
-    "<span>void_result</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>void_result</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~withdraw_permission_claim",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~withdraw_permission_claim",
     "variable/index.html#static-variable-withdraw_permission_claim",
-    "<span>withdraw_permission_claim</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>withdraw_permission_claim</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~withdraw_permission_claim_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~withdraw_permission_claim_operation_fee_parameters",
     "variable/index.html#static-variable-withdraw_permission_claim_operation_fee_parameters",
-    "<span>withdraw_permission_claim_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>withdraw_permission_claim_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~withdraw_permission_create",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~withdraw_permission_create",
     "variable/index.html#static-variable-withdraw_permission_create",
-    "<span>withdraw_permission_create</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>withdraw_permission_create</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~withdraw_permission_create_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~withdraw_permission_create_operation_fee_parameters",
     "variable/index.html#static-variable-withdraw_permission_create_operation_fee_parameters",
-    "<span>withdraw_permission_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>withdraw_permission_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~withdraw_permission_delete",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~withdraw_permission_delete",
     "variable/index.html#static-variable-withdraw_permission_delete",
-    "<span>withdraw_permission_delete</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>withdraw_permission_delete</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~withdraw_permission_delete_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~withdraw_permission_delete_operation_fee_parameters",
     "variable/index.html#static-variable-withdraw_permission_delete_operation_fee_parameters",
-    "<span>withdraw_permission_delete_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>withdraw_permission_delete_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~withdraw_permission_update",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~withdraw_permission_update",
     "variable/index.html#static-variable-withdraw_permission_update",
-    "<span>withdraw_permission_update</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>withdraw_permission_update</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~withdraw_permission_update_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~withdraw_permission_update_operation_fee_parameters",
     "variable/index.html#static-variable-withdraw_permission_update_operation_fee_parameters",
-    "<span>withdraw_permission_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>withdraw_permission_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~witness_create",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~witness_create",
     "variable/index.html#static-variable-witness_create",
-    "<span>witness_create</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>witness_create</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~witness_create_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~witness_create_operation_fee_parameters",
     "variable/index.html#static-variable-witness_create_operation_fee_parameters",
-    "<span>witness_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>witness_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~witness_update",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~witness_update",
     "variable/index.html#static-variable-witness_update",
-    "<span>witness_update</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>witness_update</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~witness_update_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~witness_update_operation_fee_parameters",
     "variable/index.html#static-variable-witness_update_operation_fee_parameters",
-    "<span>witness_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>witness_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~worker_create",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~worker_create",
     "variable/index.html#static-variable-worker_create",
-    "<span>worker_create</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>worker_create</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
-    "bitsharesjs/lib/serializer/src/operations.js~worker_create_operation_fee_parameters",
+    "@revolution-populi/revpopjs/lib/serializer/src/operations.js~worker_create_operation_fee_parameters",
     "variable/index.html#static-variable-worker_create_operation_fee_parameters",
-    "<span>worker_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">bitsharesjs/lib/serializer/src/operations.js</span>",
+    "<span>worker_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@Revolution-Populi/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
