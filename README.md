@@ -6,13 +6,8 @@ Pure JavaScript RevPop library for node.js and browsers. Can be used to construc
 
 This library can be obtained through npm:
 
-#### **`.npmrc`**
 ```
-@Revolution-Populi:registry=https://npm.pkg.github.com
-```
-
-```
-npm install @revolution-populi/revpopjs
+npm install @revolutionpopuli/revpopjs
 ```
 
 ## Usage

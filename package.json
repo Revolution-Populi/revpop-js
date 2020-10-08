@@ -1,6 +1,6 @@
 {
-    "name": "@Revolution-Populi/revpopjs",
-    "version": "0.1.0",
+    "name": "@revolutionpopuli/revpopjs",
+    "version": "0.1.1",
     "description": "Pure JavaScript RevPop library for node.js and browsers.",
     "browser": {
         "ws": false,
@@ -35,9 +35,6 @@
         "example:privKey": "babel-node examples/privKey",
         "example:createHtlc": "babel-node examples/createHtlc",
         "example:redeemHtlc": "babel-node examples/redeemHtlc"
-    },
-    "publishConfig": {
-        "registry": "https://npm.pkg.github.com/"
     },
     "repository": {
         "type": "git",
