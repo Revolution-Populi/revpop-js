@@ -7,7 +7,7 @@ Pure JavaScript RevPop library for node.js and browsers. Can be used to construc
 This library can be obtained through npm:
 
 ```
-npm install revpopjs
+npm install @revolutionpopuli/revpopjs
 ```
 
 ## Usage
@@ -39,7 +39,7 @@ The auths object should contain the auth arrays from the account object. An exam
 ```
 {
     active: [
-        ["GPH5Abm5dCdy3hJ1C5ckXkqUH2Me7dXqi9Y7yjn9ACaiSJ9h8r8mL", 1]
+        ["REV8S63oDiWRUUgrgvnVqpZbgcrmhNWsJ2EFbow1PtTPkfGagZkqT", 1]
     ]
 }
 ```

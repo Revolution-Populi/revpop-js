@@ -4,51 +4,51 @@
     "filePath": "lib/chain/src/ChainStore.js",
     "lines": [
       {
-        "lineNumber": 470,
+        "lineNumber": 475,
         "line": "    /**"
       },
       {
-        "lineNumber": 471,
+        "lineNumber": 476,
         "line": "     *  @param the public key to find accounts that reference it"
       },
       {
-        "lineNumber": 472,
-        "line": "     *"
-      },
-      {
-        "lineNumber": 473,
-        "line": "     *  @return Set of account ids that reference the given key"
-      },
-      {
-        "lineNumber": 474,
-        "line": "     *  @return a empty Set if no items are found"
-      },
-      {
-        "lineNumber": 475,
-        "line": "     *  @return undefined if the result is unknown"
-      },
-      {
-        "lineNumber": 476,
-        "line": "     *"
-      },
-      {
         "lineNumber": 477,
-        "line": "     *  If this method returns undefined, then it will send a request to"
+        "line": "     *"
       },
       {
         "lineNumber": 478,
-        "line": "     *  the server for the current set of accounts after which the"
+        "line": "     *  @return Set of account ids that reference the given key"
       },
       {
         "lineNumber": 479,
-        "line": "     *  server will notify us of any accounts that reference these keys"
+        "line": "     *  @return a empty Set if no items are found"
       },
       {
         "lineNumber": 480,
-        "line": "     */"
+        "line": "     *  @return undefined if the result is unknown"
       },
       {
         "lineNumber": 481,
+        "line": "     *"
+      },
+      {
+        "lineNumber": 482,
+        "line": "     *  If this method returns undefined, then it will send a request to"
+      },
+      {
+        "lineNumber": 483,
+        "line": "     *  the server for the current set of accounts after which the"
+      },
+      {
+        "lineNumber": 484,
+        "line": "     *  server will notify us of any accounts that reference these keys"
+      },
+      {
+        "lineNumber": 485,
+        "line": "     */"
+      },
+      {
+        "lineNumber": 486,
         "line": "    getAccountRefsOfKey(key) {"
       }
     ],
@@ -64,51 +64,51 @@
     "filePath": "lib/chain/src/ChainStore.js",
     "lines": [
       {
-        "lineNumber": 516,
+        "lineNumber": 521,
         "line": "    /**"
       },
       {
-        "lineNumber": 517,
+        "lineNumber": 522,
         "line": "     *  @param the account id to find accounts that reference it"
       },
       {
-        "lineNumber": 518,
-        "line": "     *"
-      },
-      {
-        "lineNumber": 519,
-        "line": "     *  @return Set of account ids that reference the given key"
-      },
-      {
-        "lineNumber": 520,
-        "line": "     *  @return a empty Set if no items are found"
-      },
-      {
-        "lineNumber": 521,
-        "line": "     *  @return undefined if the result is unknown"
-      },
-      {
-        "lineNumber": 522,
-        "line": "     *"
-      },
-      {
         "lineNumber": 523,
-        "line": "     *  If this method returns undefined, then it will send a request to"
+        "line": "     *"
       },
       {
         "lineNumber": 524,
-        "line": "     *  the server for the current set of accounts after which the"
+        "line": "     *  @return Set of account ids that reference the given key"
       },
       {
         "lineNumber": 525,
-        "line": "     *  server will notify us of any accounts that reference these keys"
+        "line": "     *  @return a empty Set if no items are found"
       },
       {
         "lineNumber": 526,
-        "line": "     */"
+        "line": "     *  @return undefined if the result is unknown"
       },
       {
         "lineNumber": 527,
+        "line": "     *"
+      },
+      {
+        "lineNumber": 528,
+        "line": "     *  If this method returns undefined, then it will send a request to"
+      },
+      {
+        "lineNumber": 529,
+        "line": "     *  the server for the current set of accounts after which the"
+      },
+      {
+        "lineNumber": 530,
+        "line": "     *  server will notify us of any accounts that reference these keys"
+      },
+      {
+        "lineNumber": 531,
+        "line": "     */"
+      },
+      {
+        "lineNumber": 532,
         "line": "    getAccountRefsOfAccount(account_id) {"
       }
     ],
@@ -124,44 +124,44 @@
     "filePath": "lib/chain/src/ChainStore.js",
     "lines": [
       {
-        "lineNumber": 858,
+        "lineNumber": 868,
         "line": "    /**"
       },
       {
-        "lineNumber": 859,
+        "lineNumber": 869,
         "line": "     *  Fetches an account and all of its associated data in a single query"
       },
       {
-        "lineNumber": 860,
+        "lineNumber": 870,
         "line": "     *"
       },
       {
-        "lineNumber": 861,
+        "lineNumber": 871,
         "line": "     *  @param an account name or account id"
       },
       {
-        "lineNumber": 862,
+        "lineNumber": 872,
         "line": "     *"
       },
       {
-        "lineNumber": 863,
+        "lineNumber": 873,
         "line": "     *  @return undefined if the account in question is in the process of being fetched"
       },
       {
-        "lineNumber": 864,
+        "lineNumber": 874,
         "line": "     *  @return the object if it has already been fetched"
       },
       {
-        "lineNumber": 865,
+        "lineNumber": 875,
         "line": "     *  @return null if the object has been queried and was not found"
       },
       {
-        "lineNumber": 866,
+        "lineNumber": 876,
         "line": "     */"
       },
       {
-        "lineNumber": 867,
-        "line": "    fetchFullAccount(name_or_id, autosubscribe = true) {"
+        "lineNumber": 877,
+        "line": "    fetchFullAccount(name_or_id, autosubscribe = null) {"
       }
     ],
     "codeParams": [
@@ -177,43 +177,43 @@
     "filePath": "lib/chain/src/ChainStore.js",
     "lines": [
       {
-        "lineNumber": 1048,
+        "lineNumber": 1087,
         "line": "    /**"
       },
       {
-        "lineNumber": 1049,
+        "lineNumber": 1088,
         "line": "     * There are two ways to extend the account history, add new more"
       },
       {
-        "lineNumber": 1050,
+        "lineNumber": 1089,
         "line": "     * recent history, and extend historic hstory. This method will fetch"
       },
       {
-        "lineNumber": 1051,
+        "lineNumber": 1090,
         "line": "     * the most recent account history and prepend it to the list of"
       },
       {
-        "lineNumber": 1052,
+        "lineNumber": 1091,
         "line": "     * historic operations."
       },
       {
-        "lineNumber": 1053,
+        "lineNumber": 1092,
         "line": "     *"
       },
       {
-        "lineNumber": 1054,
+        "lineNumber": 1093,
         "line": "     *  @param account immutable account object"
       },
       {
-        "lineNumber": 1055,
+        "lineNumber": 1094,
         "line": "     *  @return a promise with the account history"
       },
       {
-        "lineNumber": 1056,
+        "lineNumber": 1095,
         "line": "     */"
       },
       {
-        "lineNumber": 1057,
+        "lineNumber": 1096,
         "line": "    fetchRecentHistory(account, limit = 100) {"
       }
     ],

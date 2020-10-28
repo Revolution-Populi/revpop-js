@@ -1,6 +1,6 @@
 {
-    "name": "@Revolution-Populi/revpopjs",
-    "version": "0.1.0",
+    "name": "@revolutionpopuli/revpopjs",
+    "version": "0.1.1",
     "description": "Pure JavaScript RevPop library for node.js and browsers.",
     "browser": {
         "ws": false,
@@ -37,9 +37,6 @@
         "example:anything": "babel-node examples/anything",
         "example:broadcast": "babel-node examples/broadcast",
         "prepare": "npm run build"
-    },
-    "publishConfig": {
-        "registry": "https://npm.pkg.github.com/"
     },
     "repository": {
         "type": "git",
@@ -89,6 +86,8 @@
         "babel-preset-minify": "^0.5.1",
         "browserify": "^16.5.2",
         "cross-env": "^5.2.1",
+        "esdoc": "^1.1.0",
+        "esdoc-standard-plugin": "^1.0.0",
         "mocha": "^6.2.3",
         "prettier": "^1.19.1",
         "pretty-quick": "^1.11.1",
