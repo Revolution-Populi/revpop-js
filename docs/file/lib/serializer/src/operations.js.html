@@ -147,6 +147,12 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_vote_remove">content_vote_remove</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_vote_remove_operation_fee_parameters">content_vote_remove_operation_fee_parameters</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom">custom</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_create">custom_authority_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_create_operation_fee_parameters">custom_authority_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_delete">custom_authority_delete</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_delete_operation_fee_parameters">custom_authority_delete_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_update">custom_authority_update</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_update_operation_fee_parameters">custom_authority_update_operation_fee_parameters</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_operation_fee_parameters">custom_operation_fee_parameters</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-execute_bid">execute_bid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-execute_bid_operation_fee_parameters">execute_bid_operation_fee_parameters</a></span></span></li>
@@ -193,11 +199,16 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-proposal_update">proposal_update</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-proposal_update_operation_fee_parameters">proposal_update_operation_fee_parameters</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-refund_worker_initializer">refund_worker_initializer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-restriction">restriction</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-signed_block">signed_block</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-signed_block_header">signed_block_header</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-signed_transaction">signed_transaction</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-stealth_confirmation">stealth_confirmation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-stealth_memo_data">stealth_memo_data</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ticket_create">ticket_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ticket_create_operation_fee_parameters">ticket_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ticket_update">ticket_update</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ticket_update_operation_fee_parameters">ticket_update_operation_fee_parameters</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-transaction">transaction</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-transfer">transfer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-transfer_from_blind">transfer_from_blind</a></span></span></li>
@@ -236,7 +247,8 @@ import SerializerImpl from &quot;./serializer&quot;;
 
 var {
     //id_type,
-    //varint32,
+    varint32,
+    varuint64,
     uint8,
     uint16,
     uint32,
@@ -617,6 +629,28 @@ export const htlc_refund_operation_fee_parameters = new Serializer(
     {}
 );
 
+export const custom_authority_create_operation_fee_parameters = new Serializer(&quot;custom_authority_create_operation_fee_parameters&quot;, {
+    basic_fee: uint64,
+    price_per_byte: uint32,
+});
+
+export const custom_authority_update_operation_fee_parameters = new Serializer(&quot;custom_authority_update_operation_fee_parameters&quot;, {
+    basic_fee: uint64,
+    price_per_byte: uint32,
+});
+
+export const custom_authority_delete_operation_fee_parameters = new Serializer(&quot;custom_authority_delete_operation_fee_parameters&quot;, {
+    fee: uint64,
+});
+
+export const ticket_create_operation_fee_parameters = new Serializer(&quot;ticket_create_operation_fee_parameters&quot;, {
+    fee: uint64,
+});
+
+export const ticket_update_operation_fee_parameters = new Serializer(&quot;ticket_update_operation_fee_parameters&quot;, {
+    fee: uint64,
+});
+
 export const personal_data_create_operation_fee_parameters = new Serializer(
     &quot;personal_data_create_operation_fee_parameters&quot;,
     {}
@@ -717,6 +751,11 @@ var fee_parameters = static_variant([
     htlc_redeemed_operation_fee_parameters,
     htlc_extend_operation_fee_parameters,
     htlc_refund_operation_fee_parameters,
+    custom_authority_create_operation_fee_parameters,
+    custom_authority_update_operation_fee_parameters,
+    custom_authority_delete_operation_fee_parameters,
+    ticket_create_operation_fee_parameters,
+    ticket_update_operation_fee_parameters,
     personal_data_create_operation_fee_parameters,
     personal_data_remove_operation_fee_parameters,
     content_card_create_operation_fee_parameters,
@@ -1443,6 +1482,105 @@ export const htlc_refund = new Serializer(&quot;htlc_refund&quot;, {
     to: protocol_id_type(&quot;account&quot;)
 });
 
+export const restriction = new Serializer(&quot;restriction&quot;, {
+    member_index: varuint64,
+    restriction_type: varuint64,
+    argument: static_variant([
+        void_result,
+        bool,
+        int64,
+        string,
+        time_point_sec,
+        public_key,
+        bytes(32),
+        protocol_id_type(&quot;account&quot;),
+        protocol_id_type(&quot;asset&quot;),
+        protocol_id_type(&quot;force_settlement&quot;),
+        protocol_id_type(&quot;committee_member&quot;),
+        protocol_id_type(&quot;witness&quot;),
+        protocol_id_type(&quot;limit_order&quot;),
+        protocol_id_type(&quot;call_order&quot;),
+        protocol_id_type(&quot;object&quot;),
+        protocol_id_type(&quot;proposal&quot;),
+        protocol_id_type(&quot;withdraw_permission&quot;),
+        protocol_id_type(&quot;vesting_balance&quot;),
+        protocol_id_type(&quot;worker&quot;),
+        protocol_id_type(&quot;balance&quot;),
+        set(bool),
+        set(int64),
+        set(string),
+        set(time_point_sec),
+        set(public_key),
+        set(bytes(32)),
+        set(protocol_id_type(&quot;account&quot;)),
+        set(protocol_id_type(&quot;asset&quot;)),
+        set(protocol_id_type(&quot;force_settlement&quot;)),
+        set(protocol_id_type(&quot;committee_member&quot;)),
+        set(protocol_id_type(&quot;witness&quot;)),
+        set(protocol_id_type(&quot;limit_order&quot;)),
+        set(protocol_id_type(&quot;call_order&quot;)),
+        set(protocol_id_type(&quot;object&quot;)),
+        set(protocol_id_type(&quot;proposal&quot;)),
+        set(protocol_id_type(&quot;withdraw_permission&quot;)),
+        set(protocol_id_type(&quot;vesting_balance&quot;)),
+        set(protocol_id_type(&quot;worker&quot;)),
+        set(protocol_id_type(&quot;balance&quot;)),
+        array(restriction),
+        array(array(restriction)),
+        // fixme: pair&lt;int64_t,std_vector&lt;graphene::protocol::restriction&gt;&gt;
+    ]),
+    extensions: set(future_extensions)
+});
+
+export const custom_authority_create = new Serializer(&quot;custom_authority_create&quot;, {
+    fee: asset,
+    account: protocol_id_type(&quot;account&quot;),
+    enabled: bool,
+    valid_from: time_point_sec,
+    valid_to: time_point_sec,
+    operation_type: varuint64,
+    auth: authority,
+    restrictions: array(restriction),
+    extensions: set(future_extensions)
+});
+
+export const custom_authority_update = new Serializer(&quot;custom_authority_update&quot;, {
+    fee: asset,
+    account: protocol_id_type(&quot;account&quot;),
+    authority_to_update: protocol_id_type(&quot;object&quot;),
+    new_enabled: optional(bool),
+    new_valid_from: optional(time_point_sec),
+    new_valid_to: optional(time_point_sec),
+    new_auth: optional(authority),
+    restrictions_to_remove: set(uint16),
+    restrictions_to_add: array(restriction),
+    extensions: set(future_extensions)
+});
+
+export const custom_authority_delete = new Serializer(&quot;custom_authority_delete&quot;, {
+    fee: asset,
+    account: protocol_id_type(&quot;account&quot;),
+    authority_to_delete: protocol_id_type(&quot;object&quot;),
+    extensions: set(future_extensions)
+});
+
+export const ticket_create = new Serializer(&quot;ticket_create&quot;, {
+    fee: asset,
+    account: protocol_id_type(&quot;account&quot;),
+    target_type: varuint64,
+    amount: asset,
+    extensions: set(future_extensions)
+});
+
+export const ticket_update = new Serializer(&quot;ticket_update&quot;, {
+    fee: asset,
+    ticket: protocol_id_type(&quot;ticket&quot;),
+    account: protocol_id_type(&quot;account&quot;),
+    target_type: varuint64,
+    amount_for_new_target: optional(asset),
+    extensions: set(future_extensions)
+});
+
 export const personal_data_create = new Serializer(&quot;personal_data_create&quot;, {
     fee: asset,
     subject_account: protocol_id_type(&quot;account&quot;),
@@ -1568,6 +1706,11 @@ operation.st_operations = [
     htlc_redeemed,
     htlc_extend,
     htlc_refund,
+    custom_authority_create,
+    custom_authority_update,
+    custom_authority_delete,
+    ticket_create,
+    ticket_update,
     personal_data_create,
     personal_data_remove,
     content_card_create,
@@ -1614,6 +1757,8 @@ export const stealth_memo_data = new Serializer(&quot;stealth_memo_data&quot;, {
 //     to: optional( public_key ),
 //     encrypted_memo: stealth_memo_data
 // })
+
+export default operation.st_operations;
 </code></pre>
 
 </div>
