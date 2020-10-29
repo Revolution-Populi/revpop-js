@@ -612,6 +612,42 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~custom_authority_create",
+    "variable/index.html#static-variable-custom_authority_create",
+    "<span>custom_authority_create</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~custom_authority_create_operation_fee_parameters",
+    "variable/index.html#static-variable-custom_authority_create_operation_fee_parameters",
+    "<span>custom_authority_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~custom_authority_delete",
+    "variable/index.html#static-variable-custom_authority_delete",
+    "<span>custom_authority_delete</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~custom_authority_delete_operation_fee_parameters",
+    "variable/index.html#static-variable-custom_authority_delete_operation_fee_parameters",
+    "<span>custom_authority_delete_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~custom_authority_update",
+    "variable/index.html#static-variable-custom_authority_update",
+    "<span>custom_authority_update</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~custom_authority_update_operation_fee_parameters",
+    "variable/index.html#static-variable-custom_authority_update_operation_fee_parameters",
+    "<span>custom_authority_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
     "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~custom_operation_fee_parameters",
     "variable/index.html#static-variable-custom_operation_fee_parameters",
     "<span>custom_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
@@ -936,6 +972,12 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~restriction",
+    "variable/index.html#static-variable-restriction",
+    "<span>restriction</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
     "@revolutionpopuli/revpopjs/lib/ecc/src/hash.js~ripemd160",
     "function/index.html#static-function-ripemd160",
     "<span>ripemd160</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/ecc/src/hash.js</span>",
@@ -1006,6 +1048,30 @@ window.esdocSearchIndex = [
     "function/index.html#static-function-template",
     "<span>template</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/template.js</span>",
     "function"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~ticket_create",
+    "variable/index.html#static-variable-ticket_create",
+    "<span>ticket_create</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~ticket_create_operation_fee_parameters",
+    "variable/index.html#static-variable-ticket_create_operation_fee_parameters",
+    "<span>ticket_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~ticket_update",
+    "variable/index.html#static-variable-ticket_update",
+    "<span>ticket_update</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~ticket_update_operation_fee_parameters",
+    "variable/index.html#static-variable-ticket_update_operation_fee_parameters",
+    "<span>ticket_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
   ],
   [
     "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~transaction",
@@ -1827,6 +1893,12 @@ window.esdocSearchIndex = [
     "lib/chain/src/chainstore.js~chainstore#onupdate",
     "class/lib/chain/src/ChainStore.js~ChainStore.html#instance-method-onUpdate",
     "lib/chain/src/ChainStore.js~ChainStore#onUpdate",
+    "method"
+  ],
+  [
+    "lib/chain/src/chainstore.js~chainstore#requestalldataforaccount",
+    "class/lib/chain/src/ChainStore.js~ChainStore.html#instance-method-requestAllDataForAccount",
+    "lib/chain/src/ChainStore.js~ChainStore#requestAllDataForAccount",
     "method"
   ],
   [

@@ -147,6 +147,12 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_vote_remove">content_vote_remove</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_vote_remove_operation_fee_parameters">content_vote_remove_operation_fee_parameters</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom">custom</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_create">custom_authority_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_create_operation_fee_parameters">custom_authority_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_delete">custom_authority_delete</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_delete_operation_fee_parameters">custom_authority_delete_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_update">custom_authority_update</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_update_operation_fee_parameters">custom_authority_update_operation_fee_parameters</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_operation_fee_parameters">custom_operation_fee_parameters</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-execute_bid">execute_bid</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-execute_bid_operation_fee_parameters">execute_bid_operation_fee_parameters</a></span></span></li>
@@ -193,11 +199,16 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-proposal_update">proposal_update</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-proposal_update_operation_fee_parameters">proposal_update_operation_fee_parameters</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-refund_worker_initializer">refund_worker_initializer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-restriction">restriction</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-signed_block">signed_block</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-signed_block_header">signed_block_header</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-signed_transaction">signed_transaction</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-stealth_confirmation">stealth_confirmation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-stealth_memo_data">stealth_memo_data</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ticket_create">ticket_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ticket_create_operation_fee_parameters">ticket_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ticket_update">ticket_update</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ticket_update_operation_fee_parameters">ticket_update_operation_fee_parameters</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-transaction">transaction</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-transfer">transfer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-transfer_from_blind">transfer_from_blind</a></span></span></li>
@@ -257,10 +268,11 @@ ChainTypes.object_type = {
     worker: 14,
     balance: 15,
     htlc: 16,
-    personal_data: 17,
-    content_card: 18,
-    permission: 19,
-    content_vote: 20
+    ticket: 18,
+    personal_data: 19,
+    content_card: 20,
+    permission: 21,
+    content_vote: 22
 };
 
 ChainTypes.impl_object_type = {
@@ -341,15 +353,28 @@ ChainTypes.operations = {
     htlc_redeemed: 51,
     htlc_extend: 52,
     htlc_refund: 53,
-    personal_data_create: 54,
-    personal_data_remove: 55,
-    content_card_create: 56,
-    content_card_update: 57,
-    content_card_remove: 58,
-    permission_create: 59,
-    permission_remove: 60,
-    content_vote_create: 61,
-    content_vote_remove: 62
+    custom_authority_create: 54,
+    custom_authority_update: 55,
+    custom_authority_delete: 56,
+    ticket_create: 57,
+    ticket_update: 58,
+    personal_data_create: 59,
+    personal_data_remove: 60,
+    content_card_create: 61,
+    content_card_update: 62,
+    content_card_remove: 63,
+    permission_create: 64,
+    permission_remove: 65,
+    content_vote_create: 66,
+    content_vote_remove: 67
+};
+
+ChainTypes.ticket_type = {
+    liquid: 0,
+    lock_180_days: 1,
+    lock_360_days: 2,
+    lock_720_days: 3,
+    lock_forever: 4
 };
 
 export default ChainTypes;
