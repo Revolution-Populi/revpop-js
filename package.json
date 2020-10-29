@@ -1,6 +1,6 @@
 {
     "name": "@revolutionpopuli/revpopjs",
-    "version": "0.2.0",
+    "version": "0.2.2",
     "description": "Pure JavaScript RevPop library for node.js and browsers.",
     "browser": {
         "ws": false,
@@ -23,7 +23,6 @@
         "prebrowserify": "mkdirp build",
         "browserify": "cross-env NODE_ENV=production browserify --full-paths false dist/browser.js --standalone revpop_js -o build/revpopjs.js -d",
         "postbrowserify": "cross-env NODE_ENV=production minify build/revpopjs.js --mangle --outFile build/revpopjs.min.js",
-        "postinstall": "cross-env BABEL_ENV=cjs babel lib -d dist",
         "precommit": "pretty-quick --staged && npm run test",
         "doc": "esdoc -c esdoc.json",
         "example:asset": "babel-node examples/updateAsset",
