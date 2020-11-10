@@ -1,12 +1,12 @@
 import assert from "assert";
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import {TransactionBuilder, ops, hash} from "../../lib";
 
-describe("TransactionBuilder", () => {
+xdescribe("TransactionBuilder", () => {
     // Connect once for all tests
     before(function() {
         return new Promise(function(resolve, reject) {
-            Apis.instance("wss://eu.nodes.bitshares.ws", true)
+            Apis.instance("wss://testnet.revolutionpopuli.com", true)
                 .init_promise.then(resolve)
                 .catch(reject);
         });

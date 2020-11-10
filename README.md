@@ -53,7 +53,7 @@ The Chain library contains a complete state container called the ChainStore. The
 The ChainStore has several useful methods to retrieve, among other things, objects, assets and accounts using either object ids or asset/account names. These methods are synchronous and will return `undefined` to indicate fetching in progress, and `null` to indicate that the object does not exist.
 
 ```
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 var {ChainStore} = require("revpopjs");
 
 Apis.instance("wss://localhost", true).init_promise.then((res) => {

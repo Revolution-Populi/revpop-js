@@ -1,10 +1,10 @@
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import {TransactionBuilder, ChainStore, FetchChain, PrivateKey} from "../lib";
 
 const wifKey = "5JjjMBUHUecV8nHvgKXdjRi9oqD8h382qQrAEAdLQ4oYAoEeSv2";
 const pKey = PrivateKey.fromWif(wifKey);
 
-Apis.instance("wss://node.testnet.bitshares.eu", true).init_promise.then(
+Apis.instance("wss://testnet.revolutionpopuli.com", true).init_promise.then(
     res => {
         console.log("connected to:", res[0].network_name, "network");
 

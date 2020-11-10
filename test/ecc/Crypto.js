@@ -1,7 +1,7 @@
 import {Aes, PrivateKey, PublicKey, Signature, hash, key} from "../../lib";
 import assert from "assert";
 import {Long} from "bytebuffer";
-import {ChainConfig} from "bitsharesjs-ws";
+import {ChainConfig} from "@revolutionpopuli/revpopjs-ws";
 
 import secureRandom from "secure-random";
 

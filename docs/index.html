@@ -261,7 +261,7 @@ signTransaction(tr)</code>
 </code></pre><p>If checkKeys is successful, you can use signTransaction to sign a TransactionBuilder transaction using the private keys for that account.</p>
 <h4 id="state-container">State container</h4><p>The Chain library contains a complete state container called the ChainStore. The ChainStore will automatically configure the <code>set_subscribe_callback</code> and handle any incoming state changes appropriately. It uses Immutable.js for storing the state, so all objects are returned as immutable objects. It has its own <code>subscribe</code> method that can be used to register a callback that will be called whenever a state change happens.</p>
 <p>The ChainStore has several useful methods to retrieve, among other things, objects, assets and accounts using either object ids or asset/account names. These methods are synchronous and will return <code>undefined</code> to indicate fetching in progress, and <code>null</code> to indicate that the object does not exist.</p>
-<pre><code><code class="source-code prettyprint">import {Apis} from &quot;bitsharesjs-ws&quot;;
+<pre><code><code class="source-code prettyprint">import {Apis} from &quot;@revolutionpopuli/revpopjs-ws&quot;;
 var {ChainStore} = require(&quot;revpopjs&quot;);
 
 Apis.instance(&quot;wss://localhost&quot;, true).init_promise.then((res) =&gt; {

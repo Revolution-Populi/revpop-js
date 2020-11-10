@@ -1,7 +1,7 @@
 {
   "type": "File",
   "start": 0,
-  "end": 1681,
+  "end": 1693,
   "loc": {
     "start": {
       "line": 1,
@@ -15,7 +15,7 @@
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 1681,
+    "end": 1693,
     "loc": {
       "start": {
         "line": 1,
@@ -3172,9 +3172,9 @@
         "trailingComments": [
           {
             "type": "CommentBlock",
-            "value": " Reexport bitsharesjs-ws module to keep its single instance ",
+            "value": " Reexport revpopjs-ws module to keep its single instance ",
             "start": 1559,
-            "end": 1623,
+            "end": 1620,
             "loc": {
               "start": {
                 "line": 39,
@@ -3182,7 +3182,7 @@
               },
               "end": {
                 "line": 39,
-                "column": 64
+                "column": 61
               }
             }
           }
@@ -3190,8 +3190,8 @@
       },
       {
         "type": "ImportDeclaration",
-        "start": 1624,
-        "end": 1664,
+        "start": 1621,
+        "end": 1676,
         "loc": {
           "start": {
             "line": 40,
@@ -3199,14 +3199,14 @@
           },
           "end": {
             "line": 40,
-            "column": 40
+            "column": 55
           }
         },
         "specifiers": [
           {
             "type": "ImportNamespaceSpecifier",
-            "start": 1631,
-            "end": 1641,
+            "start": 1628,
+            "end": 1638,
             "loc": {
               "start": {
                 "line": 40,
@@ -3219,8 +3219,8 @@
             },
             "local": {
               "type": "Identifier",
-              "start": 1636,
-              "end": 1641,
+              "start": 1633,
+              "end": 1638,
               "loc": {
                 "start": {
                   "line": 40,
@@ -3240,8 +3240,8 @@
         ],
         "source": {
           "type": "StringLiteral",
-          "start": 1647,
-          "end": 1663,
+          "start": 1644,
+          "end": 1675,
           "loc": {
             "start": {
               "line": 40,
@@ -3249,21 +3249,21 @@
             },
             "end": {
               "line": 40,
-              "column": 39
+              "column": 54
             }
           },
           "extra": {
-            "rawValue": "bitsharesjs-ws",
-            "raw": "'bitsharesjs-ws'"
+            "rawValue": "@revolutionpopuli/revpopjs-ws",
+            "raw": "'@revolutionpopuli/revpopjs-ws'"
           },
-          "value": "bitsharesjs-ws"
+          "value": "@revolutionpopuli/revpopjs-ws"
         },
         "leadingComments": [
           {
             "type": "CommentBlock",
-            "value": " Reexport bitsharesjs-ws module to keep its single instance ",
+            "value": " Reexport revpopjs-ws module to keep its single instance ",
             "start": 1559,
-            "end": 1623,
+            "end": 1620,
             "loc": {
               "start": {
                 "line": 39,
@@ -3271,7 +3271,7 @@
               },
               "end": {
                 "line": 39,
-                "column": 64
+                "column": 61
               }
             }
           }
@@ -3279,8 +3279,8 @@
       },
       {
         "type": "ExportNamedDeclaration",
-        "start": 1666,
-        "end": 1680,
+        "start": 1678,
+        "end": 1692,
         "loc": {
           "start": {
             "line": 42,
@@ -3295,8 +3295,8 @@
         "specifiers": [
           {
             "type": "ExportSpecifier",
-            "start": 1674,
-            "end": 1679,
+            "start": 1686,
+            "end": 1691,
             "loc": {
               "start": {
                 "line": 42,
@@ -3309,8 +3309,8 @@
             },
             "local": {
               "type": "Identifier",
-              "start": 1674,
-              "end": 1679,
+              "start": 1686,
+              "end": 1691,
               "loc": {
                 "start": {
                   "line": 42,
@@ -3326,8 +3326,8 @@
             },
             "exported": {
               "type": "Identifier",
-              "start": 1674,
-              "end": 1679,
+              "start": 1686,
+              "end": 1691,
               "loc": {
                 "start": {
                   "line": 42,
@@ -3399,9 +3399,9 @@
     },
     {
       "type": "CommentBlock",
-      "value": " Reexport bitsharesjs-ws module to keep its single instance ",
+      "value": " Reexport revpopjs-ws module to keep its single instance ",
       "start": 1559,
-      "end": 1623,
+      "end": 1620,
       "loc": {
         "start": {
           "line": 39,
@@ -3409,7 +3409,7 @@
         },
         "end": {
           "line": 39,
-          "column": 64
+          "column": 61
         }
       }
     }
@@ -8373,9 +8373,9 @@
     },
     {
       "type": "CommentBlock",
-      "value": " Reexport bitsharesjs-ws module to keep its single instance ",
+      "value": " Reexport revpopjs-ws module to keep its single instance ",
       "start": 1559,
-      "end": 1623,
+      "end": 1620,
       "loc": {
         "start": {
           "line": 39,
@@ -8383,7 +8383,7 @@
         },
         "end": {
           "line": 39,
-          "column": 64
+          "column": 61
         }
       }
     },
@@ -8402,8 +8402,8 @@
         "updateContext": null
       },
       "value": "import",
-      "start": 1624,
-      "end": 1630,
+      "start": 1621,
+      "end": 1627,
       "loc": {
         "start": {
           "line": 40,
@@ -8429,8 +8429,8 @@
         "updateContext": null
       },
       "value": "*",
-      "start": 1631,
-      "end": 1632,
+      "start": 1628,
+      "end": 1629,
       "loc": {
         "start": {
           "line": 40,
@@ -8455,8 +8455,8 @@
         "binop": null
       },
       "value": "as",
-      "start": 1633,
-      "end": 1635,
+      "start": 1630,
+      "end": 1632,
       "loc": {
         "start": {
           "line": 40,
@@ -8481,8 +8481,8 @@
         "binop": null
       },
       "value": "Chain",
-      "start": 1636,
-      "end": 1641,
+      "start": 1633,
+      "end": 1638,
       "loc": {
         "start": {
           "line": 40,
@@ -8507,8 +8507,8 @@
         "binop": null
       },
       "value": "from",
-      "start": 1642,
-      "end": 1646,
+      "start": 1639,
+      "end": 1643,
       "loc": {
         "start": {
           "line": 40,
@@ -8533,9 +8533,9 @@
         "binop": null,
         "updateContext": null
       },
-      "value": "bitsharesjs-ws",
-      "start": 1647,
-      "end": 1663,
+      "value": "@revolutionpopuli/revpopjs-ws",
+      "start": 1644,
+      "end": 1675,
       "loc": {
         "start": {
           "line": 40,
@@ -8543,7 +8543,7 @@
         },
         "end": {
           "line": 40,
-          "column": 39
+          "column": 54
         }
       }
     },
@@ -8560,16 +8560,16 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1663,
-      "end": 1664,
+      "start": 1675,
+      "end": 1676,
       "loc": {
         "start": {
           "line": 40,
-          "column": 39
+          "column": 54
         },
         "end": {
           "line": 40,
-          "column": 40
+          "column": 55
         }
       }
     },
@@ -8588,8 +8588,8 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 1666,
-      "end": 1672,
+      "start": 1678,
+      "end": 1684,
       "loc": {
         "start": {
           "line": 42,
@@ -8613,8 +8613,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1673,
-      "end": 1674,
+      "start": 1685,
+      "end": 1686,
       "loc": {
         "start": {
           "line": 42,
@@ -8639,8 +8639,8 @@
         "binop": null
       },
       "value": "Chain",
-      "start": 1674,
-      "end": 1679,
+      "start": 1686,
+      "end": 1691,
       "loc": {
         "start": {
           "line": 42,
@@ -8664,8 +8664,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1679,
-      "end": 1680,
+      "start": 1691,
+      "end": 1692,
       "loc": {
         "start": {
           "line": 42,
@@ -8690,8 +8690,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1681,
-      "end": 1681,
+      "start": 1693,
+      "end": 1693,
       "loc": {
         "start": {
           "line": 43,

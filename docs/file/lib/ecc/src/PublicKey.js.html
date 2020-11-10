@@ -247,7 +247,7 @@ import {Point, getCurveByName} from &quot;ecurve&quot;;
 const secp256k1 = getCurveByName(&quot;secp256k1&quot;);
 import {encode, decode} from &quot;bs58&quot;;
 import {sha256, sha512, ripemd160} from &quot;./hash&quot;;
-import {ChainConfig} from &quot;bitsharesjs-ws&quot;;
+import {ChainConfig} from &quot;@revolutionpopuli/revpopjs-ws&quot;;
 import assert from &quot;assert&quot;;
 import deepEqual from &quot;deep-equal&quot;;
 const Buffer = require(&quot;safe-buffer&quot;).Buffer;
@@ -291,7 +291,7 @@ class PublicKey {
         return PublicKey.fromPoint(point);
     }
 
-    /** bts::blockchain::address (unique but not a full public key) */
+    /** rvp::blockchain::address (unique but not a full public key) */
     toBlockchainAddress() {
         var pub_buf = this.toBuffer();
         var pub_sha = sha512(pub_buf);

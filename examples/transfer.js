@@ -1,16 +1,16 @@
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import {ChainStore, FetchChain, PrivateKey, TransactionHelper, Aes, TransactionBuilder} from "../lib";
 
 var privKey = "5KBuq5WmHvgePmB7w3onYsqLM8ESomM2Ae7SigYuuwg8MDHW7NN";
 let pKey = PrivateKey.fromWif(privKey);
 
-Apis.instance("wss://node.testnet.bitshares.eu", true)
+Apis.instance("wss://testnet.revolutionpopuli.com", true)
 .init_promise.then((res) => {
     console.log("connected to:", res[0].network_name, "network");
 
     ChainStore.init().then(() => {
 
-        let fromAccount = "bitsharesjs";
+        let fromAccount = "revpopjs";
         let memoSender = fromAccount;
         let memo = "Testing transfer from node.js";
 

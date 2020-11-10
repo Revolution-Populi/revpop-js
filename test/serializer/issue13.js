@@ -6,8 +6,8 @@ import {
     ops,
     types
 } from "../../lib";
-// import { Apis } from 'bitsharesjs-ws';
-import {Apis, ChainConfig} from "bitsharesjs-ws";
+// import { Apis } from '@revolutionpopuli/revpopjs-ws';
+import {Apis, ChainConfig} from "@revolutionpopuli/revpopjs-ws";
 import assert from "assert";
 
 describe("issue13", function() {
@@ -68,11 +68,10 @@ describe("issue13", function() {
             signatures: []
         };
         return Apis.instance(
-            "wss://eu.nodes.bitshares.ws",
+            "wss://testnet.revolutionpopuli.com",
             true
         ).init_promise.then(() => {
             var b = ops.transaction.toBuffer(a);
-            // get from backend. remove signatures. see https://github.com/bitshares/bitsharesjs/issues/13#issuecomment-348684435
             var c =
                 "8fc336d8d65b6d1a215a0106bd0400000000000000bb921b010300000002d2d60901009ff91a01000202def83f652f3d47a2f96b97928779bcc7155db4c1fa7570f60e3af07647777da6010003b666ae35954e2b7b3e5e3430f49b0a971b3e8f13cfb3240055205f758abfd6250100000102000000029ff91a0100eb8f1d010001020f08edaefcacd7dd29ffb51b4b3b20fe1f5c0946b4e11fd499c093a5234201d0010000000000";
             assert(b);

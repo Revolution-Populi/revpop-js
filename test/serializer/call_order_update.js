@@ -1,5 +1,5 @@
 import {ops} from "../../lib/";
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 
 import assert from "assert";
 var trans1 = {
@@ -103,12 +103,12 @@ function equalTrans(trans) {
     };
 }
 
-// curl - d '{"id":1,"method":"call","params":[0,"get_transaction_hex",[{}]]}' https://btsapi.magicw.net/ws
-describe("call_order_update serialization", function() {
+// curl - d '{"id":1,"method":"call","params":[0,"get_transaction_hex",[{}]]}' https://testnet.revolutionpopuli.com/ws
+xdescribe("call_order_update serialization", function() {
     describe("same as backend", function() {
         before(function() {
             return Apis.instance(
-                "wss://eu.nodes.bitshares.ws",
+                "wss://testnet.revolutionpopuli.com",
                 true
             ).init_promise;
         });
