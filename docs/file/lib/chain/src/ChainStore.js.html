@@ -116,7 +116,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-authority">authority</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-balance_claim">balance_claim</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-balance_claim_operation_fee_parameters">balance_claim_operation_fee_parameters</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-bid_collateral">bid_collateral</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-bid_collateral_operation_fee_parameters">bid_collateral_operation_fee_parameters</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-bitasset_options">bitasset_options</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-blind_input">blind_input</a></span></span></li>
@@ -161,16 +160,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-fee_schedule">fee_schedule</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-fill_order">fill_order</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-fill_order_operation_fee_parameters">fill_order_operation_fee_parameters</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-htlc_create">htlc_create</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-htlc_create_operation_fee_parameters">htlc_create_operation_fee_parameters</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-htlc_extend">htlc_extend</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-htlc_extend_operation_fee_parameters">htlc_extend_operation_fee_parameters</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-htlc_redeem">htlc_redeem</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-htlc_redeem_operation_fee_parameters">htlc_redeem_operation_fee_parameters</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-htlc_redeemed">htlc_redeemed</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-htlc_redeemed_operation_fee_parameters">htlc_redeemed_operation_fee_parameters</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-htlc_refund">htlc_refund</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-htlc_refund_operation_fee_parameters">htlc_refund_operation_fee_parameters</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-limit_order_cancel">limit_order_cancel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-limit_order_cancel_operation_fee_parameters">limit_order_cancel_operation_fee_parameters</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-limit_order_create">limit_order_create</a></span></span></li>
@@ -1024,29 +1013,6 @@ class ChainStore {
 
     /**
      *
-     * @return a promise with the workers array
-     */
-    fetchAllWorkers() {
-        return new Promise((resolve, reject) =&gt; {
-            Apis.instance()
-                .db_api()
-                .exec(&quot;get_all_workers&quot;, [])
-                .then(workers_array =&gt; {
-                    if (workers_array &amp;&amp; workers_array.length) {
-                        workers_array.forEach(worker =&gt; {
-                            this._updateObject(worker, false);
-                        });
-                        resolve(workers_array);
-                        this.notifySubscribers();
-                    } else {
-                        resolve([]);
-                    }
-                }, reject);
-        });
-    }
-
-    /**
-     *
      * @return a promise with the witness object
      */
     fetchWitnessByAccount(account_id) {
@@ -1121,7 +1087,7 @@ class ChainStore {
          * TODO
          * Include additional object_types to fetch that chain will limit and warn about
          * By quering more_data_available the following are currently possible options
-         * assets, call_orders, htlcs_from, htlcs_to, limit_orders, proposals, settle_orders, vesting_balances, withdraws_from, withdraws_to
+         * assets, call_orders, limit_orders, proposals, settle_orders, vesting_balances, withdraws_from, withdraws_to
          */
 
         if (current.toJS().more_data_available.balances &amp;&amp; object_type == &quot;balance&quot;) {
@@ -1227,18 +1193,9 @@ class ChainStore {
                         registrar_name,
                         lifetime_referrer_name,
                         votes,
-                        proposals,
-                        htlcs_from,
-                        htlcs_to
+                        proposals
                     } = full_account;
 
-                    // ensure backwards compatibility if node is not up-to-date
-                    if (!htlcs_from) { // available with 3.1.X
-                        htlcs_from = []
-                    }
-                    if (!htlcs_to) { // available with 3.1.X
-                        htlcs_to = []
-                    }
                     if (!settle_orders) { // available with 3.0.X
                         settle_orders = []
                     }
@@ -1259,8 +1216,6 @@ class ChainStore {
                     account.call_orders = new Immutable.Set();
                     account.settle_orders = new Immutable.Set();
                     account.proposals = new Immutable.Set();
-                    account.htlcs_to = new Immutable.Set();
-                    account.htlcs_from = new Immutable.Set();
                     account.vesting_balances = account.vesting_balances.withMutations(
                         set =&gt; {
                             vesting_balances.forEach(vb =&gt; {
@@ -1303,24 +1258,6 @@ class ChainStore {
                                 this._updateObject(so);
                                 set.add(so.id);
                                 if (autosubscribe) sub_to_objects.push(so.id);
-                            });
-                        }
-                    );
-                    account.htlcs_to = account.htlcs_to.withMutations(
-                        set =&gt; {
-                            htlcs_to.forEach(htlc =&gt; {
-                                this._updateObject(htlc);
-                                set.add(htlc.id);
-                                if (autosubscribe) sub_to_objects.push(htlc.id);
-                            });
-                        }
-                    );
-                    account.htlcs_from = account.htlcs_from.withMutations(
-                        set =&gt; {
-                            htlcs_from.forEach(htlc =&gt; {
-                                this._updateObject(htlc);
-                                set.add(htlc.id);
-                                if (autosubscribe) sub_to_objects.push(htlc.id);
                             });
                         }
                     );

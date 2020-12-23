@@ -402,12 +402,6 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~bid_collateral",
-    "variable/index.html#static-variable-bid_collateral",
-    "<span>bid_collateral</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
     "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~bid_collateral_operation_fee_parameters",
     "variable/index.html#static-variable-bid_collateral_operation_fee_parameters",
     "<span>bid_collateral_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
@@ -723,66 +717,6 @@ window.esdocSearchIndex = [
     "@revolutionpopuli/revpopjs/lib/chain/src/transactionhelper.js~helper",
     "variable/index.html#static-variable-helper",
     "<span>helper</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/chain/src/TransactionHelper.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~htlc_create",
-    "variable/index.html#static-variable-htlc_create",
-    "<span>htlc_create</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~htlc_create_operation_fee_parameters",
-    "variable/index.html#static-variable-htlc_create_operation_fee_parameters",
-    "<span>htlc_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~htlc_extend",
-    "variable/index.html#static-variable-htlc_extend",
-    "<span>htlc_extend</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~htlc_extend_operation_fee_parameters",
-    "variable/index.html#static-variable-htlc_extend_operation_fee_parameters",
-    "<span>htlc_extend_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~htlc_redeem",
-    "variable/index.html#static-variable-htlc_redeem",
-    "<span>htlc_redeem</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~htlc_redeem_operation_fee_parameters",
-    "variable/index.html#static-variable-htlc_redeem_operation_fee_parameters",
-    "<span>htlc_redeem_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~htlc_redeemed",
-    "variable/index.html#static-variable-htlc_redeemed",
-    "<span>htlc_redeemed</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~htlc_redeemed_operation_fee_parameters",
-    "variable/index.html#static-variable-htlc_redeemed_operation_fee_parameters",
-    "<span>htlc_redeemed_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~htlc_refund",
-    "variable/index.html#static-variable-htlc_refund",
-    "<span>htlc_refund</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~htlc_refund_operation_fee_parameters",
-    "variable/index.html#static-variable-htlc_refund_operation_fee_parameters",
-    "<span>htlc_refund_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
@@ -1708,12 +1642,6 @@ window.esdocSearchIndex = [
     "class/lib/chain/src/ChainStore.js~ChainStore.html#instance-member-dispatched",
     "lib/chain/src/ChainStore.js~ChainStore#dispatched",
     "member"
-  ],
-  [
-    "lib/chain/src/chainstore.js~chainstore#fetchallworkers",
-    "class/lib/chain/src/ChainStore.js~ChainStore.html#instance-method-fetchAllWorkers",
-    "lib/chain/src/ChainStore.js~ChainStore#fetchAllWorkers",
-    "method"
   ],
   [
     "lib/chain/src/chainstore.js~chainstore#fetchcommitteememberbyaccount",

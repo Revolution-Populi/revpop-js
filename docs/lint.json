@@ -124,43 +124,43 @@
     "filePath": "lib/chain/src/ChainStore.js",
     "lines": [
       {
-        "lineNumber": 894,
+        "lineNumber": 871,
         "line": "    /**"
       },
       {
-        "lineNumber": 895,
+        "lineNumber": 872,
         "line": "     *  Fetches an account and all of its associated data in a single query"
       },
       {
-        "lineNumber": 896,
+        "lineNumber": 873,
         "line": "     *"
       },
       {
-        "lineNumber": 897,
+        "lineNumber": 874,
         "line": "     *  @param an account name or account id"
       },
       {
-        "lineNumber": 898,
+        "lineNumber": 875,
         "line": "     *"
       },
       {
-        "lineNumber": 899,
+        "lineNumber": 876,
         "line": "     *  @return undefined if the account in question is in the process of being fetched"
       },
       {
-        "lineNumber": 900,
+        "lineNumber": 877,
         "line": "     *  @return the object if it has already been fetched"
       },
       {
-        "lineNumber": 901,
+        "lineNumber": 878,
         "line": "     *  @return null if the object has been queried and was not found"
       },
       {
-        "lineNumber": 902,
+        "lineNumber": 879,
         "line": "     */"
       },
       {
-        "lineNumber": 903,
+        "lineNumber": 880,
         "line": "    fetchFullAccount(name_or_id, autosubscribe = null) {"
       }
     ],
@@ -177,43 +177,43 @@
     "filePath": "lib/chain/src/ChainStore.js",
     "lines": [
       {
-        "lineNumber": 1151,
+        "lineNumber": 1099,
         "line": "    /**"
       },
       {
-        "lineNumber": 1152,
+        "lineNumber": 1100,
         "line": "     * There are two ways to extend the account history, add new more"
       },
       {
-        "lineNumber": 1153,
+        "lineNumber": 1101,
         "line": "     * recent history, and extend historic hstory. This method will fetch"
       },
       {
-        "lineNumber": 1154,
+        "lineNumber": 1102,
         "line": "     * the most recent account history and prepend it to the list of"
       },
       {
-        "lineNumber": 1155,
+        "lineNumber": 1103,
         "line": "     * historic operations."
       },
       {
-        "lineNumber": 1156,
+        "lineNumber": 1104,
         "line": "     *"
       },
       {
-        "lineNumber": 1157,
+        "lineNumber": 1105,
         "line": "     *  @param account immutable account object"
       },
       {
-        "lineNumber": 1158,
+        "lineNumber": 1106,
         "line": "     *  @return a promise with the account history"
       },
       {
-        "lineNumber": 1159,
+        "lineNumber": 1107,
         "line": "     */"
       },
       {
-        "lineNumber": 1160,
+        "lineNumber": 1108,
         "line": "    fetchRecentHistory(account, limit = 100) {"
       }
     ],
