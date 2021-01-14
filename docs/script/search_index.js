@@ -402,12 +402,6 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~bid_collateral_operation_fee_parameters",
-    "variable/index.html#static-variable-bid_collateral_operation_fee_parameters",
-    "<span>bid_collateral_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
     "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~bitasset_options",
     "variable/index.html#static-variable-bitasset_options",
     "<span>bitasset_options</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
@@ -450,28 +444,10 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~burn_worker_initializer",
-    "variable/index.html#static-variable-burn_worker_initializer",
-    "<span>burn_worker_initializer</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
     "@revolutionpopuli/revpopjs/lib/ecc/src/ecdsa.js~calcpubkeyrecoveryparam",
     "function/index.html#static-function-calcPubKeyRecoveryParam",
     "<span>calcPubKeyRecoveryParam</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/ecc/src/ecdsa.js</span>",
     "function"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~call_order_update",
-    "variable/index.html#static-variable-call_order_update",
-    "<span>call_order_update</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~call_order_update_operation_fee_parameters",
-    "variable/index.html#static-variable-call_order_update_operation_fee_parameters",
-    "<span>call_order_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
   ],
   [
     "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~cdd_vesting_policy_initializer",
@@ -495,6 +471,18 @@ window.esdocSearchIndex = [
     "@revolutionpopuli/revpopjs/lib/chain/src/chainstore.js~chain_store",
     "variable/index.html#static-variable-chain_store",
     "<span>chain_store</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/chain/src/ChainStore.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~commit_create",
+    "variable/index.html#static-variable-commit_create",
+    "<span>commit_create</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~commit_create_operation_fee_parameters",
+    "variable/index.html#static-variable-commit_create_operation_fee_parameters",
+    "<span>commit_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
@@ -666,18 +654,6 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~execute_bid",
-    "variable/index.html#static-variable-execute_bid",
-    "<span>execute_bid</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~execute_bid_operation_fee_parameters",
-    "variable/index.html#static-variable-execute_bid_operation_fee_parameters",
-    "<span>execute_bid_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
     "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~fba_distribute",
     "variable/index.html#static-variable-fba_distribute",
     "<span>fba_distribute</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
@@ -696,18 +672,6 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~fill_order",
-    "variable/index.html#static-variable-fill_order",
-    "<span>fill_order</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~fill_order_operation_fee_parameters",
-    "variable/index.html#static-variable-fill_order_operation_fee_parameters",
-    "<span>fill_order_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
     "@revolutionpopuli/revpopjs/lib/chain/src/state.js~get",
     "function/index.html#static-function-get",
     "<span>get</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/chain/src/state.js</span>",
@@ -723,30 +687,6 @@ window.esdocSearchIndex = [
     "@revolutionpopuli/revpopjs/lib/ecc/src/keyutils.js~key",
     "variable/index.html#static-variable-key",
     "<span>key</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/ecc/src/KeyUtils.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~limit_order_cancel",
-    "variable/index.html#static-variable-limit_order_cancel",
-    "<span>limit_order_cancel</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~limit_order_cancel_operation_fee_parameters",
-    "variable/index.html#static-variable-limit_order_cancel_operation_fee_parameters",
-    "<span>limit_order_cancel_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~limit_order_create",
-    "variable/index.html#static-variable-limit_order_create",
-    "<span>limit_order_create</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~limit_order_create_operation_fee_parameters",
-    "variable/index.html#static-variable-limit_order_create_operation_fee_parameters",
-    "<span>limit_order_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
@@ -900,15 +840,21 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~refund_worker_initializer",
-    "variable/index.html#static-variable-refund_worker_initializer",
-    "<span>refund_worker_initializer</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
     "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~restriction",
     "variable/index.html#static-variable-restriction",
     "<span>restriction</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~reveal_create",
+    "variable/index.html#static-variable-reveal_create",
+    "<span>reveal_create</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~reveal_create_operation_fee_parameters",
+    "variable/index.html#static-variable-reveal_create_operation_fee_parameters",
+    "<span>reveal_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
@@ -1086,15 +1032,21 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~vesting_balance_worker_initializer",
-    "variable/index.html#static-variable-vesting_balance_worker_initializer",
-    "<span>vesting_balance_worker_initializer</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
     "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~void_result",
     "variable/index.html#static-variable-void_result",
     "<span>void_result</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~vote_counter_update",
+    "variable/index.html#static-variable-vote_counter_update",
+    "<span>vote_counter_update</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~vote_counter_update_operation_fee_parameters",
+    "variable/index.html#static-variable-vote_counter_update_operation_fee_parameters",
+    "<span>vote_counter_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
@@ -1167,18 +1119,6 @@ window.esdocSearchIndex = [
     "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~witness_update_operation_fee_parameters",
     "variable/index.html#static-variable-witness_update_operation_fee_parameters",
     "<span>witness_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~worker_create",
-    "variable/index.html#static-variable-worker_create",
-    "<span>worker_create</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
-    "variable"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~worker_create_operation_fee_parameters",
-    "variable/index.html#static-variable-worker_create_operation_fee_parameters",
-    "<span>worker_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
