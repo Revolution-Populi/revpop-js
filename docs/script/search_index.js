@@ -6,6 +6,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "@revolutionpopuli/revpopjs/lib/storage/src/adapter.js~adapter",
+    "class/lib/storage/src/Adapter.js~Adapter.html",
+    "<span>Adapter</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/Adapter.js</span>",
+    "class"
+  ],
+  [
     "@revolutionpopuli/revpopjs/lib/ecc/src/address.js~address",
     "class/lib/ecc/src/address.js~Address.html",
     "<span>Address</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/ecc/src/address.js</span>",
@@ -28,6 +34,12 @@ window.esdocSearchIndex = [
     "variable/index.html#static-variable-ChainTypes",
     "<span>ChainTypes</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/chain/src/ChainTypes.js</span>",
     "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/storage/src/cloudstorage.js~cloudstorage",
+    "class/lib/storage/src/CloudStorage.js~CloudStorage.html",
+    "<span>CloudStorage</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/CloudStorage.js</span>",
+    "class"
   ],
   [
     "@revolutionpopuli/revpopjs/lib/ecc/src/ecsignature.js~ecsignature",
@@ -54,6 +66,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "@revolutionpopuli/revpopjs/lib/storage/src/memoryadapter.js~memoryadapter",
+    "class/lib/storage/src/MemoryAdapter.js~MemoryAdapter.html",
+    "<span>MemoryAdapter</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/MemoryAdapter.js</span>",
+    "class"
+  ],
+  [
     "@revolutionpopuli/revpopjs/lib/chain/src/numberutils.js~numberutils",
     "variable/index.html#static-variable-NumberUtils",
     "<span>NumberUtils</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/chain/src/NumberUtils.js</span>",
@@ -63,6 +81,12 @@ window.esdocSearchIndex = [
     "@revolutionpopuli/revpopjs/lib/chain/src/objectid.js~objectid",
     "class/lib/chain/src/ObjectId.js~ObjectId.html",
     "<span>ObjectId</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/chain/src/ObjectId.js</span>",
+    "class"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/storage/src/personaldata.js~personaldata",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html",
+    "<span>PersonalData</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/PersonalData.js</span>",
     "class"
   ],
   [
@@ -588,6 +612,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js~crypto_content_transform",
+    "function/index.html#static-function-crypto_content_transform",
+    "<span>crypto_content_transform</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/crypto.js</span>",
+    "function"
+  ],
+  [
     "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~custom",
     "variable/index.html#static-variable-custom",
     "<span>custom</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
@@ -636,6 +666,30 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js~decrypt_buffer",
+    "function/index.html#static-function-decrypt_buffer",
+    "<span>decrypt_buffer</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/crypto.js</span>",
+    "function"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js~decrypt_content",
+    "function/index.html#static-function-decrypt_content",
+    "<span>decrypt_content</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/crypto.js</span>",
+    "function"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js~decrypt_content_str",
+    "function/index.html#static-function-decrypt_content_str",
+    "<span>decrypt_content_str</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/crypto.js</span>",
+    "function"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js~decrypt_object",
+    "function/index.html#static-function-decrypt_object",
+    "<span>decrypt_object</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/crypto.js</span>",
+    "function"
+  ],
+  [
     "@revolutionpopuli/revpopjs/lib/ecc/src/ecdsa.js~deterministicgeneratek",
     "function/index.html#static-function-deterministicGenerateK",
     "<span>deterministicGenerateK</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/ecc/src/ecdsa.js</span>",
@@ -645,6 +699,30 @@ window.esdocSearchIndex = [
     "@revolutionpopuli/revpopjs/lib/chain/src/emitterinstance.js~emitter",
     "function/index.html#static-function-emitter",
     "<span>emitter</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/chain/src/EmitterInstance.js</span>",
+    "function"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js~encrypt_buffer",
+    "function/index.html#static-function-encrypt_buffer",
+    "<span>encrypt_buffer</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/crypto.js</span>",
+    "function"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js~encrypt_content",
+    "function/index.html#static-function-encrypt_content",
+    "<span>encrypt_content</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/crypto.js</span>",
+    "function"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js~encrypt_content_str",
+    "function/index.html#static-function-encrypt_content_str",
+    "<span>encrypt_content_str</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/crypto.js</span>",
+    "function"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js~encrypt_object",
+    "function/index.html#static-function-encrypt_object",
+    "<span>encrypt_object</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/crypto.js</span>",
     "function"
   ],
   [
@@ -694,6 +772,30 @@ window.esdocSearchIndex = [
     "variable/index.html#static-variable-linear_vesting_policy_initializer",
     "<span>linear_vesting_policy_initializer</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js~make_content_cipher_stream",
+    "function/index.html#static-function-make_content_cipher_stream",
+    "<span>make_content_cipher_stream</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/crypto.js</span>",
+    "function"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js~make_content_decipher_stream",
+    "function/index.html#static-function-make_content_decipher_stream",
+    "<span>make_content_decipher_stream</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/crypto.js</span>",
+    "function"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js~make_content_key",
+    "function/index.html#static-function-make_content_key",
+    "<span>make_content_key</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/crypto.js</span>",
+    "function"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js~make_content_key_noencrypt",
+    "function/index.html#static-function-make_content_key_noencrypt",
+    "<span>make_content_key_noencrypt</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/crypto.js</span>",
+    "function"
   ],
   [
     "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~memo_data",
@@ -2841,6 +2943,372 @@ window.esdocSearchIndex = [
     "lib/serializer/src/types.js",
     "file/lib/serializer/src/types.js.html",
     "lib/serializer/src/types.js",
+    "file"
+  ],
+  [
+    "lib/storage/index.js",
+    "file/lib/storage/index.js.html",
+    "lib/storage/index.js",
+    "file"
+  ],
+  [
+    "lib/storage/src/adapter.js",
+    "file/lib/storage/src/Adapter.js.html",
+    "lib/storage/src/Adapter.js",
+    "file"
+  ],
+  [
+    "lib/storage/src/adapter.js~adapter#close",
+    "class/lib/storage/src/Adapter.js~Adapter.html#instance-method-close",
+    "lib/storage/src/Adapter.js~Adapter#close",
+    "method"
+  ],
+  [
+    "lib/storage/src/adapter.js~adapter#constructor",
+    "class/lib/storage/src/Adapter.js~Adapter.html#instance-constructor-constructor",
+    "lib/storage/src/Adapter.js~Adapter#constructor",
+    "method"
+  ],
+  [
+    "lib/storage/src/adapter.js~adapter#delete",
+    "class/lib/storage/src/Adapter.js~Adapter.html#instance-method-delete",
+    "lib/storage/src/Adapter.js~Adapter#delete",
+    "method"
+  ],
+  [
+    "lib/storage/src/adapter.js~adapter#get",
+    "class/lib/storage/src/Adapter.js~Adapter.html#instance-method-get",
+    "lib/storage/src/Adapter.js~Adapter#get",
+    "method"
+  ],
+  [
+    "lib/storage/src/adapter.js~adapter#open",
+    "class/lib/storage/src/Adapter.js~Adapter.html#instance-method-open",
+    "lib/storage/src/Adapter.js~Adapter#open",
+    "method"
+  ],
+  [
+    "lib/storage/src/adapter.js~adapter#put",
+    "class/lib/storage/src/Adapter.js~Adapter.html#instance-method-put",
+    "lib/storage/src/Adapter.js~Adapter#put",
+    "method"
+  ],
+  [
+    "lib/storage/src/cloudstorage.js",
+    "file/lib/storage/src/CloudStorage.js.html",
+    "lib/storage/src/CloudStorage.js",
+    "file"
+  ],
+  [
+    "lib/storage/src/cloudstorage.js~cloudstorage#client",
+    "class/lib/storage/src/CloudStorage.js~CloudStorage.html#instance-member-client",
+    "lib/storage/src/CloudStorage.js~CloudStorage#client",
+    "member"
+  ],
+  [
+    "lib/storage/src/cloudstorage.js~cloudstorage#connect",
+    "class/lib/storage/src/CloudStorage.js~CloudStorage.html#instance-method-connect",
+    "lib/storage/src/CloudStorage.js~CloudStorage#connect",
+    "method"
+  ],
+  [
+    "lib/storage/src/cloudstorage.js~cloudstorage#constructor",
+    "class/lib/storage/src/CloudStorage.js~CloudStorage.html#instance-constructor-constructor",
+    "lib/storage/src/CloudStorage.js~CloudStorage#constructor",
+    "method"
+  ],
+  [
+    "lib/storage/src/cloudstorage.js~cloudstorage#crypto_load_buffer",
+    "class/lib/storage/src/CloudStorage.js~CloudStorage.html#instance-method-crypto_load_buffer",
+    "lib/storage/src/CloudStorage.js~CloudStorage#crypto_load_buffer",
+    "method"
+  ],
+  [
+    "lib/storage/src/cloudstorage.js~cloudstorage#crypto_load_content",
+    "class/lib/storage/src/CloudStorage.js~CloudStorage.html#instance-method-crypto_load_content",
+    "lib/storage/src/CloudStorage.js~CloudStorage#crypto_load_content",
+    "method"
+  ],
+  [
+    "lib/storage/src/cloudstorage.js~cloudstorage#crypto_load_object",
+    "class/lib/storage/src/CloudStorage.js~CloudStorage.html#instance-method-crypto_load_object",
+    "lib/storage/src/CloudStorage.js~CloudStorage#crypto_load_object",
+    "method"
+  ],
+  [
+    "lib/storage/src/cloudstorage.js~cloudstorage#crypto_save_buffer",
+    "class/lib/storage/src/CloudStorage.js~CloudStorage.html#instance-method-crypto_save_buffer",
+    "lib/storage/src/CloudStorage.js~CloudStorage#crypto_save_buffer",
+    "method"
+  ],
+  [
+    "lib/storage/src/cloudstorage.js~cloudstorage#crypto_save_content",
+    "class/lib/storage/src/CloudStorage.js~CloudStorage.html#instance-method-crypto_save_content",
+    "lib/storage/src/CloudStorage.js~CloudStorage#crypto_save_content",
+    "method"
+  ],
+  [
+    "lib/storage/src/cloudstorage.js~cloudstorage#crypto_save_object",
+    "class/lib/storage/src/CloudStorage.js~CloudStorage.html#instance-method-crypto_save_object",
+    "lib/storage/src/CloudStorage.js~CloudStorage#crypto_save_object",
+    "method"
+  ],
+  [
+    "lib/storage/src/cloudstorage.js~cloudstorage#del",
+    "class/lib/storage/src/CloudStorage.js~CloudStorage.html#instance-method-del",
+    "lib/storage/src/CloudStorage.js~CloudStorage#del",
+    "method"
+  ],
+  [
+    "lib/storage/src/cloudstorage.js~cloudstorage#disconnect",
+    "class/lib/storage/src/CloudStorage.js~CloudStorage.html#instance-method-disconnect",
+    "lib/storage/src/CloudStorage.js~CloudStorage#disconnect",
+    "method"
+  ],
+  [
+    "lib/storage/src/memoryadapter.js",
+    "file/lib/storage/src/MemoryAdapter.js.html",
+    "lib/storage/src/MemoryAdapter.js",
+    "file"
+  ],
+  [
+    "lib/storage/src/memoryadapter.js~memoryadapter#constructor",
+    "class/lib/storage/src/MemoryAdapter.js~MemoryAdapter.html#instance-constructor-constructor",
+    "lib/storage/src/MemoryAdapter.js~MemoryAdapter#constructor",
+    "method"
+  ],
+  [
+    "lib/storage/src/memoryadapter.js~memoryadapter#delete",
+    "class/lib/storage/src/MemoryAdapter.js~MemoryAdapter.html#instance-method-delete",
+    "lib/storage/src/MemoryAdapter.js~MemoryAdapter#delete",
+    "method"
+  ],
+  [
+    "lib/storage/src/memoryadapter.js~memoryadapter#get",
+    "class/lib/storage/src/MemoryAdapter.js~MemoryAdapter.html#instance-method-get",
+    "lib/storage/src/MemoryAdapter.js~MemoryAdapter#get",
+    "method"
+  ],
+  [
+    "lib/storage/src/memoryadapter.js~memoryadapter#memory",
+    "class/lib/storage/src/MemoryAdapter.js~MemoryAdapter.html#instance-member-memory",
+    "lib/storage/src/MemoryAdapter.js~MemoryAdapter#memory",
+    "member"
+  ],
+  [
+    "lib/storage/src/memoryadapter.js~memoryadapter#put",
+    "class/lib/storage/src/MemoryAdapter.js~MemoryAdapter.html#instance-method-put",
+    "lib/storage/src/MemoryAdapter.js~MemoryAdapter#put",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js",
+    "file/lib/storage/src/PersonalData.js.html",
+    "lib/storage/src/PersonalData.js",
+    "file"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#personal_data_part_paths",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-member-PERSONAL_DATA_PART_PATHS",
+    "lib/storage/src/PersonalData.js~PersonalData#PERSONAL_DATA_PART_PATHS",
+    "member"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#_computehash",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_computeHash",
+    "lib/storage/src/PersonalData.js~PersonalData#_computeHash",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#_computesha256",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_computeSha256",
+    "lib/storage/src/PersonalData.js~PersonalData#_computeSha256",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#_deepclone",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_deepClone",
+    "lib/storage/src/PersonalData.js~PersonalData#_deepClone",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#_deepsortobjkeys",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_deepSortObjKeys",
+    "lib/storage/src/PersonalData.js~PersonalData#_deepSortObjKeys",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#_defaultvalue",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_defaultValue",
+    "lib/storage/src/PersonalData.js~PersonalData#_defaultValue",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#_getmissed",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_getMissed",
+    "lib/storage/src/PersonalData.js~PersonalData#_getMissed",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#_getobjpart",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_getObjPart",
+    "lib/storage/src/PersonalData.js~PersonalData#_getObjPart",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#_getsalt",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_getSalt",
+    "lib/storage/src/PersonalData.js~PersonalData#_getSalt",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#_putobjpart",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_putObjPart",
+    "lib/storage/src/PersonalData.js~PersonalData#_putObjPart",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#assign",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-assign",
+    "lib/storage/src/PersonalData.js~PersonalData#assign",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#constructor",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-constructor-constructor",
+    "lib/storage/src/PersonalData.js~PersonalData#constructor",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#enabled_parts",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-member-enabled_parts",
+    "lib/storage/src/PersonalData.js~PersonalData#enabled_parts",
+    "member"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#full_structure",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-member-full_structure",
+    "lib/storage/src/PersonalData.js~PersonalData#full_structure",
+    "member"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#getallparts",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-getAllParts",
+    "lib/storage/src/PersonalData.js~PersonalData#getAllParts",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#getemail",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-getEmail",
+    "lib/storage/src/PersonalData.js~PersonalData#getEmail",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#getfirstname",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-getFirstName",
+    "lib/storage/src/PersonalData.js~PersonalData#getFirstName",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#getlastname",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-getLastName",
+    "lib/storage/src/PersonalData.js~PersonalData#getLastName",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#getphone",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-getPhone",
+    "lib/storage/src/PersonalData.js~PersonalData#getPhone",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#getphoto",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-getPhoto",
+    "lib/storage/src/PersonalData.js~PersonalData#getPhoto",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#getroothash",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-getRootHash",
+    "lib/storage/src/PersonalData.js~PersonalData#getRootHash",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#isavailable",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-isAvailable",
+    "lib/storage/src/PersonalData.js~PersonalData#isAvailable",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#makepartial",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-makePartial",
+    "lib/storage/src/PersonalData.js~PersonalData#makePartial",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#missings",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-member-missings",
+    "lib/storage/src/PersonalData.js~PersonalData#missings",
+    "member"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#salts",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-member-salts",
+    "lib/storage/src/PersonalData.js~PersonalData#salts",
+    "member"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#setemail",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-setEmail",
+    "lib/storage/src/PersonalData.js~PersonalData#setEmail",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#setfirstname",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-setFirstName",
+    "lib/storage/src/PersonalData.js~PersonalData#setFirstName",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#setlastname",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-setLastName",
+    "lib/storage/src/PersonalData.js~PersonalData#setLastName",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#setname",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-setName",
+    "lib/storage/src/PersonalData.js~PersonalData#setName",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#setphone",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-setPhone",
+    "lib/storage/src/PersonalData.js~PersonalData#setPhone",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#setphoto",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-setPhoto",
+    "lib/storage/src/PersonalData.js~PersonalData#setPhoto",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata.fromallparts",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#static-method-fromAllParts",
+    "lib/storage/src/PersonalData.js~PersonalData.fromAllParts",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata.makereference",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#static-method-makeReference",
+    "lib/storage/src/PersonalData.js~PersonalData.makeReference",
+    "method"
+  ],
+  [
+    "lib/storage/src/crypto.js",
+    "file/lib/storage/src/crypto.js.html",
+    "lib/storage/src/crypto.js",
     "file"
   ]
 ]

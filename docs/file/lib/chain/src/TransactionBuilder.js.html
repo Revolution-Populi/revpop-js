@@ -216,6 +216,23 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-witness_update">witness_update</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-witness_update_operation_fee_parameters">witness_update_operation_fee_parameters</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Types">Types</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#storage-src">storage/src</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/storage/src/Adapter.js~Adapter.html">Adapter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/storage/src/CloudStorage.js~CloudStorage.html">CloudStorage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/storage/src/MemoryAdapter.js~MemoryAdapter.html">MemoryAdapter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/storage/src/PersonalData.js~PersonalData.html">PersonalData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-crypto_content_transform">crypto_content_transform</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-decrypt_buffer">decrypt_buffer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-decrypt_content">decrypt_content</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-decrypt_content_str">decrypt_content_str</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-decrypt_object">decrypt_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-encrypt_buffer">encrypt_buffer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-encrypt_content">encrypt_content</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-encrypt_content_str">encrypt_content_str</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-encrypt_object">encrypt_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-make_content_cipher_stream">make_content_cipher_stream</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-make_content_decipher_stream">make_content_decipher_stream</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-make_content_key">make_content_key</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-make_content_key_noencrypt">make_content_key_noencrypt</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -453,36 +470,36 @@ class TransactionBuilder {
                         key = &quot;from&quot;;
                         break;
 
-                    case 6: //account_update
-                    case 17: // asset_settle
+                    case 2: //account_update
+                    case 13: // asset_settle
                         key = &quot;account&quot;;
                         break;
 
-                    case 10: // asset_create
-                    case 11: // asset_update
-                    case 12: // asset_update_bitasset
-                    case 13: // asset_update_feed_producers
-                    case 14: // asset_issue
-                    case 18: // asset_global_settle
-                    case 43: // asset_claim_fees
+                    case 6: // asset_create
+                    case 7: // asset_update
+                    case 8: // asset_update_bitasset
+                    case 9: // asset_update_feed_producers
+                    case 10: // asset_issue
+                    case 14: // asset_global_settle
+                    case 38: // asset_claim_fees
                         key = &quot;issuer&quot;;
                         break;
 
-                    case 15: // asset_reserve
+                    case 11: // asset_reserve
                         key = &quot;payer&quot;;
                         break;
 
-                    case 16: // asset_fund_fee_pool
+                    case 12: // asset_fund_fee_pool
                         key = &quot;from_account&quot;;
                         break;
 
-                    case 22: // proposal_create
-                    case 23: // proposal_update
-                    case 24: // proposal_delete
+                    case 18: // proposal_create
+                    case 19: // proposal_update
+                    case 20: // proposal_delete
                         key = &quot;fee_paying_account&quot;;
                         break;
 
-                    case 31: // committee_member_update_global_parameters
+                    case 27: // committee_member_update_global_parameters
                         requiresReview = true;
                         extraReview = 60 * 60 * 24 * 13; // Make the review period 2 weeks total
                         break;

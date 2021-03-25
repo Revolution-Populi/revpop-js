@@ -1,7 +1,7 @@
 {
-  "coverage": "15.8%",
-  "expectCount": 481,
-  "actualCount": 76,
+  "coverage": "15.08%",
+  "expectCount": 570,
+  "actualCount": 86,
   "files": {
     "lib/chain/index.js": {
       "expectCount": 1,
@@ -596,6 +596,115 @@
         1007,
         1008,
         15
+      ]
+    },
+    "lib/storage/src/Adapter.js": {
+      "expectCount": 7,
+      "actualCount": 4,
+      "undocumentLines": [
+        20,
+        23,
+        27
+      ]
+    },
+    "lib/storage/src/CloudStorage.js": {
+      "expectCount": 12,
+      "actualCount": 1,
+      "undocumentLines": [
+        22,
+        28,
+        31,
+        35,
+        39,
+        44,
+        50,
+        55,
+        60,
+        65,
+        70
+      ]
+    },
+    "lib/storage/src/MemoryAdapter.js": {
+      "expectCount": 6,
+      "actualCount": 5,
+      "undocumentLines": [
+        32
+      ]
+    },
+    "lib/storage/src/PersonalData.js": {
+      "expectCount": 34,
+      "actualCount": 0,
+      "undocumentLines": [
+        22,
+        23,
+        29,
+        36,
+        37,
+        38,
+        39,
+        45,
+        70,
+        81,
+        88,
+        93,
+        97,
+        101,
+        105,
+        109,
+        113,
+        117,
+        121,
+        125,
+        129,
+        133,
+        141,
+        173,
+        183,
+        207,
+        220,
+        238,
+        258,
+        293,
+        298,
+        306,
+        310,
+        316
+      ]
+    },
+    "lib/storage/src/crypto.js": {
+      "expectCount": 30,
+      "actualCount": 0,
+      "undocumentLines": [
+        80,
+        81,
+        82,
+        83,
+        174,
+        176,
+        178,
+        180,
+        182,
+        184,
+        186,
+        188,
+        190,
+        192,
+        194,
+        196,
+        198,
+        27,
+        40,
+        53,
+        66,
+        88,
+        103,
+        114,
+        126,
+        138,
+        147,
+        155,
+        163,
+        170
       ]
     }
   }
