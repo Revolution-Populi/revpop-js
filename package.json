@@ -1,6 +1,6 @@
 {
     "name": "@revolutionpopuli/revpopjs",
-    "version": "0.4.4",
+    "version": "0.4.5",
     "description": "Pure JavaScript RevPop library for node.js and browsers.",
     "browser": {
         "ws": false,
@@ -58,7 +58,7 @@
     "main": "./dist/index.js",
     "jsnext:main": "./es/index.js",
     "dependencies": {
-        "@revolutionpopuli/revpopjs-ws": "0.4.4",
+        "@revolutionpopuli/revpopjs-ws": "0.4.5",
         "aws-sdk": "^2.810.0",
         "bigi": "1.4.2",
         "bs58": "4.0.1",
