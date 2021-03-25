@@ -3335,7 +3335,7 @@
     "__docId__": 189,
     "kind": "file",
     "name": "lib/chain/src/TransactionBuilder.js",
-    "content": "import assert from \"assert\";\nimport {Signature, PublicKey, hash} from \"../../ecc\";\nimport {ops} from \"../../serializer\";\nimport {Apis, ChainConfig} from \"@revolutionpopuli/revpopjs-ws\";\nimport ChainTypes from \"./ChainTypes\";\nconst Buffer = require(\"safe-buffer\").Buffer;\n\nvar head_block_time_string, committee_min_review;\n\nclass TransactionBuilder {\n    constructor(tx = null) {\n        this.signer_private_keys = [];\n\n        if (tx) {\n            this.expiration = tx.expiration;\n            this.ref_block_num = tx.ref_block_num;\n            this.ref_block_prefix = tx.ref_block_prefix;\n            this.signatures = tx.signatures;\n            this.operations = [];\n            for (var i = 0; i < tx.operations.length; ++i) {\n                this.add_operation(tx.operations[i]);\n            }\n        } else {\n            this.ref_block_num = 0;\n            this.ref_block_prefix = 0;\n            this.expiration = 0;\n            this.operations = [];\n            this.signatures = [];\n        }\n\n        // semi-private method bindings\n        this._broadcast = _broadcast.bind(this);\n    }\n\n    /**\n        @arg {string} name - like \"transfer\"\n        @arg {object} operation - JSON matchching the operation's format\n    */\n    add_type_operation(name, operation) {\n        this.add_operation(this.get_type_operation(name, operation));\n        return;\n    }\n\n    /**\n        This does it all: set fees, finalize, sign, and broadcast (if wanted).\n\n        @arg {ConfidentialWallet} cwallet - must be unlocked, used to gather signing keys\n\n        @arg {array<string>} [signer_pubkeys = null] - Optional [\"GPHAbc9Def0...\", ...].  These are additional signing keys.  Some balance claims require propritary address formats, the witness node can't tell us which ones are needed so they must be passed in.  If the witness node can figure out a signing key (mostly all other transactions), it should not be passed in here.\n\n        @arg {boolean} [broadcast = false]\n    */\n    process_transaction(cwallet, signer_pubkeys = null, broadcast = false) {\n        let wallet_object = cwallet.wallet.wallet_object;\n        if (Apis.instance().chain_id !== wallet_object.get(\"chain_id\"))\n            return Promise.reject(\n                \"Mismatched chain_id; expecting \" +\n                    wallet_object.get(\"chain_id\") +\n                    \", but got \" +\n                    Apis.instance().chain_id\n            );\n\n        return this.set_required_fees().then(() => {\n            var signer_pubkeys_added = {};\n            if (signer_pubkeys) {\n                // Balance claims are by address, only the private\n                // key holder can know about these additional\n                // potential keys.\n                var pubkeys = cwallet.getPubkeys_having_PrivateKey(\n                    signer_pubkeys\n                );\n                if (!pubkeys.length) throw new Error(\"Missing signing key\");\n\n                for (let pubkey_string of pubkeys) {\n                    var private_key = cwallet.getPrivateKey(pubkey_string);\n                    this.add_signer(private_key, pubkey_string);\n                    signer_pubkeys_added[pubkey_string] = true;\n                }\n            }\n\n            return this.get_potential_signatures()\n                .then(({pubkeys, addys}) => {\n                    var my_pubkeys = cwallet.getPubkeys_having_PrivateKey(\n                        pubkeys,\n                        addys\n                    );\n\n                    //{//Testing only, don't send All public keys!\n                    //    var pubkeys_all = PrivateKeyStore.getPubkeys() // All public keys\n                    //    this.get_required_signatures(pubkeys_all).then( required_pubkey_strings =>\n                    //        console.log('get_required_signatures all\\t',required_pubkey_strings.sort(), pubkeys_all))\n                    //    this.get_required_signatures(my_pubkeys).then( required_pubkey_strings =>\n                    //        console.log('get_required_signatures normal\\t',required_pubkey_strings.sort(), pubkeys))\n                    //}\n\n                    return this.get_required_signatures(my_pubkeys).then(\n                        required_pubkeys => {\n                            for (let pubkey_string of required_pubkeys) {\n                                if (signer_pubkeys_added[pubkey_string])\n                                    continue;\n                                var private_key = cwallet.getPrivateKey(\n                                    pubkey_string\n                                );\n                                if (!private_key)\n                                    // This should not happen, get_required_signatures will only\n                                    // returned keys from my_pubkeys\n                                    throw new Error(\n                                        \"Missing signing key for \" +\n                                            pubkey_string\n                                    );\n                                this.add_signer(private_key, pubkey_string);\n                            }\n                        }\n                    );\n                })\n                .then(() => (broadcast ? this.broadcast() : this.serialize()));\n        });\n    }\n\n    /** Typically this is called automatically just prior to signing.  Once finalized this transaction can not be changed. */\n    finalize() {\n        return new Promise((resolve, reject) => {\n            if (this.tr_buffer) {\n                throw new Error(\"already finalized\");\n            }\n\n            let _finalize = () => {\n                var iterable = this.operations;\n                for (var i = 0, op; i < iterable.length; i++) {\n                    op = iterable[i];\n                    if (op[1][\"finalize\"]) {\n                        op[1].finalize();\n                    }\n                }\n                this.tr_buffer = ops.transaction.toBuffer(this);\n            };\n\n            // check if api call is necessary at all\n            if (\n                this.expiration !== 0 &&\n                this.ref_block_num !== 0 &&\n                this.ref_block_prefix !== 0\n            ) {\n                _finalize();\n                resolve();\n            } else {\n                resolve(\n                    Apis.instance()\n                        .db_api()\n                        .exec(\"get_objects\", [[\"2.1.0\"]])\n                        .then(r => {\n                            head_block_time_string = r[0].time;\n                            if (this.expiration === 0)\n                                this.expiration =\n                                    base_expiration_sec() +\n                                    ChainConfig.expire_in_secs;\n                            if (\n                                this.ref_block_num === 0 &&\n                                this.ref_block_prefix === 0\n                            ) {\n                                this.ref_block_num =\n                                    r[0].head_block_number & 0xffff;\n                                this.ref_block_prefix = new Buffer(\n                                    r[0].head_block_id,\n                                    \"hex\"\n                                ).readUInt32LE(4);\n                            }\n                            _finalize();\n                        })\n                );\n            }\n        });\n    }\n\n    /** @return {string} hex transaction ID */\n    id() {\n        if (!this.tr_buffer) {\n            throw new Error(\"not finalized\");\n        }\n        return hash\n            .sha256(this.tr_buffer)\n            .toString(\"hex\")\n            .substring(0, 40);\n    }\n\n    /**\n        Typically one will use {@link this.add_type_operation} instead.\n        @arg {array} operation - [operation_id, operation]\n    */\n    add_operation(operation) {\n        if (this.tr_buffer) {\n            throw new Error(\"already finalized\");\n        }\n        assert(operation, \"operation\");\n        if (!Array.isArray(operation)) {\n            throw new Error(\"Expecting array [operation_id, operation]\");\n        }\n        this.operations.push(operation);\n        return;\n    }\n\n    get_type_operation(name, operation) {\n        if (this.tr_buffer) {\n            throw new Error(\"already finalized\");\n        }\n        assert(name, \"name\");\n        assert(operation, \"operation\");\n        var _type = ops[name];\n        assert(_type, `Unknown operation ${name}`);\n        var operation_id = ChainTypes.operations[_type.operation_name];\n        if (operation_id === undefined) {\n            throw new Error(`unknown operation: ${_type.operation_name}`);\n        }\n        if (!operation.fee) {\n            operation.fee = {amount: 0, asset_id: 0};\n        }\n        if (name === \"proposal_create\") {\n            /*\n            * Proposals involving the committee account require a review\n            * period to be set, look for them here\n            */\n            let requiresReview = false,\n                extraReview = 0;\n            operation.proposed_ops.forEach(op => {\n                const COMMITTE_ACCOUNT = 0;\n                let key;\n\n                switch (op.op[0]) {\n                    case 0: // transfer\n                        key = \"from\";\n                        break;\n\n                    case 6: //account_update\n                    case 17: // asset_settle\n                        key = \"account\";\n                        break;\n\n                    case 10: // asset_create\n                    case 11: // asset_update\n                    case 12: // asset_update_bitasset\n                    case 13: // asset_update_feed_producers\n                    case 14: // asset_issue\n                    case 18: // asset_global_settle\n                    case 43: // asset_claim_fees\n                        key = \"issuer\";\n                        break;\n\n                    case 15: // asset_reserve\n                        key = \"payer\";\n                        break;\n\n                    case 16: // asset_fund_fee_pool\n                        key = \"from_account\";\n                        break;\n\n                    case 22: // proposal_create\n                    case 23: // proposal_update\n                    case 24: // proposal_delete\n                        key = \"fee_paying_account\";\n                        break;\n\n                    case 31: // committee_member_update_global_parameters\n                        requiresReview = true;\n                        extraReview = 60 * 60 * 24 * 13; // Make the review period 2 weeks total\n                        break;\n                }\n                if (key in op.op[1] && op.op[1][key] === COMMITTE_ACCOUNT) {\n                    requiresReview = true;\n                }\n            });\n            operation.expiration_time ||\n                (operation.expiration_time =\n                    base_expiration_sec() +\n                    ChainConfig.expire_in_secs_proposal);\n            if (requiresReview) {\n                operation.review_period_seconds =\n                    extraReview +\n                    Math.max(\n                        committee_min_review,\n                        24 * 60 * 60 || ChainConfig.review_in_secs_committee\n                    );\n                /*\n                * Expiration time must be at least equal to\n                * now + review_period_seconds, so we add one hour to make sure\n                */\n                operation.expiration_time += 60 * 60 + extraReview;\n            }\n        }\n        var operation_instance = _type.fromObject(operation);\n        return [operation_id, operation_instance];\n    }\n\n    /* optional: fetch the current head block */\n\n    update_head_block() {\n        return Promise.all([\n            Apis.instance()\n                .db_api()\n                .exec(\"get_objects\", [[\"2.0.0\"]]),\n            Apis.instance()\n                .db_api()\n                .exec(\"get_objects\", [[\"2.1.0\"]])\n        ]).then(function(res) {\n            let [g, r] = res;\n            head_block_time_string = r[0].time;\n            committee_min_review =\n                g[0].parameters.committee_proposal_review_period;\n        });\n    }\n\n    /** optional: there is a deafult expiration */\n    set_expire_seconds(sec) {\n        if (this.tr_buffer) {\n            throw new Error(\"already finalized\");\n        }\n        return (this.expiration = base_expiration_sec() + sec);\n    }\n\n    /* Wraps this transaction in a proposal_create transaction */\n    propose(proposal_create_options) {\n        if (this.tr_buffer) {\n            throw new Error(\"already finalized\");\n        }\n        if (!this.operations.length) {\n            throw new Error(\"add operation first\");\n        }\n\n        assert(proposal_create_options, \"proposal_create_options\");\n        assert(\n            proposal_create_options.fee_paying_account,\n            \"proposal_create_options.fee_paying_account\"\n        );\n\n        let proposed_ops = this.operations.map(op => {\n            return {op: op};\n        });\n\n        this.operations = [];\n        this.signatures = [];\n        this.signer_private_keys = [];\n        proposal_create_options.proposed_ops = proposed_ops;\n        this.add_type_operation(\"proposal_create\", proposal_create_options);\n        return this;\n    }\n\n    has_proposed_operation() {\n        let hasProposed = false;\n        for (var i = 0; i < this.operations.length; i++) {\n            if (\"proposed_ops\" in this.operations[i][1]) {\n                hasProposed = true;\n                break;\n            }\n        }\n\n        return hasProposed;\n    }\n\n    /** optional: the fees can be obtained from the witness node */\n    set_required_fees(asset_id, removeDuplicates) {\n        if (this.tr_buffer) {\n            throw new Error(\"already finalized\");\n        }\n        if (!this.operations.length) {\n            throw new Error(\"add operations first\");\n        }\n\n        function isProposal(op) {\n            return op[0] === 22;\n        }\n\n        let operations = [];\n        let proposed_ops = [];\n        let feeAssets = [];\n        let proposalFeeAssets = [];\n        let potentialDuplicates = {};\n        function getDuplicateOriginalIndex(op, index) {\n            let key = getOperationKey(op);\n            let duplicate = potentialDuplicates[key];\n            if (!!duplicate) {\n                if (duplicate.original === index) return index;\n                else if (duplicate.duplicates.indexOf(index) !== -1) {\n                    return duplicate.original;\n                }\n            }\n        }\n        function getOperationKey(op) {\n            let key = null;\n            switch (op[0]) {\n                case 0: // transfer\n                    let memoDummy = new Array(\n                        op[1].memo.message.length + 1\n                    ).join(\"a\");\n                    key = `${op[0]}_${op[1].amount.asset_id}_${memoDummy}`;\n                    break;\n                default:\n            }\n            return key;\n        }\n        for (let i = 0, op; i < this.operations.length; i++) {\n            op = this.operations[i];\n            let opObject = ops.operation.toObject(op);\n            let isDuplicate = false;\n            if (removeDuplicates) {\n                let key = getOperationKey(opObject);\n                if (key) {\n                    if (!potentialDuplicates[key])\n                        potentialDuplicates[key] = {\n                            original: i,\n                            duplicates: []\n                        };\n                    else {\n                        potentialDuplicates[key].duplicates.push(i);\n                        isDuplicate = true;\n                    }\n                }\n            }\n            /*\n            * If the operation creates a proposal, we should check the fee pool\n            * of the suggested proposal fee assets to prevent users from creating\n            * proposals that will most likely fail due to empty fee pools\n            */\n            if (isProposal(op)) {\n                op[1].proposed_ops.forEach(proposal => {\n                    proposed_ops.push(proposal);\n                    if (\n                        proposalFeeAssets.indexOf(\n                            proposal.op[1].fee.asset_id\n                        ) === -1\n                    )\n                        proposalFeeAssets.push(\n                            \"1.3.\" + proposal.op[1].fee.asset_id\n                        );\n                });\n            }\n            if (!isDuplicate) {\n                operations.push(opObject);\n                if (feeAssets.indexOf(operations[i][1].fee.asset_id) === -1)\n                    feeAssets.push(operations[i][1].fee.asset_id);\n            }\n        }\n\n        if (!asset_id) {\n            let op1_fee = operations[0][1].fee;\n            if (op1_fee && op1_fee.asset_id !== null) {\n                asset_id = op1_fee.asset_id;\n            } else {\n                asset_id = \"1.3.0\";\n            }\n        }\n\n        /*\n        * Add the proposal fee asset ids to feeAssets here to fetch their\n        * fees and dynamic objects\n        */\n        if (proposalFeeAssets.length) {\n            proposalFeeAssets.forEach(id => {\n                if (feeAssets.indexOf(id) === -1) feeAssets.push(id);\n            });\n        }\n        let promises = [];\n        promises.push(\n            Promise.all(\n                feeAssets.map(id => {\n                    return Apis.instance()\n                        .db_api()\n                        .exec(\"get_required_fees\", [operations, id]);\n                })\n            ).catch(err => {\n                console.error(\"get_required_fees API error: \", err.message);\n            })\n        );\n\n        if (feeAssets.length > 1 || feeAssets[0] !== \"1.3.0\") {\n            /*\n            * If we're paying with any assets other than CORE, we need to fetch\n            * the dynamic asset object and check the fee pool of those assets.\n            * The dynamic asset object id is equal to the asset id but with\n            * 2.3.x instead of 1.3.x\n            */\n            let dynamicObjectIds = feeAssets.map(a => a.replace(/^1\\./, \"2.\"));\n            promises.push(\n                Apis.instance()\n                    .db_api()\n                    .exec(\"get_required_fees\", [operations, \"1.3.0\"])\n            );\n            promises.push(\n                Apis.instance()\n                    .db_api()\n                    .exec(\"get_objects\", [dynamicObjectIds])\n            );\n        }\n\n        return Promise.all(promises).then(results => {\n            /*\n            * allFees and coreFees are arrays containg fee amounts grouped by\n            * asset and for each operation in operations\n            */\n            let [allFees, coreFees, dynamicObjects] = results;\n            /*\n            * If one of the desired fee assets has an invalid core exchange rate\n            * get_required_signatures will fail and the result for all assets\n            * will be undefined, if so we just default to coreFees\n            */\n            if (allFees === undefined) {\n                allFees = coreFees;\n            }\n            /*\n            * If the only desired fee asset is CORE, coreFees are not fetched\n            * but are equal to allFees\n            */\n            if (!coreFees) {\n                coreFees = allFees[0];\n            }\n\n            /* Create a map of fees and proposal fees by asset id */\n            let feesByAsset = {};\n            let proposalFeesByAsset = {};\n            allFees.forEach(feeSet => {\n                let filteredFeeSet = feeSet.map(f => {\n                    if (Array.isArray(f)) {\n                        // This operation includes a proposal\n                        proposalFeesByAsset[f[1][0].asset_id] = f[1];\n                        return f[0];\n                    }\n                    return f;\n                });\n                let currentAssetId = filteredFeeSet[0].asset_id;\n\n                feesByAsset[currentAssetId] = filteredFeeSet;\n            }, {});\n\n            /* Create a map of fee pools by asset id*/\n            let feePoolMap = !!dynamicObjects\n                ? dynamicObjects.reduce((map, object) => {\n                      map[object.id.replace(/^2\\./, \"1.\")] = object;\n                      return map;\n                  }, {})\n                : {};\n\n            let feeMap = {};\n            let proposalFeeMap = {};\n            function updateFeeMap(map, asset_id, opIndex, core_fees) {\n                if (!map[asset_id]) map[asset_id] = {total: 0, ops: []};\n                if (map[asset_id].propIdx) map[asset_id].propIdx.push(opIndex);\n                else map[asset_id].ops.push(opIndex);\n\n                if (asset_id !== \"1.3.0\") {\n                    map[asset_id].total += core_fees.length\n                        ? core_fees[opIndex].amount\n                        : core_fees.amount;\n                }\n                return map;\n            }\n\n            for (let i = 0; i < operations.length; i++) {\n                let op = operations[i];\n                let feeAssetId = op[1].fee.asset_id;\n\n                if (isProposal(op)) {\n                    feeMap = updateFeeMap(\n                        feeMap,\n                        feeAssetId,\n                        i,\n                        coreFees[i][0]\n                    );\n\n                    op[1].proposed_ops.forEach((prop, y) => {\n                        let propFeeAsset = prop.op[1].fee.asset_id;\n                        if (!proposalFeeMap[i]) proposalFeeMap[i] = {};\n                        if (!proposalFeeMap[i][propFeeAsset])\n                            proposalFeeMap[i][propFeeAsset] = {\n                                total: 0,\n                                ops: [i],\n                                propIdx: []\n                            };\n\n                        proposalFeeMap[i] = updateFeeMap(\n                            proposalFeeMap[i],\n                            propFeeAsset,\n                            y,\n                            coreFees[i][1]\n                        );\n                    });\n                } else {\n                    feeMap = updateFeeMap(feeMap, feeAssetId, i, coreFees[i]);\n                }\n            }\n\n            /* Check fee pool balances for regular ops */\n            function checkPoolBalance(feeMap) {\n                if (!Object.keys(feeMap).length) return [];\n                let final_fees = [];\n                for (let asset in feeMap) {\n                    let feePoolBalance = feePoolMap[asset]\n                        ? parseInt(feePoolMap[asset].fee_pool, 10)\n                        : 0;\n                    /* Fee pool balance insufficient, default to core*/\n                    if (feeMap[asset].total > feePoolBalance) {\n                        feeMap[asset].ops.forEach(opIndex => {\n                            if (\n                                coreFees[opIndex].length === 2 &&\n                                \"propIdx\" in feeMap[asset]\n                            ) {\n                                /* Proposal op */\n                                feeMap[asset].propIdx.forEach(prop_idx => {\n                                    final_fees[prop_idx] =\n                                        coreFees[opIndex][1][prop_idx];\n                                });\n                            } else if (coreFees[opIndex].length === 2) {\n                                final_fees[opIndex] = coreFees[opIndex][0];\n                            } else {\n                                final_fees[opIndex] = coreFees[opIndex];\n                            }\n                        });\n                        /* Use the desired fee asset */\n                    } else {\n                        feeMap[asset].ops.forEach(opIndex => {\n                            if (\n                                coreFees[opIndex].length === 2 &&\n                                \"propIdx\" in feeMap[asset]\n                            ) {\n                                feeMap[asset].propIdx.forEach(prop_idx => {\n                                    final_fees[prop_idx] =\n                                        proposalFeesByAsset[asset][prop_idx];\n                                });\n                            } else {\n                                final_fees[opIndex] =\n                                    feesByAsset[asset][opIndex];\n                            }\n                        });\n                    }\n                }\n                return final_fees;\n            }\n\n            let finalFees = checkPoolBalance(feeMap);\n\n            let finalProposalFees = {};\n            for (let key in proposalFeeMap) {\n                finalProposalFees[key] = checkPoolBalance(proposalFeeMap[key]);\n            }\n\n            let set_fee = (operation, opIndex) => {\n                if (\n                    !operation.fee ||\n                    operation.fee.amount === 0 ||\n                    (operation.fee.amount.toString &&\n                        operation.fee.amount.toString() === \"0\") // Long\n                ) {\n                    if (removeDuplicates) {\n                        let op = ops.operation.toObject(\n                            this.operations[opIndex]\n                        );\n                        let originalIndex = getDuplicateOriginalIndex(\n                            op,\n                            opIndex\n                        );\n                        if (originalIndex >= 0) {\n                            // it's a duplicate\n                            operation.fee = finalFees[originalIndex];\n                        } else {\n                            operation.fee = finalFees[opIndex];\n                        }\n                    } else {\n                        operation.fee = finalFees[opIndex];\n                    }\n                }\n                if (operation.proposed_ops) {\n                    let result = [];\n                    /*\n                    * Loop over proposed_ops and assign fee asset ids as\n                    * determined by the fee pool balance check. If the balance\n                    * is sufficient the asset_id is kept, if not it defaults to\n                    * \"1.3.0\"\n                    */\n                    for (let y = 0; y < operation.proposed_ops.length; y++) {\n                        operation.proposed_ops[y].op[1].fee.asset_id =\n                            finalProposalFees[opIndex][y].asset_id;\n                        operation.proposed_ops[y].op[1].fee.amount =\n                            finalProposalFees[opIndex][y].amount;\n                    }\n\n                    return result;\n                }\n            };\n            /* We apply the final fees the the operations */\n            for (let i = 0; i < this.operations.length; i++) {\n                set_fee(this.operations[i][1], i);\n            }\n        });\n        //DEBUG console.log('... get_required_fees',operations,asset_id,flat_fees)\n    }\n\n    get_potential_signatures() {\n        var tr_object = ops.signed_transaction.toObject(this);\n        return Promise.all([\n            Apis.instance()\n                .db_api()\n                .exec(\"get_potential_signatures\", [tr_object]),\n            Apis.instance()\n                .db_api()\n                .exec(\"get_potential_address_signatures\", [tr_object])\n        ]).then(function(results) {\n            return {pubkeys: results[0], addys: results[1]};\n        });\n    }\n\n    get_required_signatures(available_keys) {\n        if (!available_keys.length) {\n            return Promise.resolve([]);\n        }\n        var tr_object = ops.signed_transaction.toObject(this);\n        //DEBUG console.log('... tr_object',tr_object)\n        return Apis.instance()\n            .db_api()\n            .exec(\"get_required_signatures\", [tr_object, available_keys])\n            .then(function(required_public_keys) {\n                //DEBUG console.log('... get_required_signatures',required_public_keys)\n                return required_public_keys;\n            });\n    }\n\n    add_signer(private_key, public_key = private_key.toPublicKey()) {\n        assert(private_key.d, \"required PrivateKey object\");\n\n        if (this.signed) {\n            throw new Error(\"already signed\");\n        }\n        if (!public_key.Q) {\n            public_key = PublicKey.fromPublicKeyString(public_key);\n        }\n        // prevent duplicates\n        let spHex = private_key.toHex();\n        for (let sp of this.signer_private_keys) {\n            if (sp[0].toHex() === spHex) return;\n        }\n        this.signer_private_keys.push([private_key, public_key]);\n    }\n\n    sign(chain_id = Apis.instance().chain_id) {\n        if (!this.tr_buffer) {\n            throw new Error(\"not finalized\");\n        }\n        if (this.signed) {\n            throw new Error(\"already signed\");\n        }\n        if (!this.signer_private_keys.length) {\n            throw new Error(\n                \"Transaction was not signed. Do you have a private key? [no_signers]\"\n            );\n        }\n        var end = this.signer_private_keys.length;\n        for (var i = 0; 0 < end ? i < end : i > end; 0 < end ? i++ : i++) {\n            var [private_key, public_key] = this.signer_private_keys[i];\n            var sig = Signature.signBuffer(\n                Buffer.concat([new Buffer(chain_id, \"hex\"), this.tr_buffer]),\n                private_key,\n                public_key\n            );\n            this.signatures.push(sig.toBuffer());\n        }\n        this.signer_private_keys = [];\n        this.signed = true;\n        return;\n    }\n\n    serialize() {\n        return ops.signed_transaction.toObject(this);\n    }\n\n    toObject() {\n        return ops.signed_transaction.toObject(this);\n    }\n\n    broadcast(was_broadcast_callback) {\n        if (this.tr_buffer) {\n            return this._broadcast(was_broadcast_callback);\n        } else {\n            return this.finalize().then(() => {\n                return this._broadcast(was_broadcast_callback);\n            });\n        }\n    }\n}\n\nvar base_expiration_sec = () => {\n    var head_block_sec = Math.ceil(getHeadBlockDate().getTime() / 1000);\n    var now_sec = Math.ceil(Date.now() / 1000);\n    // The head block time should be updated every 3 seconds.  If it isn't\n    // then help the transaction to expire (use head_block_sec)\n    if (now_sec - head_block_sec > 30) {\n        return head_block_sec;\n    }\n    // If the user's clock is very far behind, use the head block time.\n    return Math.max(now_sec, head_block_sec);\n};\n\nfunction _broadcast(was_broadcast_callback) {\n    return new Promise((resolve, reject) => {\n        if (!this.signed) {\n            this.sign();\n        }\n        if (!this.tr_buffer) {\n            throw new Error(\"not finalized\");\n        }\n        if (!this.signatures.length) {\n            throw new Error(\"not signed\");\n        }\n        if (!this.operations.length) {\n            throw new Error(\"no operations\");\n        }\n\n        var tr_object = ops.signed_transaction.toObject(this);\n        // console.log('... broadcast_transaction_with_callback !!!')\n        Apis.instance()\n            .network_api()\n            .exec(\"broadcast_transaction_with_callback\", [\n                function(res) {\n                    return resolve(res);\n                },\n                tr_object\n            ])\n            .then(function() {\n                //console.log('... broadcast success, waiting for callback')\n                if (was_broadcast_callback) was_broadcast_callback();\n                return;\n            })\n            .catch(error => {\n                // console.log may be redundant for network errors, other errors could occur\n                var message = error.message;\n                if (!message) {\n                    message = \"Unknown error\";\n                }\n                error.digest = hash.sha256(this.tr_buffer).toString(\"hex\");\n                error.transaction = this.tr_buffer.toString(\"hex\");\n                console.log(error);\n                reject(\n                    new Error(\n                        message +\n                            \"\\n\" +\n                            JSON.stringify(error)\n                    )\n                );\n                return;\n            });\n        return;\n    });\n}\n\nfunction getHeadBlockDate() {\n    return timeStringToDate(head_block_time_string);\n}\n\nfunction timeStringToDate(time_string) {\n    if (!time_string) return new Date(\"1970-01-01T00:00:00.000Z\");\n    if (!/Z$/.test(time_string))\n        //does not end in Z\n        // https://github.com/cryptonomex/graphene/issues/368\n        time_string = time_string + \"Z\";\n    return new Date(time_string);\n}\n\nexport default TransactionBuilder;\n",
+    "content": "import assert from \"assert\";\nimport {Signature, PublicKey, hash} from \"../../ecc\";\nimport {ops} from \"../../serializer\";\nimport {Apis, ChainConfig} from \"@revolutionpopuli/revpopjs-ws\";\nimport ChainTypes from \"./ChainTypes\";\nconst Buffer = require(\"safe-buffer\").Buffer;\n\nvar head_block_time_string, committee_min_review;\n\nclass TransactionBuilder {\n    constructor(tx = null) {\n        this.signer_private_keys = [];\n\n        if (tx) {\n            this.expiration = tx.expiration;\n            this.ref_block_num = tx.ref_block_num;\n            this.ref_block_prefix = tx.ref_block_prefix;\n            this.signatures = tx.signatures;\n            this.operations = [];\n            for (var i = 0; i < tx.operations.length; ++i) {\n                this.add_operation(tx.operations[i]);\n            }\n        } else {\n            this.ref_block_num = 0;\n            this.ref_block_prefix = 0;\n            this.expiration = 0;\n            this.operations = [];\n            this.signatures = [];\n        }\n\n        // semi-private method bindings\n        this._broadcast = _broadcast.bind(this);\n    }\n\n    /**\n        @arg {string} name - like \"transfer\"\n        @arg {object} operation - JSON matchching the operation's format\n    */\n    add_type_operation(name, operation) {\n        this.add_operation(this.get_type_operation(name, operation));\n        return;\n    }\n\n    /**\n        This does it all: set fees, finalize, sign, and broadcast (if wanted).\n\n        @arg {ConfidentialWallet} cwallet - must be unlocked, used to gather signing keys\n\n        @arg {array<string>} [signer_pubkeys = null] - Optional [\"GPHAbc9Def0...\", ...].  These are additional signing keys.  Some balance claims require propritary address formats, the witness node can't tell us which ones are needed so they must be passed in.  If the witness node can figure out a signing key (mostly all other transactions), it should not be passed in here.\n\n        @arg {boolean} [broadcast = false]\n    */\n    process_transaction(cwallet, signer_pubkeys = null, broadcast = false) {\n        let wallet_object = cwallet.wallet.wallet_object;\n        if (Apis.instance().chain_id !== wallet_object.get(\"chain_id\"))\n            return Promise.reject(\n                \"Mismatched chain_id; expecting \" +\n                    wallet_object.get(\"chain_id\") +\n                    \", but got \" +\n                    Apis.instance().chain_id\n            );\n\n        return this.set_required_fees().then(() => {\n            var signer_pubkeys_added = {};\n            if (signer_pubkeys) {\n                // Balance claims are by address, only the private\n                // key holder can know about these additional\n                // potential keys.\n                var pubkeys = cwallet.getPubkeys_having_PrivateKey(\n                    signer_pubkeys\n                );\n                if (!pubkeys.length) throw new Error(\"Missing signing key\");\n\n                for (let pubkey_string of pubkeys) {\n                    var private_key = cwallet.getPrivateKey(pubkey_string);\n                    this.add_signer(private_key, pubkey_string);\n                    signer_pubkeys_added[pubkey_string] = true;\n                }\n            }\n\n            return this.get_potential_signatures()\n                .then(({pubkeys, addys}) => {\n                    var my_pubkeys = cwallet.getPubkeys_having_PrivateKey(\n                        pubkeys,\n                        addys\n                    );\n\n                    //{//Testing only, don't send All public keys!\n                    //    var pubkeys_all = PrivateKeyStore.getPubkeys() // All public keys\n                    //    this.get_required_signatures(pubkeys_all).then( required_pubkey_strings =>\n                    //        console.log('get_required_signatures all\\t',required_pubkey_strings.sort(), pubkeys_all))\n                    //    this.get_required_signatures(my_pubkeys).then( required_pubkey_strings =>\n                    //        console.log('get_required_signatures normal\\t',required_pubkey_strings.sort(), pubkeys))\n                    //}\n\n                    return this.get_required_signatures(my_pubkeys).then(\n                        required_pubkeys => {\n                            for (let pubkey_string of required_pubkeys) {\n                                if (signer_pubkeys_added[pubkey_string])\n                                    continue;\n                                var private_key = cwallet.getPrivateKey(\n                                    pubkey_string\n                                );\n                                if (!private_key)\n                                    // This should not happen, get_required_signatures will only\n                                    // returned keys from my_pubkeys\n                                    throw new Error(\n                                        \"Missing signing key for \" +\n                                            pubkey_string\n                                    );\n                                this.add_signer(private_key, pubkey_string);\n                            }\n                        }\n                    );\n                })\n                .then(() => (broadcast ? this.broadcast() : this.serialize()));\n        });\n    }\n\n    /** Typically this is called automatically just prior to signing.  Once finalized this transaction can not be changed. */\n    finalize() {\n        return new Promise((resolve, reject) => {\n            if (this.tr_buffer) {\n                throw new Error(\"already finalized\");\n            }\n\n            let _finalize = () => {\n                var iterable = this.operations;\n                for (var i = 0, op; i < iterable.length; i++) {\n                    op = iterable[i];\n                    if (op[1][\"finalize\"]) {\n                        op[1].finalize();\n                    }\n                }\n                this.tr_buffer = ops.transaction.toBuffer(this);\n            };\n\n            // check if api call is necessary at all\n            if (\n                this.expiration !== 0 &&\n                this.ref_block_num !== 0 &&\n                this.ref_block_prefix !== 0\n            ) {\n                _finalize();\n                resolve();\n            } else {\n                resolve(\n                    Apis.instance()\n                        .db_api()\n                        .exec(\"get_objects\", [[\"2.1.0\"]])\n                        .then(r => {\n                            head_block_time_string = r[0].time;\n                            if (this.expiration === 0)\n                                this.expiration =\n                                    base_expiration_sec() +\n                                    ChainConfig.expire_in_secs;\n                            if (\n                                this.ref_block_num === 0 &&\n                                this.ref_block_prefix === 0\n                            ) {\n                                this.ref_block_num =\n                                    r[0].head_block_number & 0xffff;\n                                this.ref_block_prefix = new Buffer(\n                                    r[0].head_block_id,\n                                    \"hex\"\n                                ).readUInt32LE(4);\n                            }\n                            _finalize();\n                        })\n                );\n            }\n        });\n    }\n\n    /** @return {string} hex transaction ID */\n    id() {\n        if (!this.tr_buffer) {\n            throw new Error(\"not finalized\");\n        }\n        return hash\n            .sha256(this.tr_buffer)\n            .toString(\"hex\")\n            .substring(0, 40);\n    }\n\n    /**\n        Typically one will use {@link this.add_type_operation} instead.\n        @arg {array} operation - [operation_id, operation]\n    */\n    add_operation(operation) {\n        if (this.tr_buffer) {\n            throw new Error(\"already finalized\");\n        }\n        assert(operation, \"operation\");\n        if (!Array.isArray(operation)) {\n            throw new Error(\"Expecting array [operation_id, operation]\");\n        }\n        this.operations.push(operation);\n        return;\n    }\n\n    get_type_operation(name, operation) {\n        if (this.tr_buffer) {\n            throw new Error(\"already finalized\");\n        }\n        assert(name, \"name\");\n        assert(operation, \"operation\");\n        var _type = ops[name];\n        assert(_type, `Unknown operation ${name}`);\n        var operation_id = ChainTypes.operations[_type.operation_name];\n        if (operation_id === undefined) {\n            throw new Error(`unknown operation: ${_type.operation_name}`);\n        }\n        if (!operation.fee) {\n            operation.fee = {amount: 0, asset_id: 0};\n        }\n        if (name === \"proposal_create\") {\n            /*\n            * Proposals involving the committee account require a review\n            * period to be set, look for them here\n            */\n            let requiresReview = false,\n                extraReview = 0;\n            operation.proposed_ops.forEach(op => {\n                const COMMITTE_ACCOUNT = 0;\n                let key;\n\n                switch (op.op[0]) {\n                    case 0: // transfer\n                        key = \"from\";\n                        break;\n\n                    case 2: //account_update\n                    case 13: // asset_settle\n                        key = \"account\";\n                        break;\n\n                    case 6: // asset_create\n                    case 7: // asset_update\n                    case 8: // asset_update_bitasset\n                    case 9: // asset_update_feed_producers\n                    case 10: // asset_issue\n                    case 14: // asset_global_settle\n                    case 38: // asset_claim_fees\n                        key = \"issuer\";\n                        break;\n\n                    case 11: // asset_reserve\n                        key = \"payer\";\n                        break;\n\n                    case 12: // asset_fund_fee_pool\n                        key = \"from_account\";\n                        break;\n\n                    case 18: // proposal_create\n                    case 19: // proposal_update\n                    case 20: // proposal_delete\n                        key = \"fee_paying_account\";\n                        break;\n\n                    case 27: // committee_member_update_global_parameters\n                        requiresReview = true;\n                        extraReview = 60 * 60 * 24 * 13; // Make the review period 2 weeks total\n                        break;\n                }\n                if (key in op.op[1] && op.op[1][key] === COMMITTE_ACCOUNT) {\n                    requiresReview = true;\n                }\n            });\n            operation.expiration_time ||\n                (operation.expiration_time =\n                    base_expiration_sec() +\n                    ChainConfig.expire_in_secs_proposal);\n            if (requiresReview) {\n                operation.review_period_seconds =\n                    extraReview +\n                    Math.max(\n                        committee_min_review,\n                        24 * 60 * 60 || ChainConfig.review_in_secs_committee\n                    );\n                /*\n                * Expiration time must be at least equal to\n                * now + review_period_seconds, so we add one hour to make sure\n                */\n                operation.expiration_time += 60 * 60 + extraReview;\n            }\n        }\n        var operation_instance = _type.fromObject(operation);\n        return [operation_id, operation_instance];\n    }\n\n    /* optional: fetch the current head block */\n\n    update_head_block() {\n        return Promise.all([\n            Apis.instance()\n                .db_api()\n                .exec(\"get_objects\", [[\"2.0.0\"]]),\n            Apis.instance()\n                .db_api()\n                .exec(\"get_objects\", [[\"2.1.0\"]])\n        ]).then(function(res) {\n            let [g, r] = res;\n            head_block_time_string = r[0].time;\n            committee_min_review =\n                g[0].parameters.committee_proposal_review_period;\n        });\n    }\n\n    /** optional: there is a deafult expiration */\n    set_expire_seconds(sec) {\n        if (this.tr_buffer) {\n            throw new Error(\"already finalized\");\n        }\n        return (this.expiration = base_expiration_sec() + sec);\n    }\n\n    /* Wraps this transaction in a proposal_create transaction */\n    propose(proposal_create_options) {\n        if (this.tr_buffer) {\n            throw new Error(\"already finalized\");\n        }\n        if (!this.operations.length) {\n            throw new Error(\"add operation first\");\n        }\n\n        assert(proposal_create_options, \"proposal_create_options\");\n        assert(\n            proposal_create_options.fee_paying_account,\n            \"proposal_create_options.fee_paying_account\"\n        );\n\n        let proposed_ops = this.operations.map(op => {\n            return {op: op};\n        });\n\n        this.operations = [];\n        this.signatures = [];\n        this.signer_private_keys = [];\n        proposal_create_options.proposed_ops = proposed_ops;\n        this.add_type_operation(\"proposal_create\", proposal_create_options);\n        return this;\n    }\n\n    has_proposed_operation() {\n        let hasProposed = false;\n        for (var i = 0; i < this.operations.length; i++) {\n            if (\"proposed_ops\" in this.operations[i][1]) {\n                hasProposed = true;\n                break;\n            }\n        }\n\n        return hasProposed;\n    }\n\n    /** optional: the fees can be obtained from the witness node */\n    set_required_fees(asset_id, removeDuplicates) {\n        if (this.tr_buffer) {\n            throw new Error(\"already finalized\");\n        }\n        if (!this.operations.length) {\n            throw new Error(\"add operations first\");\n        }\n\n        function isProposal(op) {\n            return op[0] === 22;\n        }\n\n        let operations = [];\n        let proposed_ops = [];\n        let feeAssets = [];\n        let proposalFeeAssets = [];\n        let potentialDuplicates = {};\n        function getDuplicateOriginalIndex(op, index) {\n            let key = getOperationKey(op);\n            let duplicate = potentialDuplicates[key];\n            if (!!duplicate) {\n                if (duplicate.original === index) return index;\n                else if (duplicate.duplicates.indexOf(index) !== -1) {\n                    return duplicate.original;\n                }\n            }\n        }\n        function getOperationKey(op) {\n            let key = null;\n            switch (op[0]) {\n                case 0: // transfer\n                    let memoDummy = new Array(\n                        op[1].memo.message.length + 1\n                    ).join(\"a\");\n                    key = `${op[0]}_${op[1].amount.asset_id}_${memoDummy}`;\n                    break;\n                default:\n            }\n            return key;\n        }\n        for (let i = 0, op; i < this.operations.length; i++) {\n            op = this.operations[i];\n            let opObject = ops.operation.toObject(op);\n            let isDuplicate = false;\n            if (removeDuplicates) {\n                let key = getOperationKey(opObject);\n                if (key) {\n                    if (!potentialDuplicates[key])\n                        potentialDuplicates[key] = {\n                            original: i,\n                            duplicates: []\n                        };\n                    else {\n                        potentialDuplicates[key].duplicates.push(i);\n                        isDuplicate = true;\n                    }\n                }\n            }\n            /*\n            * If the operation creates a proposal, we should check the fee pool\n            * of the suggested proposal fee assets to prevent users from creating\n            * proposals that will most likely fail due to empty fee pools\n            */\n            if (isProposal(op)) {\n                op[1].proposed_ops.forEach(proposal => {\n                    proposed_ops.push(proposal);\n                    if (\n                        proposalFeeAssets.indexOf(\n                            proposal.op[1].fee.asset_id\n                        ) === -1\n                    )\n                        proposalFeeAssets.push(\n                            \"1.3.\" + proposal.op[1].fee.asset_id\n                        );\n                });\n            }\n            if (!isDuplicate) {\n                operations.push(opObject);\n                if (feeAssets.indexOf(operations[i][1].fee.asset_id) === -1)\n                    feeAssets.push(operations[i][1].fee.asset_id);\n            }\n        }\n\n        if (!asset_id) {\n            let op1_fee = operations[0][1].fee;\n            if (op1_fee && op1_fee.asset_id !== null) {\n                asset_id = op1_fee.asset_id;\n            } else {\n                asset_id = \"1.3.0\";\n            }\n        }\n\n        /*\n        * Add the proposal fee asset ids to feeAssets here to fetch their\n        * fees and dynamic objects\n        */\n        if (proposalFeeAssets.length) {\n            proposalFeeAssets.forEach(id => {\n                if (feeAssets.indexOf(id) === -1) feeAssets.push(id);\n            });\n        }\n        let promises = [];\n        promises.push(\n            Promise.all(\n                feeAssets.map(id => {\n                    return Apis.instance()\n                        .db_api()\n                        .exec(\"get_required_fees\", [operations, id]);\n                })\n            ).catch(err => {\n                console.error(\"get_required_fees API error: \", err.message);\n            })\n        );\n\n        if (feeAssets.length > 1 || feeAssets[0] !== \"1.3.0\") {\n            /*\n            * If we're paying with any assets other than CORE, we need to fetch\n            * the dynamic asset object and check the fee pool of those assets.\n            * The dynamic asset object id is equal to the asset id but with\n            * 2.3.x instead of 1.3.x\n            */\n            let dynamicObjectIds = feeAssets.map(a => a.replace(/^1\\./, \"2.\"));\n            promises.push(\n                Apis.instance()\n                    .db_api()\n                    .exec(\"get_required_fees\", [operations, \"1.3.0\"])\n            );\n            promises.push(\n                Apis.instance()\n                    .db_api()\n                    .exec(\"get_objects\", [dynamicObjectIds])\n            );\n        }\n\n        return Promise.all(promises).then(results => {\n            /*\n            * allFees and coreFees are arrays containg fee amounts grouped by\n            * asset and for each operation in operations\n            */\n            let [allFees, coreFees, dynamicObjects] = results;\n            /*\n            * If one of the desired fee assets has an invalid core exchange rate\n            * get_required_signatures will fail and the result for all assets\n            * will be undefined, if so we just default to coreFees\n            */\n            if (allFees === undefined) {\n                allFees = coreFees;\n            }\n            /*\n            * If the only desired fee asset is CORE, coreFees are not fetched\n            * but are equal to allFees\n            */\n            if (!coreFees) {\n                coreFees = allFees[0];\n            }\n\n            /* Create a map of fees and proposal fees by asset id */\n            let feesByAsset = {};\n            let proposalFeesByAsset = {};\n            allFees.forEach(feeSet => {\n                let filteredFeeSet = feeSet.map(f => {\n                    if (Array.isArray(f)) {\n                        // This operation includes a proposal\n                        proposalFeesByAsset[f[1][0].asset_id] = f[1];\n                        return f[0];\n                    }\n                    return f;\n                });\n                let currentAssetId = filteredFeeSet[0].asset_id;\n\n                feesByAsset[currentAssetId] = filteredFeeSet;\n            }, {});\n\n            /* Create a map of fee pools by asset id*/\n            let feePoolMap = !!dynamicObjects\n                ? dynamicObjects.reduce((map, object) => {\n                      map[object.id.replace(/^2\\./, \"1.\")] = object;\n                      return map;\n                  }, {})\n                : {};\n\n            let feeMap = {};\n            let proposalFeeMap = {};\n            function updateFeeMap(map, asset_id, opIndex, core_fees) {\n                if (!map[asset_id]) map[asset_id] = {total: 0, ops: []};\n                if (map[asset_id].propIdx) map[asset_id].propIdx.push(opIndex);\n                else map[asset_id].ops.push(opIndex);\n\n                if (asset_id !== \"1.3.0\") {\n                    map[asset_id].total += core_fees.length\n                        ? core_fees[opIndex].amount\n                        : core_fees.amount;\n                }\n                return map;\n            }\n\n            for (let i = 0; i < operations.length; i++) {\n                let op = operations[i];\n                let feeAssetId = op[1].fee.asset_id;\n\n                if (isProposal(op)) {\n                    feeMap = updateFeeMap(\n                        feeMap,\n                        feeAssetId,\n                        i,\n                        coreFees[i][0]\n                    );\n\n                    op[1].proposed_ops.forEach((prop, y) => {\n                        let propFeeAsset = prop.op[1].fee.asset_id;\n                        if (!proposalFeeMap[i]) proposalFeeMap[i] = {};\n                        if (!proposalFeeMap[i][propFeeAsset])\n                            proposalFeeMap[i][propFeeAsset] = {\n                                total: 0,\n                                ops: [i],\n                                propIdx: []\n                            };\n\n                        proposalFeeMap[i] = updateFeeMap(\n                            proposalFeeMap[i],\n                            propFeeAsset,\n                            y,\n                            coreFees[i][1]\n                        );\n                    });\n                } else {\n                    feeMap = updateFeeMap(feeMap, feeAssetId, i, coreFees[i]);\n                }\n            }\n\n            /* Check fee pool balances for regular ops */\n            function checkPoolBalance(feeMap) {\n                if (!Object.keys(feeMap).length) return [];\n                let final_fees = [];\n                for (let asset in feeMap) {\n                    let feePoolBalance = feePoolMap[asset]\n                        ? parseInt(feePoolMap[asset].fee_pool, 10)\n                        : 0;\n                    /* Fee pool balance insufficient, default to core*/\n                    if (feeMap[asset].total > feePoolBalance) {\n                        feeMap[asset].ops.forEach(opIndex => {\n                            if (\n                                coreFees[opIndex].length === 2 &&\n                                \"propIdx\" in feeMap[asset]\n                            ) {\n                                /* Proposal op */\n                                feeMap[asset].propIdx.forEach(prop_idx => {\n                                    final_fees[prop_idx] =\n                                        coreFees[opIndex][1][prop_idx];\n                                });\n                            } else if (coreFees[opIndex].length === 2) {\n                                final_fees[opIndex] = coreFees[opIndex][0];\n                            } else {\n                                final_fees[opIndex] = coreFees[opIndex];\n                            }\n                        });\n                        /* Use the desired fee asset */\n                    } else {\n                        feeMap[asset].ops.forEach(opIndex => {\n                            if (\n                                coreFees[opIndex].length === 2 &&\n                                \"propIdx\" in feeMap[asset]\n                            ) {\n                                feeMap[asset].propIdx.forEach(prop_idx => {\n                                    final_fees[prop_idx] =\n                                        proposalFeesByAsset[asset][prop_idx];\n                                });\n                            } else {\n                                final_fees[opIndex] =\n                                    feesByAsset[asset][opIndex];\n                            }\n                        });\n                    }\n                }\n                return final_fees;\n            }\n\n            let finalFees = checkPoolBalance(feeMap);\n\n            let finalProposalFees = {};\n            for (let key in proposalFeeMap) {\n                finalProposalFees[key] = checkPoolBalance(proposalFeeMap[key]);\n            }\n\n            let set_fee = (operation, opIndex) => {\n                if (\n                    !operation.fee ||\n                    operation.fee.amount === 0 ||\n                    (operation.fee.amount.toString &&\n                        operation.fee.amount.toString() === \"0\") // Long\n                ) {\n                    if (removeDuplicates) {\n                        let op = ops.operation.toObject(\n                            this.operations[opIndex]\n                        );\n                        let originalIndex = getDuplicateOriginalIndex(\n                            op,\n                            opIndex\n                        );\n                        if (originalIndex >= 0) {\n                            // it's a duplicate\n                            operation.fee = finalFees[originalIndex];\n                        } else {\n                            operation.fee = finalFees[opIndex];\n                        }\n                    } else {\n                        operation.fee = finalFees[opIndex];\n                    }\n                }\n                if (operation.proposed_ops) {\n                    let result = [];\n                    /*\n                    * Loop over proposed_ops and assign fee asset ids as\n                    * determined by the fee pool balance check. If the balance\n                    * is sufficient the asset_id is kept, if not it defaults to\n                    * \"1.3.0\"\n                    */\n                    for (let y = 0; y < operation.proposed_ops.length; y++) {\n                        operation.proposed_ops[y].op[1].fee.asset_id =\n                            finalProposalFees[opIndex][y].asset_id;\n                        operation.proposed_ops[y].op[1].fee.amount =\n                            finalProposalFees[opIndex][y].amount;\n                    }\n\n                    return result;\n                }\n            };\n            /* We apply the final fees the the operations */\n            for (let i = 0; i < this.operations.length; i++) {\n                set_fee(this.operations[i][1], i);\n            }\n        });\n        //DEBUG console.log('... get_required_fees',operations,asset_id,flat_fees)\n    }\n\n    get_potential_signatures() {\n        var tr_object = ops.signed_transaction.toObject(this);\n        return Promise.all([\n            Apis.instance()\n                .db_api()\n                .exec(\"get_potential_signatures\", [tr_object]),\n            Apis.instance()\n                .db_api()\n                .exec(\"get_potential_address_signatures\", [tr_object])\n        ]).then(function(results) {\n            return {pubkeys: results[0], addys: results[1]};\n        });\n    }\n\n    get_required_signatures(available_keys) {\n        if (!available_keys.length) {\n            return Promise.resolve([]);\n        }\n        var tr_object = ops.signed_transaction.toObject(this);\n        //DEBUG console.log('... tr_object',tr_object)\n        return Apis.instance()\n            .db_api()\n            .exec(\"get_required_signatures\", [tr_object, available_keys])\n            .then(function(required_public_keys) {\n                //DEBUG console.log('... get_required_signatures',required_public_keys)\n                return required_public_keys;\n            });\n    }\n\n    add_signer(private_key, public_key = private_key.toPublicKey()) {\n        assert(private_key.d, \"required PrivateKey object\");\n\n        if (this.signed) {\n            throw new Error(\"already signed\");\n        }\n        if (!public_key.Q) {\n            public_key = PublicKey.fromPublicKeyString(public_key);\n        }\n        // prevent duplicates\n        let spHex = private_key.toHex();\n        for (let sp of this.signer_private_keys) {\n            if (sp[0].toHex() === spHex) return;\n        }\n        this.signer_private_keys.push([private_key, public_key]);\n    }\n\n    sign(chain_id = Apis.instance().chain_id) {\n        if (!this.tr_buffer) {\n            throw new Error(\"not finalized\");\n        }\n        if (this.signed) {\n            throw new Error(\"already signed\");\n        }\n        if (!this.signer_private_keys.length) {\n            throw new Error(\n                \"Transaction was not signed. Do you have a private key? [no_signers]\"\n            );\n        }\n        var end = this.signer_private_keys.length;\n        for (var i = 0; 0 < end ? i < end : i > end; 0 < end ? i++ : i++) {\n            var [private_key, public_key] = this.signer_private_keys[i];\n            var sig = Signature.signBuffer(\n                Buffer.concat([new Buffer(chain_id, \"hex\"), this.tr_buffer]),\n                private_key,\n                public_key\n            );\n            this.signatures.push(sig.toBuffer());\n        }\n        this.signer_private_keys = [];\n        this.signed = true;\n        return;\n    }\n\n    serialize() {\n        return ops.signed_transaction.toObject(this);\n    }\n\n    toObject() {\n        return ops.signed_transaction.toObject(this);\n    }\n\n    broadcast(was_broadcast_callback) {\n        if (this.tr_buffer) {\n            return this._broadcast(was_broadcast_callback);\n        } else {\n            return this.finalize().then(() => {\n                return this._broadcast(was_broadcast_callback);\n            });\n        }\n    }\n}\n\nvar base_expiration_sec = () => {\n    var head_block_sec = Math.ceil(getHeadBlockDate().getTime() / 1000);\n    var now_sec = Math.ceil(Date.now() / 1000);\n    // The head block time should be updated every 3 seconds.  If it isn't\n    // then help the transaction to expire (use head_block_sec)\n    if (now_sec - head_block_sec > 30) {\n        return head_block_sec;\n    }\n    // If the user's clock is very far behind, use the head block time.\n    return Math.max(now_sec, head_block_sec);\n};\n\nfunction _broadcast(was_broadcast_callback) {\n    return new Promise((resolve, reject) => {\n        if (!this.signed) {\n            this.sign();\n        }\n        if (!this.tr_buffer) {\n            throw new Error(\"not finalized\");\n        }\n        if (!this.signatures.length) {\n            throw new Error(\"not signed\");\n        }\n        if (!this.operations.length) {\n            throw new Error(\"no operations\");\n        }\n\n        var tr_object = ops.signed_transaction.toObject(this);\n        // console.log('... broadcast_transaction_with_callback !!!')\n        Apis.instance()\n            .network_api()\n            .exec(\"broadcast_transaction_with_callback\", [\n                function(res) {\n                    return resolve(res);\n                },\n                tr_object\n            ])\n            .then(function() {\n                //console.log('... broadcast success, waiting for callback')\n                if (was_broadcast_callback) was_broadcast_callback();\n                return;\n            })\n            .catch(error => {\n                // console.log may be redundant for network errors, other errors could occur\n                var message = error.message;\n                if (!message) {\n                    message = \"Unknown error\";\n                }\n                error.digest = hash.sha256(this.tr_buffer).toString(\"hex\");\n                error.transaction = this.tr_buffer.toString(\"hex\");\n                console.log(error);\n                reject(\n                    new Error(\n                        message +\n                            \"\\n\" +\n                            JSON.stringify(error)\n                    )\n                );\n                return;\n            });\n        return;\n    });\n}\n\nfunction getHeadBlockDate() {\n    return timeStringToDate(head_block_time_string);\n}\n\nfunction timeStringToDate(time_string) {\n    if (!time_string) return new Date(\"1970-01-01T00:00:00.000Z\");\n    if (!/Z$/.test(time_string))\n        //does not end in Z\n        // https://github.com/cryptonomex/graphene/issues/368\n        time_string = time_string + \"Z\";\n    return new Date(time_string);\n}\n\nexport default TransactionBuilder;\n",
     "static": true,
     "longname": "/home/santer/work/revpop/revpopjs/lib/chain/src/TransactionBuilder.js",
     "access": "public",
@@ -7970,7 +7970,7 @@
     "__docId__": 377,
     "kind": "file",
     "name": "lib/index.js",
-    "content": "/* Serializer */\nimport Serializer from \"./serializer/src/serializer\";\nimport fp from \"./serializer/src/FastParser\";\nimport types from \"./serializer/src/types\";\nimport * as ops from \"./serializer/src/operations\";\nimport template from \"./serializer/src/template\";\nimport SerializerValidation from \"./serializer/src/SerializerValidation\";\n\nexport { Serializer, fp, types, ops, template, SerializerValidation };\n\n/* ECC */\nimport Address from \"./ecc/src/address\";\nimport Aes from \"./ecc/src/aes\";\nimport PrivateKey from \"./ecc/src/PrivateKey\";\nimport PublicKey from \"./ecc/src/PublicKey\";\nimport Signature from \"./ecc/src/signature\";\nimport brainKey from \"./ecc/src/BrainKey\";\nimport * as hash from \"./ecc/src/hash\";\nimport key from \"./ecc/src/KeyUtils\";\n\nexport { Address, Aes, PrivateKey, PublicKey, Signature, brainKey, hash, key };\n\n/* Chain */\nimport ChainStore from \"./chain/src/ChainStore\";\nimport TransactionBuilder  from \"./chain/src/TransactionBuilder\";\nimport ChainTypes from \"./chain/src/ChainTypes\";\nimport ObjectId from \"./chain/src/ObjectId\";\nimport NumberUtils from \"./chain/src/NumberUtils\";\nimport TransactionHelper from \"./chain/src/TransactionHelper\";\nimport ChainValidation from \"./chain/src/ChainValidation\";\nimport EmitterInstance from \"./chain/src/EmitterInstance\";\nimport Login from \"./chain/src/AccountLogin\";\n\nconst {FetchChainObjects, FetchChain} = ChainStore;\n\nexport {ChainStore, TransactionBuilder, FetchChainObjects, ChainTypes, EmitterInstance,\n    ObjectId, NumberUtils, TransactionHelper, ChainValidation, FetchChain, Login }\n\n/* Reexport revpopjs-ws module to keep its single instance */\nimport * as Chain from '@revolutionpopuli/revpopjs-ws';\n\nexport {Chain}\n",
+    "content": "/* Serializer */\nimport Serializer from \"./serializer/src/serializer\";\nimport fp from \"./serializer/src/FastParser\";\nimport types from \"./serializer/src/types\";\nimport * as ops from \"./serializer/src/operations\";\nimport template from \"./serializer/src/template\";\nimport SerializerValidation from \"./serializer/src/SerializerValidation\";\n\nexport { Serializer, fp, types, ops, template, SerializerValidation };\n\n/* ECC */\nimport Address from \"./ecc/src/address\";\nimport Aes from \"./ecc/src/aes\";\nimport PrivateKey from \"./ecc/src/PrivateKey\";\nimport PublicKey from \"./ecc/src/PublicKey\";\nimport Signature from \"./ecc/src/signature\";\nimport brainKey from \"./ecc/src/BrainKey\";\nimport * as hash from \"./ecc/src/hash\";\nimport key from \"./ecc/src/KeyUtils\";\n\nexport { Address, Aes, PrivateKey, PublicKey, Signature, brainKey, hash, key };\n\n/* Chain */\nimport ChainStore from \"./chain/src/ChainStore\";\nimport TransactionBuilder  from \"./chain/src/TransactionBuilder\";\nimport ChainTypes from \"./chain/src/ChainTypes\";\nimport ObjectId from \"./chain/src/ObjectId\";\nimport NumberUtils from \"./chain/src/NumberUtils\";\nimport TransactionHelper from \"./chain/src/TransactionHelper\";\nimport ChainValidation from \"./chain/src/ChainValidation\";\nimport EmitterInstance from \"./chain/src/EmitterInstance\";\nimport Login from \"./chain/src/AccountLogin\";\n\nconst {FetchChainObjects, FetchChain} = ChainStore;\n\nexport {ChainStore, TransactionBuilder, FetchChainObjects, ChainTypes, EmitterInstance,\n    ObjectId, NumberUtils, TransactionHelper, ChainValidation, FetchChain, Login }\n\n/* Reexport revpopjs-ws module to keep its single instance */\nimport * as Chain from '@revolutionpopuli/revpopjs-ws';\n\nexport {Chain}\n\nimport Adapter from \"./storage/src/Adapter\"\nimport CloudStorage from \"./storage/src/CloudStorage\"\nimport IPFSAdapter from \"./storage/src/IPFSAdapter\"\nimport MemoryAdapter from \"./storage/src/MemoryAdapter\"\nimport PersonalData from \"./storage/src/PersonalData\"\nimport S3Adapter from './storage/src/S3Adapter'\n\nexport { Adapter, CloudStorage, IPFSAdapter, MemoryAdapter, PersonalData, S3Adapter }\n",
     "static": true,
     "longname": "/home/santer/work/revpop/revpopjs/lib/index.js",
     "access": "public",
@@ -12602,6 +12602,2446 @@
     }
   },
   {
+    "__docId__": 597,
+    "kind": "file",
+    "name": "lib/storage/index.js",
+    "content": "/**\n * The Revolution Populi Project\n * Copyright (C) 2020 Revolution Populi Limited\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\nimport Adapter from './src/Adapter'\nimport CloudStorage from './src/CloudStorage'\nimport IPFSAdapter from './src/IPFSAdapter'\nimport MemoryAdapter from './src/MemoryAdapter'\nimport PersonalData from './src/PersonalData'\nimport S3Adapter from './src/S3Adapter'\n\nexport { Adapter, CloudStorage, IPFSAdapter, MemoryAdapter, PersonalData, S3Adapter }\n",
+    "static": true,
+    "longname": "/home/santer/work/revpop/revpopjs/lib/storage/index.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 598,
+    "kind": "file",
+    "name": "lib/storage/src/Adapter.js",
+    "content": "/**\n * The Revolution Populi Project\n * Copyright (C) 2020 Revolution Populi Limited\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\nclass Adapter {\n    constructor(options = {}) {\n    }\n\n    async open() {\n        return Promise.resolve();\n    }\n\n    async close() {\n        return Promise.resolve();\n    }\n\n    /**\n     * Store the passed value under the passed key\n     *\n     * @param {Uint8Array} val\n     * @param {Object} options\n     * @returns {Promise<String>}\n     */\n    async put(val, options = {}) { // eslint-disable-line require-await\n    }\n\n    /**\n     * Retrieve the value for the passed key\n     *\n     * @param {String} key\n     * @param {Object} options\n     * @returns {Promise<Uint8Array>}\n     */\n    async get(key, options = {}) { // eslint-disable-line require-await\n    }\n\n    /**\n     * Remove the record for the passed key\n     *\n     * @param {String} key\n     * @param {Object} options\n     * @returns {Promise<boolean>}\n     */\n    async delete (key, options = {}) { // eslint-disable-line require-await\n    }\n}\n\nexport default Adapter;\n",
+    "static": true,
+    "longname": "/home/santer/work/revpop/revpopjs/lib/storage/src/Adapter.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 599,
+    "kind": "class",
+    "name": "Adapter",
+    "memberof": "lib/storage/src/Adapter.js",
+    "static": true,
+    "longname": "lib/storage/src/Adapter.js~Adapter",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/Adapter.js",
+    "importStyle": "Adapter",
+    "description": "The Revolution Populi Project\nCopyright (C) 2020 Revolution Populi Limited\n\nThis program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with this program.  If not, see <http://www.gnu.org/licenses/>.",
+    "lineNumber": 19,
+    "interface": false
+  },
+  {
+    "__docId__": 600,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "lib/storage/src/Adapter.js~Adapter",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/Adapter.js~Adapter#constructor",
+    "access": "public",
+    "description": null,
+    "lineNumber": 20,
+    "undocument": true
+  },
+  {
+    "__docId__": 601,
+    "kind": "method",
+    "name": "open",
+    "memberof": "lib/storage/src/Adapter.js~Adapter",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/Adapter.js~Adapter#open",
+    "access": "public",
+    "description": null,
+    "lineNumber": 23,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 602,
+    "kind": "method",
+    "name": "close",
+    "memberof": "lib/storage/src/Adapter.js~Adapter",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/Adapter.js~Adapter#close",
+    "access": "public",
+    "description": null,
+    "lineNumber": 27,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 603,
+    "kind": "method",
+    "name": "put",
+    "memberof": "lib/storage/src/Adapter.js~Adapter",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/Adapter.js~Adapter#put",
+    "access": "public",
+    "description": "Store the passed value under the passed key",
+    "lineNumber": 38,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Promise<String>}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Uint8Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "val",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise<String>"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 604,
+    "kind": "method",
+    "name": "get",
+    "memberof": "lib/storage/src/Adapter.js~Adapter",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/Adapter.js~Adapter#get",
+    "access": "public",
+    "description": "Retrieve the value for the passed key",
+    "lineNumber": 48,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Promise<Uint8Array>}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "key",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise<Uint8Array>"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 605,
+    "kind": "method",
+    "name": "delete",
+    "memberof": "lib/storage/src/Adapter.js~Adapter",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/Adapter.js~Adapter#delete",
+    "access": "public",
+    "description": "Remove the record for the passed key",
+    "lineNumber": 58,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Promise<boolean>}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "key",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise<boolean>"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 606,
+    "kind": "file",
+    "name": "lib/storage/src/CloudStorage.js",
+    "content": "/**\n * The Revolution Populi Project\n * Copyright (C) 2020 Revolution Populi Limited\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\nimport Adapter from './Adapter';\nimport { encrypt_buffer, decrypt_buffer, encrypt_content, decrypt_content, encrypt_object, decrypt_object } from './crypto';\n\nclass CloudStorage {\n    /**\n     * \n     * @param {Adapter} adapter\n     */\n    constructor(adapter) {\n        this.client = adapter;\n    }\n\n    async connect() {\n        return this.client.open();\n    }\n\n    async disconnect() {\n        return this.client.close();\n    }\n\n    async crypto_save_object(obj, subject_private_key, operator_public_key) {\n        const crypto_str = encrypt_object(obj, subject_private_key, operator_public_key);\n        return this.client.put(crypto_str);\n    }\n\n    async crypto_load_object(id, subject_public_key, operator_private_key) {\n        const crypto_buf = await this.client.get(id);\n        const crypto_str = crypto_buf.toString();\n        return crypto_str ? decrypt_object(crypto_str, subject_public_key, operator_private_key) : null;\n    }\n\n    async crypto_save_buffer(buf, subject_private_key, operator_public_key) {\n        const crypto_buf = encrypt_buffer(buf, subject_private_key, operator_public_key);\n        return this.client.put(crypto_buf);\n    }\n\n    async crypto_load_buffer(id, subject_public_key, operator_private_key) {\n        const crypto_buf = await this.client.get(id);\n        return crypto_buf ? decrypt_buffer(crypto_buf, subject_public_key, operator_private_key) : null;\n    }\n\n    async crypto_save_content(content_buf, content_key) {\n        const crypto_buf = encrypt_content(content_buf, content_key);\n        return this.client.put(crypto_buf);\n    }\n\n    async crypto_load_content(id, content_key) {\n        const crypto_buf = await this.client.get(id);\n        return crypto_buf ? decrypt_content(crypto_buf, content_key) : null;\n    }\n\n    async del(id) {\n        return this.client.delete(id);\n    }\n}\n\nexport default CloudStorage;\n",
+    "static": true,
+    "longname": "/home/santer/work/revpop/revpopjs/lib/storage/src/CloudStorage.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 607,
+    "kind": "class",
+    "name": "CloudStorage",
+    "memberof": "lib/storage/src/CloudStorage.js",
+    "static": true,
+    "longname": "lib/storage/src/CloudStorage.js~CloudStorage",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/CloudStorage.js",
+    "importStyle": "CloudStorage",
+    "description": null,
+    "lineNumber": 22,
+    "undocument": true,
+    "interface": false
+  },
+  {
+    "__docId__": 608,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "lib/storage/src/CloudStorage.js~CloudStorage",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/CloudStorage.js~CloudStorage#constructor",
+    "access": "public",
+    "description": "",
+    "lineNumber": 27,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Adapter"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "adapter",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "__docId__": 609,
+    "kind": "member",
+    "name": "client",
+    "memberof": "lib/storage/src/CloudStorage.js~CloudStorage",
+    "static": false,
+    "longname": "lib/storage/src/CloudStorage.js~CloudStorage#client",
+    "access": "public",
+    "description": null,
+    "lineNumber": 28,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 610,
+    "kind": "method",
+    "name": "connect",
+    "memberof": "lib/storage/src/CloudStorage.js~CloudStorage",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/CloudStorage.js~CloudStorage#connect",
+    "access": "public",
+    "description": null,
+    "lineNumber": 31,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 611,
+    "kind": "method",
+    "name": "disconnect",
+    "memberof": "lib/storage/src/CloudStorage.js~CloudStorage",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/CloudStorage.js~CloudStorage#disconnect",
+    "access": "public",
+    "description": null,
+    "lineNumber": 35,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 612,
+    "kind": "method",
+    "name": "crypto_save_object",
+    "memberof": "lib/storage/src/CloudStorage.js~CloudStorage",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/CloudStorage.js~CloudStorage#crypto_save_object",
+    "access": "public",
+    "description": null,
+    "lineNumber": 39,
+    "undocument": true,
+    "params": [
+      {
+        "name": "obj",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "subject_private_key",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "operator_public_key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 613,
+    "kind": "method",
+    "name": "crypto_load_object",
+    "memberof": "lib/storage/src/CloudStorage.js~CloudStorage",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/CloudStorage.js~CloudStorage#crypto_load_object",
+    "access": "public",
+    "description": null,
+    "lineNumber": 44,
+    "undocument": true,
+    "params": [
+      {
+        "name": "id",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "subject_public_key",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "operator_private_key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 614,
+    "kind": "method",
+    "name": "crypto_save_buffer",
+    "memberof": "lib/storage/src/CloudStorage.js~CloudStorage",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/CloudStorage.js~CloudStorage#crypto_save_buffer",
+    "access": "public",
+    "description": null,
+    "lineNumber": 50,
+    "undocument": true,
+    "params": [
+      {
+        "name": "buf",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "subject_private_key",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "operator_public_key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 615,
+    "kind": "method",
+    "name": "crypto_load_buffer",
+    "memberof": "lib/storage/src/CloudStorage.js~CloudStorage",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/CloudStorage.js~CloudStorage#crypto_load_buffer",
+    "access": "public",
+    "description": null,
+    "lineNumber": 55,
+    "undocument": true,
+    "params": [
+      {
+        "name": "id",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "subject_public_key",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "operator_private_key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 616,
+    "kind": "method",
+    "name": "crypto_save_content",
+    "memberof": "lib/storage/src/CloudStorage.js~CloudStorage",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/CloudStorage.js~CloudStorage#crypto_save_content",
+    "access": "public",
+    "description": null,
+    "lineNumber": 60,
+    "undocument": true,
+    "params": [
+      {
+        "name": "content_buf",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "content_key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 617,
+    "kind": "method",
+    "name": "crypto_load_content",
+    "memberof": "lib/storage/src/CloudStorage.js~CloudStorage",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/CloudStorage.js~CloudStorage#crypto_load_content",
+    "access": "public",
+    "description": null,
+    "lineNumber": 65,
+    "undocument": true,
+    "params": [
+      {
+        "name": "id",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "content_key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 618,
+    "kind": "method",
+    "name": "del",
+    "memberof": "lib/storage/src/CloudStorage.js~CloudStorage",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/CloudStorage.js~CloudStorage#del",
+    "access": "public",
+    "description": null,
+    "lineNumber": 70,
+    "undocument": true,
+    "params": [
+      {
+        "name": "id",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 619,
+    "kind": "file",
+    "name": "lib/storage/src/MemoryAdapter.js",
+    "content": "/**\n * The Revolution Populi Project\n * Copyright (C) 2020 Revolution Populi Limited\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\n import Adapter from \"./Adapter\";\n import {sha256} from \"../../ecc/src/hash\";\n \n /**\n  * Memory client adapter for CloudStorage class.\n  * Implemented for testing purposes.\n  */\nclass MemoryAdapter extends Adapter {\n    /**\n     * @param {*} options required options: {}\n     */\n    constructor(options = {}) {\n        super(options);\n        this.memory = {};\n    }\n\n    /**\n     * Store the passed value\n     *\n     * @param {string|Buffer} val\n     * @param {Object} options\n     * @returns {Promise<String>}\n     */\n    async put(val, options = {}) {\n        const id = sha256(val, 'hex');\n        this.memory[id] = val;\n\n        return id;\n    }\n\n    /**\n     * Retrieve the value for the passed key\n     *\n     * @param {String} key\n     * @param {Object} options\n     * @returns {Promise<Buffer>}\n     */\n    async get(key, options = {}) {\n        return this.memory[key];\n    }\n\n    /**\n     * Remove the record for the passed key\n     *\n     * @param {String} key\n     * @param {Object} options\n     * @returns {Promise<boolean>}\n     */\n    async delete(key, options = {}) {\n        return new Promise((resolve, reject) => {\n            delete this.memory[key];\n            resolve();\n        });\n    }\n}\n\nexport default MemoryAdapter;\n ",
+    "static": true,
+    "longname": "/home/santer/work/revpop/revpopjs/lib/storage/src/MemoryAdapter.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 620,
+    "kind": "class",
+    "name": "MemoryAdapter",
+    "memberof": "lib/storage/src/MemoryAdapter.js",
+    "static": true,
+    "longname": "lib/storage/src/MemoryAdapter.js~MemoryAdapter",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/MemoryAdapter.js",
+    "importStyle": "MemoryAdapter",
+    "description": "Memory client adapter for CloudStorage class.\nImplemented for testing purposes.",
+    "lineNumber": 26,
+    "interface": false,
+    "extends": [
+      "lib/storage/src/Adapter.js~Adapter"
+    ]
+  },
+  {
+    "__docId__": 621,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "lib/storage/src/MemoryAdapter.js~MemoryAdapter",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/MemoryAdapter.js~MemoryAdapter#constructor",
+    "access": "public",
+    "description": "",
+    "lineNumber": 30,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "required options: {}"
+      }
+    ]
+  },
+  {
+    "__docId__": 622,
+    "kind": "member",
+    "name": "memory",
+    "memberof": "lib/storage/src/MemoryAdapter.js~MemoryAdapter",
+    "static": false,
+    "longname": "lib/storage/src/MemoryAdapter.js~MemoryAdapter#memory",
+    "access": "public",
+    "description": null,
+    "lineNumber": 32,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{}"
+      ]
+    }
+  },
+  {
+    "__docId__": 623,
+    "kind": "method",
+    "name": "put",
+    "memberof": "lib/storage/src/MemoryAdapter.js~MemoryAdapter",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/MemoryAdapter.js~MemoryAdapter#put",
+    "access": "public",
+    "description": "Store the passed value",
+    "lineNumber": 42,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Promise<String>}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string",
+          "Buffer"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "val",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise<String>"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 624,
+    "kind": "method",
+    "name": "get",
+    "memberof": "lib/storage/src/MemoryAdapter.js~MemoryAdapter",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/MemoryAdapter.js~MemoryAdapter#get",
+    "access": "public",
+    "description": "Retrieve the value for the passed key",
+    "lineNumber": 56,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Promise<Buffer>}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "key",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise<Buffer>"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 625,
+    "kind": "method",
+    "name": "delete",
+    "memberof": "lib/storage/src/MemoryAdapter.js~MemoryAdapter",
+    "generator": false,
+    "async": true,
+    "static": false,
+    "longname": "lib/storage/src/MemoryAdapter.js~MemoryAdapter#delete",
+    "access": "public",
+    "description": "Remove the record for the passed key",
+    "lineNumber": 67,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Promise<boolean>}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "key",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise<boolean>"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 626,
+    "kind": "file",
+    "name": "lib/storage/src/PersonalData.js",
+    "content": "/**\n * The Revolution Populi Project\n * Copyright (C) 2020 Revolution Populi Limited\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\nimport { randomBytes } from 'crypto-browserify';\nimport { hash, Signature } from '../../ecc';\n\nclass PersonalData {\n    constructor() {\n        ////////////////////////////////////////////////////////////////////////////////////////////////////\n        // List of personal data parts\n        // Personal data can be shared only by parts\n        // Each part specified by fields path inside of whole personal data\n        ////////////////////////////////////////////////////////////////////////////////////////////////////\n        this.PERSONAL_DATA_PART_PATHS = [\n            'name',\n            'email',\n            'phone',\n            'photo',\n        ].sort();\n\n        this.full_structure = this._defaultValue();\n        this.enabled_parts = this.PERSONAL_DATA_PART_PATHS;\n        this.salts = {};\n        this.missings = {};\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Return a new PersonalData object from the result of PersonalData.getAllParts.\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    static fromAllParts(data) {\n        const inst = new PersonalData();\n        inst.full_structure = JSON.parse(JSON.stringify(data.content));\n        inst.enabled_parts = [];\n        inst.salts = {};\n        inst.missings = {};\n        inst.PERSONAL_DATA_PART_PATHS.forEach(part_path => {\n            const part = data.parts.find(obj => obj.path === part_path);\n            if (typeof part !== 'undefined') {\n                inst.enabled_parts.push(part_path);\n                inst.salts[part_path] = part.salt;\n            }\n            const missed_part = data.missed_parts.find(obj => obj.path === part_path);\n            if (typeof missed_part !== 'undefined') {\n                inst.enabled_parts.push(part_path);\n                inst.missings[part_path] = missed_part.hash;\n            }\n        });\n\n        return inst;\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Create personal data part\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    static makeReference(url, type, hash) {\n        return {\n            url: url || '',\n            type: type || '',\n            hash: hash || '',\n        };\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Update PD fields from a flat object. Missing fields will be overwriten with default values.\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    assign(props) {\n        this.setName(props.first_name, props.last_name);\n        this.setEmail(props.email);\n        this.setPhone(props.phone);\n        this.setPhoto(props.photo);\n    }\n\n    setName(first_name, last_name) {\n        this.setFirstName(first_name);\n        this.setLastName(last_name);\n    }\n\n    setFirstName(first_name) {\n        this.full_structure.name.first = first_name || '';\n    }\n\n    setLastName(last_name) {\n        this.full_structure.name.last = last_name || '';\n    }\n\n    setEmail(email) {\n        this.full_structure.email = email || '';\n    }\n\n    setPhone(phone) {\n        this.full_structure.phone = phone || '';\n    }\n\n    setPhoto(photo) {\n        this.full_structure.photo = photo || null;\n    }\n\n    getFirstName() {\n        return this.full_structure.name.first;\n    }\n\n    getLastName() {\n        return this.full_structure.name.last;\n    }\n\n    getEmail() {\n        return this.full_structure.email;\n    }\n\n    getPhone() {\n        return this.full_structure.phone;\n    }\n\n    getPhoto() {\n        return this.full_structure.photo;\n    }\n\n    isAvailable(part_name) {\n        return typeof this.missings[part_name] === 'undefined';\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Create full personal data from its content\n    // Return personal data structure\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    getAllParts() {\n        const content = this._deepSortObjKeys(this.full_structure);\n        const res = {\n            content: {},\n            parts: [],\n            missed_parts: []\n        };\n        this.enabled_parts.forEach(part_path => {\n            const missed_hash = this._getMissed(part_path);\n            if (typeof missed_hash !== 'undefined') {\n                res.missed_parts.push({\n                    path: part_path,\n                    hash: missed_hash\n                });\n            } else {\n                let part_content = this._getObjPart(content, part_path);\n                if (part_content === undefined) {\n                    part_content = null;\n                }\n                this._putObjPart(res.content, part_path, part_content);\n                res.parts.push({\n                    path: part_path,\n                    salt: this._getSalt(part_path)\n                });\n            }\n        });\n        return res;\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Compute hash of personal data\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    getRootHash() {\n        const pd = this.getAllParts();\n        const all_parts = pd.parts.concat(pd.missed_parts).sort((a, b) => a.path.localeCompare(b.path));\n        return this._computeSha256(all_parts.map(part => {\n            return part.salt ?\n                this._computeSha256(`${part.salt}:${JSON.stringify(this._getObjPart(pd.content, part.path))}`) :\n                part.hash;\n        }).join());\n    }\n\n    makePartial(limited_parts) {\n        const inst = new PersonalData();\n        inst.enabled_parts = this.enabled_parts;\n\n        this.PERSONAL_DATA_PART_PATHS.forEach(part_path => {\n            if (limited_parts.indexOf(part_path) >= 0) {\n                inst.full_structure[part_path] = this._deepClone(this.full_structure[part_path]);\n                inst.salts[part_path] = this._getSalt(part_path);\n            } else {\n                const miss = this._getMissed(part_path);\n                if (typeof miss !== 'undefined') {\n                    inst.missings[part_path] = miss;\n                } else {\n                    inst.missings[part_path] = this._computeHash(part_path);\n                }\n            }\n        });\n\n        return inst;\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Return new object with sorted keys/values pairs from input object (handle nested objects too)\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    _deepSortObjKeys(obj) {\n        if (typeof(obj) !== 'object' || obj === null) {\n            return obj;\n        }\n        const keys = Object.keys(obj).sort();\n        let ret = {};\n        for (const key of keys) {\n            let val = obj[key];\n            ret[key] = this._deepSortObjKeys(val);\n        }\n        return ret;\n    }\n\n    _defaultValue() {\n        return {\n            name: {\n                first: '',\n                last: '',\n            },\n            email: '',\n            phone: '',\n            photo: null,\n        };\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Returns part of object with specified path\n    // Path must contains period-delimited field names\n    // For empty path returns input object\n    // Returns undefined if path not found\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    _getObjPart(obj, part_path) {\n        let ret = obj;\n        if (part_path) {\n            for (const elem of part_path.split('.')) {\n                if (elem in ret) {\n                    ret = ret[elem];\n                } else {\n                    ret = undefined;\n                    break;\n                }\n            }\n        }\n        return ret;\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Set part of object with specified path\n    // Path must contains period-delimited field names\n    // For empty path channges input object\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    _putObjPart(obj, part_path, part) {\n        const part_path_elems = part_path ? part_path.split('.') : [];\n        if (part_path_elems.length > 0) {\n            let dst = obj;\n            const prefix_elems = part_path_elems.slice(0, -1);\n            for (const elem of prefix_elems) {\n                if (elem in dst) {\n                    dst = dst[elem];\n                } else {\n                    dst = dst[elem] = {};\n                    break;\n                }\n            }\n            const last_elem = part_path_elems[part_path_elems.length - 1];\n            dst[last_elem] = part;\n        } else {\n            const old_keys = Object.keys(obj);\n            for (const k of old_keys) {\n                if (Object.prototype.hasOwnProperty.call(obj, k)) {\n                    delete obj[k];\n                }\n            }\n            const new_keys = Object.keys(part);\n            for (const k of new_keys) {\n                if (Object.prototype.hasOwnProperty.call(part, k)) {\n                    obj[k] = part[k];\n                }\n            }\n        }\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Compute SHA256 hash of string\n    // Return hex lowercase representation of hash\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    _computeSha256(str) {\n        const buf = Buffer.from(str.toString(), 'utf-8');\n        return hash.sha256(buf).toString('hex');\n    }\n\n    _getSalt(path) {\n        if (typeof this.salts[path] === 'undefined') {\n            this.salts[path] = randomBytes(8).toString('base64');\n        }\n\n        return this.salts[path];\n    }\n\n    _getMissed(path) {\n        return this.missings[path];\n    }\n\n    _computeHash(path) {\n        const salt = this._getSalt(path);\n        const content = this._deepSortObjKeys(this._getObjPart(this.full_structure, path));\n        return this._computeSha256(`${salt}:${JSON.stringify(content)}`);\n    }\n\n    _deepClone(obj) {\n        return JSON.parse(JSON.stringify(obj));\n    }\n}\n\nexport default PersonalData;\n",
+    "static": true,
+    "longname": "/home/santer/work/revpop/revpopjs/lib/storage/src/PersonalData.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 627,
+    "kind": "class",
+    "name": "PersonalData",
+    "memberof": "lib/storage/src/PersonalData.js",
+    "static": true,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/PersonalData.js",
+    "importStyle": "PersonalData",
+    "description": null,
+    "lineNumber": 22,
+    "undocument": true,
+    "interface": false
+  },
+  {
+    "__docId__": 628,
+    "kind": "constructor",
+    "name": "constructor",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#constructor",
+    "access": "public",
+    "description": null,
+    "lineNumber": 23,
+    "undocument": true
+  },
+  {
+    "__docId__": 629,
+    "kind": "member",
+    "name": "PERSONAL_DATA_PART_PATHS",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#PERSONAL_DATA_PART_PATHS",
+    "access": "public",
+    "description": null,
+    "lineNumber": 29,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 630,
+    "kind": "member",
+    "name": "full_structure",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#full_structure",
+    "access": "public",
+    "description": null,
+    "lineNumber": 36,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 631,
+    "kind": "member",
+    "name": "enabled_parts",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#enabled_parts",
+    "access": "public",
+    "description": null,
+    "lineNumber": 37,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 632,
+    "kind": "member",
+    "name": "salts",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#salts",
+    "access": "public",
+    "description": null,
+    "lineNumber": 38,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{}"
+      ]
+    }
+  },
+  {
+    "__docId__": 633,
+    "kind": "member",
+    "name": "missings",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#missings",
+    "access": "public",
+    "description": null,
+    "lineNumber": 39,
+    "undocument": true,
+    "type": {
+      "types": [
+        "{}"
+      ]
+    }
+  },
+  {
+    "__docId__": 634,
+    "kind": "method",
+    "name": "fromAllParts",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData.fromAllParts",
+    "access": "public",
+    "description": null,
+    "lineNumber": 45,
+    "undocument": true,
+    "params": [
+      {
+        "name": "data",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 635,
+    "kind": "method",
+    "name": "makeReference",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData.makeReference",
+    "access": "public",
+    "description": null,
+    "lineNumber": 70,
+    "undocument": true,
+    "params": [
+      {
+        "name": "url",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "type",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "hash",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "{\"url\": *, \"type\": *, \"hash\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 636,
+    "kind": "method",
+    "name": "assign",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#assign",
+    "access": "public",
+    "description": null,
+    "lineNumber": 81,
+    "undocument": true,
+    "params": [
+      {
+        "name": "props",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 637,
+    "kind": "method",
+    "name": "setName",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#setName",
+    "access": "public",
+    "description": null,
+    "lineNumber": 88,
+    "undocument": true,
+    "params": [
+      {
+        "name": "first_name",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "last_name",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 638,
+    "kind": "method",
+    "name": "setFirstName",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#setFirstName",
+    "access": "public",
+    "description": null,
+    "lineNumber": 93,
+    "undocument": true,
+    "params": [
+      {
+        "name": "first_name",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 639,
+    "kind": "method",
+    "name": "setLastName",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#setLastName",
+    "access": "public",
+    "description": null,
+    "lineNumber": 97,
+    "undocument": true,
+    "params": [
+      {
+        "name": "last_name",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 640,
+    "kind": "method",
+    "name": "setEmail",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#setEmail",
+    "access": "public",
+    "description": null,
+    "lineNumber": 101,
+    "undocument": true,
+    "params": [
+      {
+        "name": "email",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 641,
+    "kind": "method",
+    "name": "setPhone",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#setPhone",
+    "access": "public",
+    "description": null,
+    "lineNumber": 105,
+    "undocument": true,
+    "params": [
+      {
+        "name": "phone",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 642,
+    "kind": "method",
+    "name": "setPhoto",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#setPhoto",
+    "access": "public",
+    "description": null,
+    "lineNumber": 109,
+    "undocument": true,
+    "params": [
+      {
+        "name": "photo",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 643,
+    "kind": "method",
+    "name": "getFirstName",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#getFirstName",
+    "access": "public",
+    "description": null,
+    "lineNumber": 113,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 644,
+    "kind": "method",
+    "name": "getLastName",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#getLastName",
+    "access": "public",
+    "description": null,
+    "lineNumber": 117,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 645,
+    "kind": "method",
+    "name": "getEmail",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#getEmail",
+    "access": "public",
+    "description": null,
+    "lineNumber": 121,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 646,
+    "kind": "method",
+    "name": "getPhone",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#getPhone",
+    "access": "public",
+    "description": null,
+    "lineNumber": 125,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 647,
+    "kind": "method",
+    "name": "getPhoto",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#getPhoto",
+    "access": "public",
+    "description": null,
+    "lineNumber": 129,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 648,
+    "kind": "method",
+    "name": "isAvailable",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#isAvailable",
+    "access": "public",
+    "description": null,
+    "lineNumber": 133,
+    "undocument": true,
+    "params": [
+      {
+        "name": "part_name",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 649,
+    "kind": "method",
+    "name": "getAllParts",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#getAllParts",
+    "access": "public",
+    "description": null,
+    "lineNumber": 141,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 650,
+    "kind": "method",
+    "name": "getRootHash",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#getRootHash",
+    "access": "public",
+    "description": null,
+    "lineNumber": 173,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 651,
+    "kind": "method",
+    "name": "makePartial",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#makePartial",
+    "access": "public",
+    "description": null,
+    "lineNumber": 183,
+    "undocument": true,
+    "params": [
+      {
+        "name": "limited_parts",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 652,
+    "kind": "method",
+    "name": "_deepSortObjKeys",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#_deepSortObjKeys",
+    "access": "private",
+    "description": null,
+    "lineNumber": 207,
+    "undocument": true,
+    "params": [
+      {
+        "name": "obj",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 653,
+    "kind": "method",
+    "name": "_defaultValue",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#_defaultValue",
+    "access": "private",
+    "description": null,
+    "lineNumber": 220,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "{\"name\": *, \"email\": *, \"phone\": *, \"photo\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 654,
+    "kind": "method",
+    "name": "_getObjPart",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#_getObjPart",
+    "access": "private",
+    "description": null,
+    "lineNumber": 238,
+    "undocument": true,
+    "params": [
+      {
+        "name": "obj",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "part_path",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 655,
+    "kind": "method",
+    "name": "_putObjPart",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#_putObjPart",
+    "access": "private",
+    "description": null,
+    "lineNumber": 258,
+    "undocument": true,
+    "params": [
+      {
+        "name": "obj",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "part_path",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "part",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null
+  },
+  {
+    "__docId__": 656,
+    "kind": "method",
+    "name": "_computeSha256",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#_computeSha256",
+    "access": "private",
+    "description": null,
+    "lineNumber": 293,
+    "undocument": true,
+    "params": [
+      {
+        "name": "str",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 657,
+    "kind": "method",
+    "name": "_getSalt",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#_getSalt",
+    "access": "private",
+    "description": null,
+    "lineNumber": 298,
+    "undocument": true,
+    "params": [
+      {
+        "name": "path",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 658,
+    "kind": "method",
+    "name": "_getMissed",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#_getMissed",
+    "access": "private",
+    "description": null,
+    "lineNumber": 306,
+    "undocument": true,
+    "params": [
+      {
+        "name": "path",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 659,
+    "kind": "method",
+    "name": "_computeHash",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#_computeHash",
+    "access": "private",
+    "description": null,
+    "lineNumber": 310,
+    "undocument": true,
+    "params": [
+      {
+        "name": "path",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 660,
+    "kind": "method",
+    "name": "_deepClone",
+    "memberof": "lib/storage/src/PersonalData.js~PersonalData",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "lib/storage/src/PersonalData.js~PersonalData#_deepClone",
+    "access": "private",
+    "description": null,
+    "lineNumber": 316,
+    "undocument": true,
+    "params": [
+      {
+        "name": "obj",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 661,
+    "kind": "file",
+    "name": "lib/storage/src/crypto.js",
+    "content": "/**\n * The Revolution Populi Project\n * Copyright (C) 2020 Revolution Populi Limited\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\nimport { randomBytes, createCipheriv, createDecipheriv } from 'crypto';\nimport { PassThrough } from 'stream';\nimport { key, Aes } from '../../ecc';\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Encrypt object with subject private key and operator public key\n// Return string with serialized representation of nonce and ciphertext\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction encrypt_object(obj, subject_private_key, operator_public_key) {\n    const nonce = key.random32ByteBuffer().toString('base64');\n    const cipherbuf = Aes.encrypt_with_checksum(\n        subject_private_key, operator_public_key, nonce,\n        Buffer.from(JSON.stringify(obj), 'utf-8')\n    );\n    return `${nonce}:${cipherbuf.toString('base64')}`;\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Decrypt string (serialized nonce and ciphertext data) with subject public key and operator private key\n// Return original object as before encryption\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction decrypt_object(str, subject_public_key, operator_private_key) {\n    const parts = str.split(':', 2);\n    const plainbuf = Aes.decrypt_with_checksum(\n        operator_private_key, subject_public_key, parts[0],\n        Buffer.from(parts[1], 'base64')\n    );\n    return JSON.parse(plainbuf.toString('utf-8'));\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Encrypt buffer with subject private key and operator public key\n// Return buffer (nonce and ciphertext)\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction encrypt_buffer(buf, subject_private_key, operator_public_key) {\n    const noncebuf = key.random32ByteBuffer();\n    const cipherbuf = Aes.encrypt_with_checksum(\n        subject_private_key, operator_public_key,\n        noncebuf.toString('base64'), buf\n    );\n    return Buffer.concat([ Buffer.from([ noncebuf.length ]), noncebuf, cipherbuf ]);\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Decrypt buffer (nonce and ciphertext) with subject public key and operator private key\n// Return original buffer as before encryption\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction decrypt_buffer(buf, subject_public_key, operator_private_key) {\n    const noncelen = buf.slice(0, 1)[0];\n    const noncebuf = buf.slice(1, 1 + noncelen);\n    const cipherbuf = buf.slice(1 + noncelen);\n    const plainbuf = Aes.decrypt_with_checksum(\n        operator_private_key, subject_public_key,\n        noncebuf.toString('base64'), cipherbuf\n    );\n    return plainbuf;\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Content encryption settings\n////////////////////////////////////////////////////////////////////////////////////////////////////\nconst CONTENT_CIPHER_ALGORITHM = 'aes-256-cbc';\nconst CONTENT_CIPHER_ALGORITHM_KEY_SIZE = 32;\nconst CONTENT_CIPHER_ALGORITHM_IV_SIZE = 16;\nconst CONTENT_CIPHER_ALGORITHM_NOENCRYPT = 'noencrypt';\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Create content encryption info (algorithm and random key and random IV)\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction make_content_key() {\n    return {\n        algo: CONTENT_CIPHER_ALGORITHM,\n        key: (CONTENT_CIPHER_ALGORITHM_KEY_SIZE > 0) ?\n            randomBytes(CONTENT_CIPHER_ALGORITHM_KEY_SIZE).toString('hex') :\n            null,\n        iv: (CONTENT_CIPHER_ALGORITHM_IV_SIZE > 0) ?\n            randomBytes(CONTENT_CIPHER_ALGORITHM_IV_SIZE).toString('hex') :\n            null\n    };\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Create content encryption info with no encryption\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction make_content_key_noencrypt() {\n    return {\n        algo: CONTENT_CIPHER_ALGORITHM_NOENCRYPT,\n        key: null,\n        iv: null\n    };\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Create content encryption transform stream\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction make_content_cipher_stream(content_key) {\n    if (content_key.algo === CONTENT_CIPHER_ALGORITHM_NOENCRYPT)\n        return new PassThrough();\n    return createCipheriv(\n        content_key.algo,\n        Buffer.from(content_key.key, 'hex'),\n        content_key.iv ? Buffer.from(content_key.iv, 'hex') : null);\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Create content decryption transform stream\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction make_content_decipher_stream(content_key) {\n    if (content_key.algo === CONTENT_CIPHER_ALGORITHM_NOENCRYPT)\n        return new PassThrough();\n    return createDecipheriv(\n        content_key.algo,\n        Buffer.from(content_key.key, 'hex'),\n        content_key.iv ? Buffer.from(content_key.iv, 'hex') : null);\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Transform content buffer using cipher/decipher transform\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction crypto_content_transform(transform, input) {\n    const buf_main = transform.update(input);\n    const buf_final = transform.final();\n    return Buffer.concat([ buf_main, buf_final ]);\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Encrypt content buffer using key\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction encrypt_content(plain_content_buf, content_key) {\n    const cipher = make_content_cipher_stream(content_key);\n    return crypto_content_transform(cipher, plain_content_buf);\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Decrypt content buffer using key\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction decrypt_content(cipher_content_buf, content_key) {\n    const decipher = make_content_decipher_stream(content_key);\n    return crypto_content_transform(decipher, cipher_content_buf);\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Encrypt content string using key\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction encrypt_content_str(plain_content_str, content_key) {\n    return encrypt_content(Buffer.from(plain_content_str, 'utf-8'), content_key).toString('base64')\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Decrypt content string using key\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction decrypt_content_str(cipher_content_str, content_key) {\n    return decrypt_content(Buffer.from(cipher_content_str, 'base64'), content_key).toString('utf-8')\n}\n\nconst _encrypt_object = encrypt_object;\nexport { _encrypt_object as encrypt_object };\nconst _decrypt_object = decrypt_object;\nexport { _decrypt_object as decrypt_object };\nconst _encrypt_buffer = encrypt_buffer;\nexport { _encrypt_buffer as encrypt_buffer };\nconst _decrypt_buffer = decrypt_buffer;\nexport { _decrypt_buffer as decrypt_buffer };\nconst _make_content_key = make_content_key;\nexport { _make_content_key as make_content_key };\nconst _make_content_key_noencrypt = make_content_key_noencrypt;\nexport { _make_content_key_noencrypt as make_content_key_noencrypt };\nconst _make_content_cipher_stream = make_content_cipher_stream;\nexport { _make_content_cipher_stream as make_content_cipher_stream };\nconst _make_content_decipher_stream = make_content_decipher_stream;\nexport { _make_content_decipher_stream as make_content_decipher_stream };\nconst _crypto_content_transform = crypto_content_transform;\nexport { _crypto_content_transform as crypto_content_transform };\nconst _encrypt_content = encrypt_content;\nexport { _encrypt_content as encrypt_content };\nconst _decrypt_content = decrypt_content;\nexport { _decrypt_content as decrypt_content };\nconst _encrypt_content_str = encrypt_content_str;\nexport { _encrypt_content_str as encrypt_content_str };\nconst _decrypt_content_str = decrypt_content_str;\nexport { _decrypt_content_str as decrypt_content_str };\n",
+    "static": true,
+    "longname": "/home/santer/work/revpop/revpopjs/lib/storage/src/crypto.js",
+    "access": "public",
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 662,
+    "kind": "variable",
+    "name": "CONTENT_CIPHER_ALGORITHM",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~CONTENT_CIPHER_ALGORITHM",
+    "access": "public",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 80,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 663,
+    "kind": "variable",
+    "name": "CONTENT_CIPHER_ALGORITHM_KEY_SIZE",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~CONTENT_CIPHER_ALGORITHM_KEY_SIZE",
+    "access": "public",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 81,
+    "undocument": true,
+    "type": {
+      "types": [
+        "number"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 664,
+    "kind": "variable",
+    "name": "CONTENT_CIPHER_ALGORITHM_IV_SIZE",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~CONTENT_CIPHER_ALGORITHM_IV_SIZE",
+    "access": "public",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 82,
+    "undocument": true,
+    "type": {
+      "types": [
+        "number"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 665,
+    "kind": "variable",
+    "name": "CONTENT_CIPHER_ALGORITHM_NOENCRYPT",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~CONTENT_CIPHER_ALGORITHM_NOENCRYPT",
+    "access": "public",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 83,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 666,
+    "kind": "variable",
+    "name": "_encrypt_object",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~_encrypt_object",
+    "access": "private",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 174,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 667,
+    "kind": "variable",
+    "name": "_decrypt_object",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~_decrypt_object",
+    "access": "private",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 176,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 668,
+    "kind": "variable",
+    "name": "_encrypt_buffer",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~_encrypt_buffer",
+    "access": "private",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 178,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 669,
+    "kind": "variable",
+    "name": "_decrypt_buffer",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~_decrypt_buffer",
+    "access": "private",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 180,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 670,
+    "kind": "variable",
+    "name": "_make_content_key",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~_make_content_key",
+    "access": "private",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 182,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 671,
+    "kind": "variable",
+    "name": "_make_content_key_noencrypt",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~_make_content_key_noencrypt",
+    "access": "private",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 184,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 672,
+    "kind": "variable",
+    "name": "_make_content_cipher_stream",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~_make_content_cipher_stream",
+    "access": "private",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 186,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 673,
+    "kind": "variable",
+    "name": "_make_content_decipher_stream",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~_make_content_decipher_stream",
+    "access": "private",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 188,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 674,
+    "kind": "variable",
+    "name": "_crypto_content_transform",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~_crypto_content_transform",
+    "access": "private",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 190,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 675,
+    "kind": "variable",
+    "name": "_encrypt_content",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~_encrypt_content",
+    "access": "private",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 192,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 676,
+    "kind": "variable",
+    "name": "_decrypt_content",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~_decrypt_content",
+    "access": "private",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 194,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 677,
+    "kind": "variable",
+    "name": "_encrypt_content_str",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~_encrypt_content_str",
+    "access": "private",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 196,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 678,
+    "kind": "variable",
+    "name": "_decrypt_content_str",
+    "memberof": "lib/storage/src/crypto.js",
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~_decrypt_content_str",
+    "access": "private",
+    "export": false,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 198,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    },
+    "ignore": true
+  },
+  {
+    "__docId__": 679,
+    "kind": "function",
+    "name": "encrypt_object",
+    "memberof": "lib/storage/src/crypto.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~encrypt_object",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": "{encrypt_object}",
+    "description": null,
+    "lineNumber": 27,
+    "undocument": true,
+    "params": [
+      {
+        "name": "obj",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "subject_private_key",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "operator_public_key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 680,
+    "kind": "function",
+    "name": "decrypt_object",
+    "memberof": "lib/storage/src/crypto.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~decrypt_object",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": "{decrypt_object}",
+    "description": null,
+    "lineNumber": 40,
+    "undocument": true,
+    "params": [
+      {
+        "name": "str",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "subject_public_key",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "operator_private_key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 681,
+    "kind": "function",
+    "name": "encrypt_buffer",
+    "memberof": "lib/storage/src/crypto.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~encrypt_buffer",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": "{encrypt_buffer}",
+    "description": null,
+    "lineNumber": 53,
+    "undocument": true,
+    "params": [
+      {
+        "name": "buf",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "subject_private_key",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "operator_public_key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 682,
+    "kind": "function",
+    "name": "decrypt_buffer",
+    "memberof": "lib/storage/src/crypto.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~decrypt_buffer",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": "{decrypt_buffer}",
+    "description": null,
+    "lineNumber": 66,
+    "undocument": true,
+    "params": [
+      {
+        "name": "buf",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "subject_public_key",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "operator_private_key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 683,
+    "kind": "function",
+    "name": "make_content_key",
+    "memberof": "lib/storage/src/crypto.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~make_content_key",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": "{make_content_key}",
+    "description": null,
+    "lineNumber": 88,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "{\"algo\": *, \"key\": *, \"iv\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 684,
+    "kind": "function",
+    "name": "make_content_key_noencrypt",
+    "memberof": "lib/storage/src/crypto.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~make_content_key_noencrypt",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": "{make_content_key_noencrypt}",
+    "description": null,
+    "lineNumber": 103,
+    "undocument": true,
+    "params": [],
+    "return": {
+      "types": [
+        "{\"algo\": *, \"key\": *, \"iv\": *}"
+      ]
+    }
+  },
+  {
+    "__docId__": 685,
+    "kind": "function",
+    "name": "make_content_cipher_stream",
+    "memberof": "lib/storage/src/crypto.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~make_content_cipher_stream",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": "{make_content_cipher_stream}",
+    "description": null,
+    "lineNumber": 114,
+    "undocument": true,
+    "params": [
+      {
+        "name": "content_key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 686,
+    "kind": "function",
+    "name": "make_content_decipher_stream",
+    "memberof": "lib/storage/src/crypto.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~make_content_decipher_stream",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": "{make_content_decipher_stream}",
+    "description": null,
+    "lineNumber": 126,
+    "undocument": true,
+    "params": [
+      {
+        "name": "content_key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 687,
+    "kind": "function",
+    "name": "crypto_content_transform",
+    "memberof": "lib/storage/src/crypto.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~crypto_content_transform",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": "{crypto_content_transform}",
+    "description": null,
+    "lineNumber": 138,
+    "undocument": true,
+    "params": [
+      {
+        "name": "transform",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "input",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 688,
+    "kind": "function",
+    "name": "encrypt_content",
+    "memberof": "lib/storage/src/crypto.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~encrypt_content",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": "{encrypt_content}",
+    "description": null,
+    "lineNumber": 147,
+    "undocument": true,
+    "params": [
+      {
+        "name": "plain_content_buf",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "content_key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 689,
+    "kind": "function",
+    "name": "decrypt_content",
+    "memberof": "lib/storage/src/crypto.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~decrypt_content",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": "{decrypt_content}",
+    "description": null,
+    "lineNumber": 155,
+    "undocument": true,
+    "params": [
+      {
+        "name": "cipher_content_buf",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "content_key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 690,
+    "kind": "function",
+    "name": "encrypt_content_str",
+    "memberof": "lib/storage/src/crypto.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~encrypt_content_str",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": "{encrypt_content_str}",
+    "description": null,
+    "lineNumber": 163,
+    "undocument": true,
+    "params": [
+      {
+        "name": "plain_content_str",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "content_key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 691,
+    "kind": "function",
+    "name": "decrypt_content_str",
+    "memberof": "lib/storage/src/crypto.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "lib/storage/src/crypto.js~decrypt_content_str",
+    "access": "public",
+    "export": true,
+    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
+    "importStyle": "{decrypt_content_str}",
+    "description": null,
+    "lineNumber": 170,
+    "undocument": true,
+    "params": [
+      {
+        "name": "cipher_content_str",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "content_key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
     "kind": "index",
     "content": "# RevPopJS (revpopjs)\n\nPure JavaScript RevPop library for node.js and browsers. Can be used to construct, sign and broadcast transactions in JavaScript, and to easily obtain data from the blockchain via public apis.\n\n## Setup\n\nThis library can be obtained through npm:\n\n```\nnpm install @revolutionpopuli/revpopjs\n```\n\n## Usage\n\nThree sub-libraries are included: `ECC`, `Chain` and `Serializer`. Generally only the `ECC` and `Chain` libraries need to be used directly.\n\n### Chain\n\nThis library provides utility functions to handle blockchain state as well as a login class that can be used for simple login functionality using a specific key seed.\n\n#### Login\n\nThe login class uses the following format for keys:\n\n```\nkeySeed = accountName + role + password\n```\n\nUsing this seed, private keys are generated for either the default roles `active, owner, memo`, or as specified. A minimum password length of 12 characters is enforced, but an even longer password is recommended. Three methods are provided:\n\n```\ngenerateKeys(account, password, [roles])\ncheckKeys(account, password, auths)\nsignTransaction(tr)\n```\n\nThe auths object should contain the auth arrays from the account object. An example is this:\n\n```\n{\n    active: [\n        [\"REV8S63oDiWRUUgrgvnVqpZbgcrmhNWsJ2EFbow1PtTPkfGagZkqT\", 1]\n    ]\n}\n```\n\nIf checkKeys is successful, you can use signTransaction to sign a TransactionBuilder transaction using the private keys for that account.\n\n#### State container\n\nThe Chain library contains a complete state container called the ChainStore. The ChainStore will automatically configure the `set_subscribe_callback` and handle any incoming state changes appropriately. It uses Immutable.js for storing the state, so all objects are returned as immutable objects. It has its own `subscribe` method that can be used to register a callback that will be called whenever a state change happens.\n\nThe ChainStore has several useful methods to retrieve, among other things, objects, assets and accounts using either object ids or asset/account names. These methods are synchronous and will return `undefined` to indicate fetching in progress, and `null` to indicate that the object does not exist.\n\n```\nimport {Apis} from \"@revolutionpopuli/revpopjs-ws\";\nvar {ChainStore} = require(\"revpopjs\");\n\nApis.instance(\"wss://localhost\", true).init_promise.then((res) => {\n    console.log(\"connected to:\", res[0].network);\n    ChainStore.init().then(() => {\n        ChainStore.subscribe(updateState);\n    });\n});\n\nlet dynamicGlobal = null;\nfunction updateState(object) {\n    dynamicGlobal = ChainStore.getObject(\"2.1.0\");\n    console.log(\"ChainStore object update\\n\", dynamicGlobal ? dynamicGlobal.toJS() : dynamicGlobal);\n}\n```\n\n### ECC\n\nThe ECC library contains all the crypto functions for private and public keys as well as transaction creation/signing.\n\n#### Private keys\n\nAs a quick example, here's how to generate a new private key from a seed (a brainkey for example):\n\n```\nvar {PrivateKey, key} = require(\"revpopjs\");\n\nlet seed = \"THIS IS A TERRIBLE BRAINKEY SEED WORD SEQUENCE\";\nlet pkey = PrivateKey.fromSeed( key.normalize_brainKey(seed) );\n\nconsole.log(\"\\nPrivate key:\", pkey.toWif());\nconsole.log(\"Public key :\", pkey.toPublicKey().toString(), \"\\n\");\n```\n\n#### Transactions\n\nTODO transaction signing example\n\n## ESDoc (beta)\n\n```bash\nnpm i -g esdoc esdoc-es7-plugin\nesdoc -c ./esdoc.json\nopen out/esdoc/index.html\n```\n\n## Binaries / Browserified bundles\n\nPlease have a [look here](https://github.com/Revolution-Populi/revpop-js/releases) to find your desired release.\n\nIf you want to build the binaries yourself you can clone this repository and run `npm install`. It will\ncreate\n\n-   Browserified version `build/revpopjs.js`\n-   Browserified and minified (babel) version `build/revpopjs.min.js`\n-   CommonJS version using wepback `build/revpopjs.cjs`\n\n## Contributing\nPull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.\n\nPlease make sure to update tests as appropriate.\n\n## License\n[GPLv3](https://choosealicense.com/licenses/gpl-3.0/)\n",
     "longname": "/home/santer/work/revpop/revpopjs/README.md",
@@ -12611,7 +15051,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n    \"name\": \"@revolutionpopuli/revpopjs\",\n    \"version\": \"0.4.4\",\n    \"description\": \"Pure JavaScript RevPop library for node.js and browsers.\",\n    \"browser\": {\n        \"ws\": false,\n        \"crypto\": false\n    },\n    \"scripts\": {\n        \"test\": \"cross-env BABEL_ENV=test mocha --require @babel/register --recursive\",\n        \"test:chain\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/chain --recursive --watch\",\n        \"test:trxbuilder\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/chain/TransactionBuilder.js --watch\",\n        \"test:ecc\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/ecc --recursive --watch\",\n        \"test:serializer\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/serializer --recursive\",\n        \"test:watch\": \"npm test -- --watch\",\n        \"clean\": \"rimraf dist build es\",\n        \"prebuild\": \"npm run clean\",\n        \"build\": \"cross-env BABEL_ENV=cjs babel lib -d dist\",\n        \"webpack\": \"webpack --config webpack.config.js\",\n        \"build-es\": \"cross-env BABEL_ENV=es babel lib -d es\",\n        \"postbuild\": \"npm run browserify && npm run build-es && npm run webpack\",\n        \"build:watch\": \"babel lib -d dist --watch\",\n        \"prebrowserify\": \"mkdirp build\",\n        \"browserify\": \"cross-env NODE_ENV=production browserify --full-paths false dist/browser.js --standalone revpop_js -o build/revpopjs.js -d\",\n        \"postbrowserify\": \"cross-env NODE_ENV=production minify build/revpopjs.js --mangle --outFile build/revpopjs.min.js\",\n        \"precommit\": \"pretty-quick --staged && npm run test\",\n        \"doc\": \"esdoc -c esdoc.json\",\n        \"example:asset\": \"babel-node examples/updateAsset\",\n        \"example:transfer\": \"babel-node examples/transfer\",\n        \"example:feed\": \"babel-node examples/publishFeed\",\n        \"example:co-update\": \"babel-node examples/callOrderUpdate\",\n        \"example:chainStore\": \"babel-node examples/chainStore\",\n        \"example:privKey\": \"babel-node examples/privKey\",\n        \"example:anything\": \"babel-node examples/anything\",\n        \"example:broadcast\": \"babel-node examples/broadcast\",\n        \"prepare\": \"npm run build\"\n    },\n    \"repository\": {\n        \"type\": \"git\",\n        \"url\": \"https://github.com/Revolution-Populi/revpop-js.git\"\n    },\n    \"author\": \"Revolution Populi Limited <robert.b.rosenthal@gmail.com>\",\n    \"contributors\": [\n        \"Robert Rosenthal <robert.b.rosenthal@gmail.com> (https://github.com/Revolution-Populi)\",\n        \"Sigve Kvalsvik <bitsharesblocks@gmail.com> (https://github.com/svk31)\",\n        \"James Calfee <james@jcalfee.info> (https://github.com/jcalfee/)\",\n        \"Daniel Larimer <dan@cryptonomex.com> (https://github.com/bytemaster/)\",\n        \"Valentine Zavgorodnev <valentine.zavgorodnev@gmail.com> (https://github.com/valzav/)\"\n    ],\n    \"license\": \"GPLv3\",\n    \"bugs\": {\n        \"url\": \"https://github.com/Revolution-Populi/revpop-js/issues\"\n    },\n    \"engines\": {\n        \"node\": \">= 6.0.0\"\n    },\n    \"main\": \"./dist/index.js\",\n    \"jsnext:main\": \"./es/index.js\",\n    \"dependencies\": {\n        \"bigi\": \"1.4.2\",\n        \"@revolutionpopuli/revpopjs-ws\": \"0.4.4\",\n        \"bs58\": \"4.0.1\",\n        \"bytebuffer\": \"5.0.1\",\n        \"create-hash\": \"1.2.0\",\n        \"create-hmac\": \"1.1.7\",\n        \"crypto-js\": \"3.1.9-1\",\n        \"deep-equal\": \"1.0.1\",\n        \"ecurve\": \"1.0.6\",\n        \"event-emitter\": \"0.3.5\",\n        \"immutable\": \"3.8.2\",\n        \"safe-buffer\": \"^5.2.1\",\n        \"secure-random\": \"1.1.1\"\n    },\n    \"devDependencies\": {\n        \"@babel/cli\": \"^7.11.6\",\n        \"@babel/core\": \"^7.11.6\",\n        \"@babel/node\": \"^7.10.5\",\n        \"@babel/preset-env\": \"^7.11.5\",\n        \"@babel/register\": \"^7.11.5\",\n        \"assert\": \"^2.0.0\",\n        \"babel-minify\": \"^0.5.1\",\n        \"babel-plugin-add-module-exports\": \"^1.0.4\",\n        \"babel-preset-minify\": \"^0.5.1\",\n        \"browserify\": \"^16.5.2\",\n        \"cross-env\": \"^5.2.1\",\n        \"esdoc\": \"^1.1.0\",\n        \"esdoc-standard-plugin\": \"^1.0.0\",\n        \"mocha\": \"^6.2.3\",\n        \"prettier\": \"^1.19.1\",\n        \"pretty-quick\": \"^1.11.1\",\n        \"rimraf\": \"^2.7.1\",\n        \"webpack\": \"^4.44.2\",\n        \"webpack-cli\": \"^3.3.12\"\n    }\n}\n",
+    "content": "{\n    \"name\": \"@revolutionpopuli/revpopjs\",\n    \"version\": \"0.4.5\",\n    \"description\": \"Pure JavaScript RevPop library for node.js and browsers.\",\n    \"browser\": {\n        \"ws\": false,\n        \"crypto\": false\n    },\n    \"scripts\": {\n        \"test\": \"cross-env BABEL_ENV=test mocha --require @babel/register --recursive\",\n        \"test:chain\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/chain --recursive --watch\",\n        \"test:trxbuilder\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/chain/TransactionBuilder.js --watch\",\n        \"test:ecc\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/ecc --recursive --watch\",\n        \"test:serializer\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/serializer --recursive\",\n        \"test:storage\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/storage --recursive\",\n        \"test:watch\": \"npm test -- --watch\",\n        \"clean\": \"rimraf dist build es\",\n        \"prebuild\": \"npm run clean\",\n        \"build\": \"cross-env BABEL_ENV=cjs babel lib -d dist\",\n        \"webpack\": \"webpack --config webpack.config.js\",\n        \"build-es\": \"cross-env BABEL_ENV=es babel lib -d es\",\n        \"postbuild\": \"npm run browserify && npm run build-es && npm run webpack\",\n        \"build:watch\": \"babel lib -d dist --watch\",\n        \"prebrowserify\": \"mkdirp build\",\n        \"browserify\": \"cross-env NODE_ENV=production browserify --full-paths false dist/browser.js --standalone revpop_js -o build/revpopjs.js -d\",\n        \"postbrowserify\": \"cross-env NODE_ENV=production minify build/revpopjs.js --mangle --outFile build/revpopjs.min.js\",\n        \"precommit\": \"pretty-quick --staged && npm run test\",\n        \"doc\": \"esdoc -c esdoc.json\",\n        \"example:asset\": \"babel-node examples/updateAsset\",\n        \"example:transfer\": \"babel-node examples/transfer\",\n        \"example:feed\": \"babel-node examples/publishFeed\",\n        \"example:co-update\": \"babel-node examples/callOrderUpdate\",\n        \"example:chainStore\": \"babel-node examples/chainStore\",\n        \"example:privKey\": \"babel-node examples/privKey\",\n        \"example:anything\": \"babel-node examples/anything\",\n        \"example:broadcast\": \"babel-node examples/broadcast\",\n        \"prepare\": \"npm run build\"\n    },\n    \"repository\": {\n        \"type\": \"git\",\n        \"url\": \"https://github.com/Revolution-Populi/revpop-js.git\"\n    },\n    \"author\": \"Revolution Populi Limited <robert.b.rosenthal@gmail.com>\",\n    \"contributors\": [\n        \"Robert Rosenthal <robert.b.rosenthal@gmail.com> (https://github.com/Revolution-Populi)\",\n        \"Sigve Kvalsvik <bitsharesblocks@gmail.com> (https://github.com/svk31)\",\n        \"James Calfee <james@jcalfee.info> (https://github.com/jcalfee/)\",\n        \"Daniel Larimer <dan@cryptonomex.com> (https://github.com/bytemaster/)\",\n        \"Valentine Zavgorodnev <valentine.zavgorodnev@gmail.com> (https://github.com/valzav/)\"\n    ],\n    \"license\": \"GPLv3\",\n    \"bugs\": {\n        \"url\": \"https://github.com/Revolution-Populi/revpop-js/issues\"\n    },\n    \"engines\": {\n        \"node\": \">= 6.0.0\"\n    },\n    \"main\": \"./dist/index.js\",\n    \"jsnext:main\": \"./es/index.js\",\n    \"dependencies\": {\n        \"@revolutionpopuli/revpopjs-ws\": \"0.4.5\",\n        \"aws-sdk\": \"^2.810.0\",\n        \"bigi\": \"1.4.2\",\n        \"bs58\": \"4.0.1\",\n        \"bytebuffer\": \"5.0.1\",\n        \"create-hash\": \"1.2.0\",\n        \"create-hmac\": \"1.1.7\",\n        \"crypto-js\": \"3.1.9-1\",\n        \"deep-equal\": \"1.0.1\",\n        \"ecurve\": \"1.0.6\",\n        \"event-emitter\": \"0.3.5\",\n        \"immutable\": \"3.8.2\",\n        \"ipfs-http-client\": \"^48.2.2\",\n        \"safe-buffer\": \"^5.2.1\",\n        \"secure-random\": \"1.1.1\"\n    },\n    \"devDependencies\": {\n        \"@babel/cli\": \"^7.11.6\",\n        \"@babel/core\": \"^7.11.6\",\n        \"@babel/node\": \"^7.10.5\",\n        \"@babel/plugin-transform-runtime\": \"^7.12.10\",\n        \"@babel/preset-env\": \"^7.11.5\",\n        \"@babel/register\": \"^7.11.5\",\n        \"assert\": \"^2.0.0\",\n        \"babel-minify\": \"^0.5.1\",\n        \"babel-plugin-add-module-exports\": \"^1.0.4\",\n        \"babel-preset-minify\": \"^0.5.1\",\n        \"browserify\": \"^16.5.2\",\n        \"cross-env\": \"^5.2.1\",\n        \"esdoc\": \"^1.1.0\",\n        \"esdoc-standard-plugin\": \"^1.0.0\",\n        \"mocha\": \"^6.2.3\",\n        \"prettier\": \"^1.19.1\",\n        \"pretty-quick\": \"^1.11.1\",\n        \"rimraf\": \"^2.7.1\",\n        \"webpack\": \"^4.44.2\",\n        \"webpack-cli\": \"^3.3.12\"\n    }\n}\n",
     "longname": "/home/santer/work/revpop/revpopjs/package.json",
     "name": "package.json",
     "static": true,
