@@ -13420,7 +13420,7 @@
     "__docId__": 626,
     "kind": "file",
     "name": "lib/storage/src/PersonalData.js",
-    "content": "/**\n * The Revolution Populi Project\n * Copyright (C) 2020 Revolution Populi Limited\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\nimport { randomBytes } from 'crypto-browserify';\nimport { hash, Signature } from '../../ecc';\n\nclass PersonalData {\n    constructor() {\n        ////////////////////////////////////////////////////////////////////////////////////////////////////\n        // List of personal data parts\n        // Personal data can be shared only by parts\n        // Each part specified by fields path inside of whole personal data\n        ////////////////////////////////////////////////////////////////////////////////////////////////////\n        this.PERSONAL_DATA_PART_PATHS = [\n            'name',\n            'email',\n            'phone',\n            'photo',\n        ].sort();\n\n        this.full_structure = this._defaultValue();\n        this.enabled_parts = this.PERSONAL_DATA_PART_PATHS;\n        this.salts = {};\n        this.missings = {};\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Return a new PersonalData object from the result of PersonalData.getAllParts.\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    static fromAllParts(data) {\n        const inst = new PersonalData();\n        inst.full_structure = JSON.parse(JSON.stringify(data.content));\n        inst.enabled_parts = [];\n        inst.salts = {};\n        inst.missings = {};\n        inst.PERSONAL_DATA_PART_PATHS.forEach(part_path => {\n            const part = data.parts.find(obj => obj.path === part_path);\n            if (typeof part !== 'undefined') {\n                inst.enabled_parts.push(part_path);\n                inst.salts[part_path] = part.salt;\n            }\n            const missed_part = data.missed_parts.find(obj => obj.path === part_path);\n            if (typeof missed_part !== 'undefined') {\n                inst.enabled_parts.push(part_path);\n                inst.missings[part_path] = missed_part.hash;\n            }\n        });\n\n        return inst;\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Create personal data part\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    static makeReference(url, type, hash) {\n        return {\n            url: url || '',\n            type: type || '',\n            hash: hash || '',\n        };\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Update PD fields from a flat object. Missing fields will be overwriten with default values.\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    assign(props) {\n        this.setName(props.first_name, props.last_name);\n        this.setEmail(props.email);\n        this.setPhone(props.phone);\n        this.setPhoto(props.photo);\n    }\n\n    setName(first_name, last_name) {\n        this.setFirstName(first_name);\n        this.setLastName(last_name);\n    }\n\n    setFirstName(first_name) {\n        this.full_structure.name.first = first_name || '';\n    }\n\n    setLastName(last_name) {\n        this.full_structure.name.last = last_name || '';\n    }\n\n    setEmail(email) {\n        this.full_structure.email = email || '';\n    }\n\n    setPhone(phone) {\n        this.full_structure.phone = phone || '';\n    }\n\n    setPhoto(photo) {\n        this.full_structure.photo = photo || null;\n    }\n\n    getFirstName() {\n        return this.full_structure.name.first;\n    }\n\n    getLastName() {\n        return this.full_structure.name.last;\n    }\n\n    getEmail() {\n        return this.full_structure.email;\n    }\n\n    getPhone() {\n        return this.full_structure.phone;\n    }\n\n    getPhoto() {\n        return this.full_structure.photo;\n    }\n\n    isAvailable(part_name) {\n        return typeof this.missings[part_name] === 'undefined';\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Create full personal data from its content\n    // Return personal data structure\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    getAllParts() {\n        const content = this._deepSortObjKeys(this.full_structure);\n        const res = {\n            content: {},\n            parts: [],\n            missed_parts: []\n        };\n        this.enabled_parts.forEach(part_path => {\n            const missed_hash = this._getMissed(part_path);\n            if (typeof missed_hash !== 'undefined') {\n                res.missed_parts.push({\n                    path: part_path,\n                    hash: missed_hash\n                });\n            } else {\n                let part_content = this._getObjPart(content, part_path);\n                if (part_content === undefined) {\n                    part_content = null;\n                }\n                this._putObjPart(res.content, part_path, part_content);\n                res.parts.push({\n                    path: part_path,\n                    salt: this._getSalt(part_path)\n                });\n            }\n        });\n        return res;\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Compute hash of personal data\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    getRootHash() {\n        const pd = this.getAllParts();\n        const all_parts = pd.parts.concat(pd.missed_parts).sort((a, b) => a.path.localeCompare(b.path));\n        return this._computeSha256(all_parts.map(part => {\n            return part.salt ?\n                this._computeSha256(`${part.salt}:${JSON.stringify(this._getObjPart(pd.content, part.path))}`) :\n                part.hash;\n        }).join());\n    }\n\n    makePartial(limited_parts) {\n        const inst = new PersonalData();\n        inst.enabled_parts = this.enabled_parts;\n\n        this.PERSONAL_DATA_PART_PATHS.forEach(part_path => {\n            if (limited_parts.indexOf(part_path) >= 0) {\n                inst.full_structure[part_path] = this._deepClone(this.full_structure[part_path]);\n                inst.salts[part_path] = this._getSalt(part_path);\n            } else {\n                const miss = this._getMissed(part_path);\n                if (typeof miss !== 'undefined') {\n                    inst.missings[part_path] = miss;\n                } else {\n                    inst.missings[part_path] = this._computeHash(part_path);\n                }\n            }\n        });\n\n        return inst;\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Return new object with sorted keys/values pairs from input object (handle nested objects too)\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    _deepSortObjKeys(obj) {\n        if (typeof(obj) !== 'object' || obj === null) {\n            return obj;\n        }\n        const keys = Object.keys(obj).sort();\n        let ret = {};\n        for (const key of keys) {\n            let val = obj[key];\n            ret[key] = this._deepSortObjKeys(val);\n        }\n        return ret;\n    }\n\n    _defaultValue() {\n        return {\n            name: {\n                first: '',\n                last: '',\n            },\n            email: '',\n            phone: '',\n            photo: null,\n        };\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Returns part of object with specified path\n    // Path must contains period-delimited field names\n    // For empty path returns input object\n    // Returns undefined if path not found\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    _getObjPart(obj, part_path) {\n        let ret = obj;\n        if (part_path) {\n            for (const elem of part_path.split('.')) {\n                if (elem in ret) {\n                    ret = ret[elem];\n                } else {\n                    ret = undefined;\n                    break;\n                }\n            }\n        }\n        return ret;\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Set part of object with specified path\n    // Path must contains period-delimited field names\n    // For empty path channges input object\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    _putObjPart(obj, part_path, part) {\n        const part_path_elems = part_path ? part_path.split('.') : [];\n        if (part_path_elems.length > 0) {\n            let dst = obj;\n            const prefix_elems = part_path_elems.slice(0, -1);\n            for (const elem of prefix_elems) {\n                if (elem in dst) {\n                    dst = dst[elem];\n                } else {\n                    dst = dst[elem] = {};\n                    break;\n                }\n            }\n            const last_elem = part_path_elems[part_path_elems.length - 1];\n            dst[last_elem] = part;\n        } else {\n            const old_keys = Object.keys(obj);\n            for (const k of old_keys) {\n                if (Object.prototype.hasOwnProperty.call(obj, k)) {\n                    delete obj[k];\n                }\n            }\n            const new_keys = Object.keys(part);\n            for (const k of new_keys) {\n                if (Object.prototype.hasOwnProperty.call(part, k)) {\n                    obj[k] = part[k];\n                }\n            }\n        }\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Compute SHA256 hash of string\n    // Return hex lowercase representation of hash\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    _computeSha256(str) {\n        const buf = Buffer.from(str.toString(), 'utf-8');\n        return hash.sha256(buf).toString('hex');\n    }\n\n    _getSalt(path) {\n        if (typeof this.salts[path] === 'undefined') {\n            this.salts[path] = randomBytes(8).toString('base64');\n        }\n\n        return this.salts[path];\n    }\n\n    _getMissed(path) {\n        return this.missings[path];\n    }\n\n    _computeHash(path) {\n        const salt = this._getSalt(path);\n        const content = this._deepSortObjKeys(this._getObjPart(this.full_structure, path));\n        return this._computeSha256(`${salt}:${JSON.stringify(content)}`);\n    }\n\n    _deepClone(obj) {\n        return JSON.parse(JSON.stringify(obj));\n    }\n}\n\nexport default PersonalData;\n",
+    "content": "/**\n * The Revolution Populi Project\n * Copyright (C) 2020 Revolution Populi Limited\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\nimport secureRandom from \"secure-random\";\nimport { hash, Signature } from '../../ecc';\n\nclass PersonalData {\n    constructor() {\n        ////////////////////////////////////////////////////////////////////////////////////////////////////\n        // List of personal data parts\n        // Personal data can be shared only by parts\n        // Each part specified by fields path inside of whole personal data\n        ////////////////////////////////////////////////////////////////////////////////////////////////////\n        this.PERSONAL_DATA_PART_PATHS = [\n            'name',\n            'email',\n            'phone',\n            'photo',\n        ].sort();\n\n        this.full_structure = this._defaultValue();\n        this.enabled_parts = this.PERSONAL_DATA_PART_PATHS;\n        this.salts = {};\n        this.missings = {};\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Return a new PersonalData object from the result of PersonalData.getAllParts.\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    static fromAllParts(data) {\n        const inst = new PersonalData();\n        inst.full_structure = JSON.parse(JSON.stringify(data.content));\n        inst.enabled_parts = [];\n        inst.salts = {};\n        inst.missings = {};\n        inst.PERSONAL_DATA_PART_PATHS.forEach(part_path => {\n            const part = data.parts.find(obj => obj.path === part_path);\n            if (typeof part !== 'undefined') {\n                inst.enabled_parts.push(part_path);\n                inst.salts[part_path] = part.salt;\n            }\n            const missed_part = data.missed_parts.find(obj => obj.path === part_path);\n            if (typeof missed_part !== 'undefined') {\n                inst.enabled_parts.push(part_path);\n                inst.missings[part_path] = missed_part.hash;\n            }\n        });\n\n        return inst;\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Create personal data part\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    static makeReference(url, type, hash) {\n        return {\n            url: url || '',\n            type: type || '',\n            hash: hash || '',\n        };\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Update PD fields from a flat object. Missing fields will be overwriten with default values.\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    assign(props) {\n        this.setName(props.first_name, props.last_name);\n        this.setEmail(props.email);\n        this.setPhone(props.phone);\n        this.setPhoto(props.photo);\n    }\n\n    setName(first_name, last_name) {\n        this.setFirstName(first_name);\n        this.setLastName(last_name);\n    }\n\n    setFirstName(first_name) {\n        this.full_structure.name.first = first_name || '';\n    }\n\n    setLastName(last_name) {\n        this.full_structure.name.last = last_name || '';\n    }\n\n    setEmail(email) {\n        this.full_structure.email = email || '';\n    }\n\n    setPhone(phone) {\n        this.full_structure.phone = phone || '';\n    }\n\n    setPhoto(photo) {\n        this.full_structure.photo = photo || null;\n    }\n\n    getFirstName() {\n        return this.full_structure.name.first;\n    }\n\n    getLastName() {\n        return this.full_structure.name.last;\n    }\n\n    getEmail() {\n        return this.full_structure.email;\n    }\n\n    getPhone() {\n        return this.full_structure.phone;\n    }\n\n    getPhoto() {\n        return this.full_structure.photo;\n    }\n\n    isAvailable(part_name) {\n        return typeof this.missings[part_name] === 'undefined';\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Create full personal data from its content\n    // Return personal data structure\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    getAllParts() {\n        const content = this._deepSortObjKeys(this.full_structure);\n        const res = {\n            content: {},\n            parts: [],\n            missed_parts: []\n        };\n        this.enabled_parts.forEach(part_path => {\n            const missed_hash = this._getMissed(part_path);\n            if (typeof missed_hash !== 'undefined') {\n                res.missed_parts.push({\n                    path: part_path,\n                    hash: missed_hash\n                });\n            } else {\n                let part_content = this._getObjPart(content, part_path);\n                if (part_content === undefined) {\n                    part_content = null;\n                }\n                this._putObjPart(res.content, part_path, part_content);\n                res.parts.push({\n                    path: part_path,\n                    salt: this._getSalt(part_path)\n                });\n            }\n        });\n        return res;\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Compute hash of personal data\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    getRootHash() {\n        const pd = this.getAllParts();\n        const all_parts = pd.parts.concat(pd.missed_parts).sort((a, b) => a.path.localeCompare(b.path));\n        return this._computeSha256(all_parts.map(part => {\n            return part.salt ?\n                this._computeSha256(`${part.salt}:${JSON.stringify(this._getObjPart(pd.content, part.path))}`) :\n                part.hash;\n        }).join());\n    }\n\n    makePartial(limited_parts) {\n        const inst = new PersonalData();\n        inst.enabled_parts = this.enabled_parts;\n\n        this.PERSONAL_DATA_PART_PATHS.forEach(part_path => {\n            if (limited_parts.indexOf(part_path) >= 0) {\n                inst.full_structure[part_path] = this._deepClone(this.full_structure[part_path]);\n                inst.salts[part_path] = this._getSalt(part_path);\n            } else {\n                const miss = this._getMissed(part_path);\n                if (typeof miss !== 'undefined') {\n                    inst.missings[part_path] = miss;\n                } else {\n                    inst.missings[part_path] = this._computeHash(part_path);\n                }\n            }\n        });\n\n        return inst;\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Return new object with sorted keys/values pairs from input object (handle nested objects too)\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    _deepSortObjKeys(obj) {\n        if (typeof(obj) !== 'object' || obj === null) {\n            return obj;\n        }\n        const keys = Object.keys(obj).sort();\n        let ret = {};\n        for (const key of keys) {\n            let val = obj[key];\n            ret[key] = this._deepSortObjKeys(val);\n        }\n        return ret;\n    }\n\n    _defaultValue() {\n        return {\n            name: {\n                first: '',\n                last: '',\n            },\n            email: '',\n            phone: '',\n            photo: null,\n        };\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Returns part of object with specified path\n    // Path must contains period-delimited field names\n    // For empty path returns input object\n    // Returns undefined if path not found\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    _getObjPart(obj, part_path) {\n        let ret = obj;\n        if (part_path) {\n            for (const elem of part_path.split('.')) {\n                if (elem in ret) {\n                    ret = ret[elem];\n                } else {\n                    ret = undefined;\n                    break;\n                }\n            }\n        }\n        return ret;\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Set part of object with specified path\n    // Path must contains period-delimited field names\n    // For empty path channges input object\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    _putObjPart(obj, part_path, part) {\n        const part_path_elems = part_path ? part_path.split('.') : [];\n        if (part_path_elems.length > 0) {\n            let dst = obj;\n            const prefix_elems = part_path_elems.slice(0, -1);\n            for (const elem of prefix_elems) {\n                if (elem in dst) {\n                    dst = dst[elem];\n                } else {\n                    dst = dst[elem] = {};\n                    break;\n                }\n            }\n            const last_elem = part_path_elems[part_path_elems.length - 1];\n            dst[last_elem] = part;\n        } else {\n            const old_keys = Object.keys(obj);\n            for (const k of old_keys) {\n                if (Object.prototype.hasOwnProperty.call(obj, k)) {\n                    delete obj[k];\n                }\n            }\n            const new_keys = Object.keys(part);\n            for (const k of new_keys) {\n                if (Object.prototype.hasOwnProperty.call(part, k)) {\n                    obj[k] = part[k];\n                }\n            }\n        }\n    }\n\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    // Compute SHA256 hash of string\n    // Return hex lowercase representation of hash\n    ////////////////////////////////////////////////////////////////////////////////////////////////////\n    _computeSha256(str) {\n        const buf = Buffer.from(str.toString(), 'utf-8');\n        return hash.sha256(buf).toString('hex');\n    }\n\n    _getSalt(path) {\n        if (typeof this.salts[path] === 'undefined') {\n            this.salts[path] = secureRandom.randomBuffer(8).toString('base64');\n        }\n\n        return this.salts[path];\n    }\n\n    _getMissed(path) {\n        return this.missings[path];\n    }\n\n    _computeHash(path) {\n        const salt = this._getSalt(path);\n        const content = this._deepSortObjKeys(this._getObjPart(this.full_structure, path));\n        return this._computeSha256(`${salt}:${JSON.stringify(content)}`);\n    }\n\n    _deepClone(obj) {\n        return JSON.parse(JSON.stringify(obj));\n    }\n}\n\nexport default PersonalData;\n",
     "static": true,
     "longname": "/home/santer/work/revpop/revpopjs/lib/storage/src/PersonalData.js",
     "access": "public",
@@ -14223,7 +14223,7 @@
     "__docId__": 661,
     "kind": "file",
     "name": "lib/storage/src/crypto.js",
-    "content": "/**\n * The Revolution Populi Project\n * Copyright (C) 2020 Revolution Populi Limited\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\nimport { randomBytes, createCipheriv, createDecipheriv } from 'crypto';\nimport { PassThrough } from 'stream';\nimport { key, Aes } from '../../ecc';\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Encrypt object with subject private key and operator public key\n// Return string with serialized representation of nonce and ciphertext\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction encrypt_object(obj, subject_private_key, operator_public_key) {\n    const nonce = key.random32ByteBuffer().toString('base64');\n    const cipherbuf = Aes.encrypt_with_checksum(\n        subject_private_key, operator_public_key, nonce,\n        Buffer.from(JSON.stringify(obj), 'utf-8')\n    );\n    return `${nonce}:${cipherbuf.toString('base64')}`;\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Decrypt string (serialized nonce and ciphertext data) with subject public key and operator private key\n// Return original object as before encryption\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction decrypt_object(str, subject_public_key, operator_private_key) {\n    const parts = str.split(':', 2);\n    const plainbuf = Aes.decrypt_with_checksum(\n        operator_private_key, subject_public_key, parts[0],\n        Buffer.from(parts[1], 'base64')\n    );\n    return JSON.parse(plainbuf.toString('utf-8'));\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Encrypt buffer with subject private key and operator public key\n// Return buffer (nonce and ciphertext)\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction encrypt_buffer(buf, subject_private_key, operator_public_key) {\n    const noncebuf = key.random32ByteBuffer();\n    const cipherbuf = Aes.encrypt_with_checksum(\n        subject_private_key, operator_public_key,\n        noncebuf.toString('base64'), buf\n    );\n    return Buffer.concat([ Buffer.from([ noncebuf.length ]), noncebuf, cipherbuf ]);\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Decrypt buffer (nonce and ciphertext) with subject public key and operator private key\n// Return original buffer as before encryption\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction decrypt_buffer(buf, subject_public_key, operator_private_key) {\n    const noncelen = buf.slice(0, 1)[0];\n    const noncebuf = buf.slice(1, 1 + noncelen);\n    const cipherbuf = buf.slice(1 + noncelen);\n    const plainbuf = Aes.decrypt_with_checksum(\n        operator_private_key, subject_public_key,\n        noncebuf.toString('base64'), cipherbuf\n    );\n    return plainbuf;\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Content encryption settings\n////////////////////////////////////////////////////////////////////////////////////////////////////\nconst CONTENT_CIPHER_ALGORITHM = 'aes-256-cbc';\nconst CONTENT_CIPHER_ALGORITHM_KEY_SIZE = 32;\nconst CONTENT_CIPHER_ALGORITHM_IV_SIZE = 16;\nconst CONTENT_CIPHER_ALGORITHM_NOENCRYPT = 'noencrypt';\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Create content encryption info (algorithm and random key and random IV)\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction make_content_key() {\n    return {\n        algo: CONTENT_CIPHER_ALGORITHM,\n        key: (CONTENT_CIPHER_ALGORITHM_KEY_SIZE > 0) ?\n            randomBytes(CONTENT_CIPHER_ALGORITHM_KEY_SIZE).toString('hex') :\n            null,\n        iv: (CONTENT_CIPHER_ALGORITHM_IV_SIZE > 0) ?\n            randomBytes(CONTENT_CIPHER_ALGORITHM_IV_SIZE).toString('hex') :\n            null\n    };\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Create content encryption info with no encryption\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction make_content_key_noencrypt() {\n    return {\n        algo: CONTENT_CIPHER_ALGORITHM_NOENCRYPT,\n        key: null,\n        iv: null\n    };\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Create content encryption transform stream\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction make_content_cipher_stream(content_key) {\n    if (content_key.algo === CONTENT_CIPHER_ALGORITHM_NOENCRYPT)\n        return new PassThrough();\n    return createCipheriv(\n        content_key.algo,\n        Buffer.from(content_key.key, 'hex'),\n        content_key.iv ? Buffer.from(content_key.iv, 'hex') : null);\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Create content decryption transform stream\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction make_content_decipher_stream(content_key) {\n    if (content_key.algo === CONTENT_CIPHER_ALGORITHM_NOENCRYPT)\n        return new PassThrough();\n    return createDecipheriv(\n        content_key.algo,\n        Buffer.from(content_key.key, 'hex'),\n        content_key.iv ? Buffer.from(content_key.iv, 'hex') : null);\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Transform content buffer using cipher/decipher transform\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction crypto_content_transform(transform, input) {\n    const buf_main = transform.update(input);\n    const buf_final = transform.final();\n    return Buffer.concat([ buf_main, buf_final ]);\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Encrypt content buffer using key\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction encrypt_content(plain_content_buf, content_key) {\n    const cipher = make_content_cipher_stream(content_key);\n    return crypto_content_transform(cipher, plain_content_buf);\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Decrypt content buffer using key\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction decrypt_content(cipher_content_buf, content_key) {\n    const decipher = make_content_decipher_stream(content_key);\n    return crypto_content_transform(decipher, cipher_content_buf);\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Encrypt content string using key\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction encrypt_content_str(plain_content_str, content_key) {\n    return encrypt_content(Buffer.from(plain_content_str, 'utf-8'), content_key).toString('base64')\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Decrypt content string using key\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction decrypt_content_str(cipher_content_str, content_key) {\n    return decrypt_content(Buffer.from(cipher_content_str, 'base64'), content_key).toString('utf-8')\n}\n\nconst _encrypt_object = encrypt_object;\nexport { _encrypt_object as encrypt_object };\nconst _decrypt_object = decrypt_object;\nexport { _decrypt_object as decrypt_object };\nconst _encrypt_buffer = encrypt_buffer;\nexport { _encrypt_buffer as encrypt_buffer };\nconst _decrypt_buffer = decrypt_buffer;\nexport { _decrypt_buffer as decrypt_buffer };\nconst _make_content_key = make_content_key;\nexport { _make_content_key as make_content_key };\nconst _make_content_key_noencrypt = make_content_key_noencrypt;\nexport { _make_content_key_noencrypt as make_content_key_noencrypt };\nconst _make_content_cipher_stream = make_content_cipher_stream;\nexport { _make_content_cipher_stream as make_content_cipher_stream };\nconst _make_content_decipher_stream = make_content_decipher_stream;\nexport { _make_content_decipher_stream as make_content_decipher_stream };\nconst _crypto_content_transform = crypto_content_transform;\nexport { _crypto_content_transform as crypto_content_transform };\nconst _encrypt_content = encrypt_content;\nexport { _encrypt_content as encrypt_content };\nconst _decrypt_content = decrypt_content;\nexport { _decrypt_content as decrypt_content };\nconst _encrypt_content_str = encrypt_content_str;\nexport { _encrypt_content_str as encrypt_content_str };\nconst _decrypt_content_str = decrypt_content_str;\nexport { _decrypt_content_str as decrypt_content_str };\n",
+    "content": "/**\n * The Revolution Populi Project\n * Copyright (C) 2020 Revolution Populi Limited\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\nimport secureRandom from \"secure-random\";\nimport AES from \"crypto-js/aes\";\nimport encHex from \"crypto-js/enc-hex\";\nimport { key, Aes } from '../../ecc';\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Encrypt object with subject private key and operator public key\n// Return string with serialized representation of nonce and ciphertext\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction encrypt_object(obj, subject_private_key, operator_public_key) {\n    const nonce = key.random32ByteBuffer().toString('base64');\n    const cipherbuf = Aes.encrypt_with_checksum(\n        subject_private_key, operator_public_key, nonce,\n        Buffer.from(JSON.stringify(obj), 'utf-8')\n    );\n    return `${nonce}:${cipherbuf.toString('base64')}`;\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Decrypt string (serialized nonce and ciphertext data) with subject public key and operator private key\n// Return original object as before encryption\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction decrypt_object(str, subject_public_key, operator_private_key) {\n    const parts = str.split(':', 2);\n    const plainbuf = Aes.decrypt_with_checksum(\n        operator_private_key, subject_public_key, parts[0],\n        Buffer.from(parts[1], 'base64')\n    );\n    return JSON.parse(plainbuf.toString('utf-8'));\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Encrypt buffer with subject private key and operator public key\n// Return buffer (nonce and ciphertext)\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction encrypt_buffer(buf, subject_private_key, operator_public_key) {\n    const noncebuf = key.random32ByteBuffer();\n    const cipherbuf = Aes.encrypt_with_checksum(\n        subject_private_key, operator_public_key,\n        noncebuf.toString('base64'), buf\n    );\n    return Buffer.concat([ Buffer.from([ noncebuf.length ]), noncebuf, cipherbuf ]);\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Decrypt buffer (nonce and ciphertext) with subject public key and operator private key\n// Return original buffer as before encryption\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction decrypt_buffer(buf, subject_public_key, operator_private_key) {\n    const noncelen = buf.slice(0, 1)[0];\n    const noncebuf = buf.slice(1, 1 + noncelen);\n    const cipherbuf = buf.slice(1 + noncelen);\n    const plainbuf = Aes.decrypt_with_checksum(\n        operator_private_key, subject_public_key,\n        noncebuf.toString('base64'), cipherbuf\n    );\n    return plainbuf;\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Content encryption settings\n////////////////////////////////////////////////////////////////////////////////////////////////////\nconst CONTENT_CIPHER_ALGORITHM = 'aes-256-cbc';\nconst CONTENT_CIPHER_ALGORITHM_KEY_SIZE = 32;\nconst CONTENT_CIPHER_ALGORITHM_IV_SIZE = 16;\nconst CONTENT_CIPHER_ALGORITHM_NOENCRYPT = 'noencrypt';\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Create content encryption info (algorithm and random key and random IV)\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction make_content_key() {\n    return {\n        algo: CONTENT_CIPHER_ALGORITHM,\n        key: (CONTENT_CIPHER_ALGORITHM_KEY_SIZE > 0) ?\n            secureRandom.randomBuffer(CONTENT_CIPHER_ALGORITHM_KEY_SIZE).toString('hex') :\n            null,\n        iv: (CONTENT_CIPHER_ALGORITHM_IV_SIZE > 0) ?\n            secureRandom.randomBuffer(CONTENT_CIPHER_ALGORITHM_IV_SIZE).toString('hex') :\n            null\n    };\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Create content encryption info with no encryption\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction make_content_key_noencrypt() {\n    return {\n        algo: CONTENT_CIPHER_ALGORITHM_NOENCRYPT,\n        key: null,\n        iv: null\n    };\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Transform content buffer using cipher/decipher transform\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction crypto_content_transform(transform, input) {\n    const buf_main = transform.update(input);\n    const buf_final = transform.final();\n    return Buffer.concat([ buf_main, buf_final ]);\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Encrypt content buffer using key\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction encrypt_content(plain_content_buf, content_key) {\n    if (content_key.algo === CONTENT_CIPHER_ALGORITHM_NOENCRYPT) {\n        return plain_content_buf;\n    }\n    if (content_key.algo !== CONTENT_CIPHER_ALGORITHM) {\n        throw 'Unsupported cipher algorithm ' + content_key.algo;\n    }\n    const key_WA = encHex.parse(content_key.key);\n    // if (key.length !== CONTENT_CIPHER_ALGORITHM_KEY_SIZE) {\n    //     throw 'Unsupported cipher key size' + key.length;\n    // }\n    const plain_content_WA = encHex.parse(plain_content_buf.toString('hex'));\n    const result_CP = content_key.iv ?\n        AES.encrypt(plain_content_WA, key_WA, {iv: encHex.parse(content_key.iv)}) :\n        AES.encrypt(plain_content_WA, key_WA);\n    const result_WA = result_CP.ciphertext;\n    return Buffer.from(result_WA.toString(encHex), 'hex');\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Decrypt content buffer using key\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction decrypt_content(cipher_content_buf, content_key) {\n    if (content_key.algo === CONTENT_CIPHER_ALGORITHM_NOENCRYPT) {\n        return cipher_content_buf;\n    }\n    if (content_key.algo !== CONTENT_CIPHER_ALGORITHM) {\n        throw 'Unsupported cipher algorithm ' + content_key.algo;\n    }\n    const key_WA = encHex.parse(content_key.key);\n    // if (key.length !== CONTENT_CIPHER_ALGORITHM_KEY_SIZE) {\n    //     throw 'Unsupported cipher key size' + key.length;\n    // }\n    const cipher_content_WA = encHex.parse(cipher_content_buf.toString('hex'));\n    const result_WA = content_key.iv ?\n        AES.decrypt({ciphertext: cipher_content_WA, salt: null}, key_WA, {iv: encHex.parse(content_key.iv)}) :\n        AES.decrypt({ciphertext: cipher_content_WA, salt: null}, key_WA);\n    return Buffer.from(result_WA.toString(encHex), 'hex');\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Encrypt content string using key\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction encrypt_content_str(plain_content_str, content_key) {\n    return encrypt_content(Buffer.from(plain_content_str, 'utf-8'), content_key).toString('base64')\n}\n\n////////////////////////////////////////////////////////////////////////////////////////////////////\n// Decrypt content string using key\n////////////////////////////////////////////////////////////////////////////////////////////////////\nfunction decrypt_content_str(cipher_content_str, content_key) {\n    return decrypt_content(Buffer.from(cipher_content_str, 'base64'), content_key).toString('utf-8')\n}\n\nconst _encrypt_object = encrypt_object;\nexport { _encrypt_object as encrypt_object };\nconst _decrypt_object = decrypt_object;\nexport { _decrypt_object as decrypt_object };\nconst _encrypt_buffer = encrypt_buffer;\nexport { _encrypt_buffer as encrypt_buffer };\nconst _decrypt_buffer = decrypt_buffer;\nexport { _decrypt_buffer as decrypt_buffer };\nconst _make_content_key = make_content_key;\nexport { _make_content_key as make_content_key };\nconst _make_content_key_noencrypt = make_content_key_noencrypt;\nexport { _make_content_key_noencrypt as make_content_key_noencrypt };\nconst _crypto_content_transform = crypto_content_transform;\nexport { _crypto_content_transform as crypto_content_transform };\nconst _encrypt_content = encrypt_content;\nexport { _encrypt_content as encrypt_content };\nconst _decrypt_content = decrypt_content;\nexport { _decrypt_content as decrypt_content };\nconst _encrypt_content_str = encrypt_content_str;\nexport { _encrypt_content_str as encrypt_content_str };\nconst _decrypt_content_str = decrypt_content_str;\nexport { _decrypt_content_str as decrypt_content_str };\n",
     "static": true,
     "longname": "/home/santer/work/revpop/revpopjs/lib/storage/src/crypto.js",
     "access": "public",
@@ -14242,7 +14242,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 80,
+    "lineNumber": 81,
     "undocument": true,
     "type": {
       "types": [
@@ -14263,7 +14263,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 81,
+    "lineNumber": 82,
     "undocument": true,
     "type": {
       "types": [
@@ -14284,7 +14284,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 82,
+    "lineNumber": 83,
     "undocument": true,
     "type": {
       "types": [
@@ -14305,7 +14305,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 83,
+    "lineNumber": 84,
     "undocument": true,
     "type": {
       "types": [
@@ -14326,7 +14326,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 174,
+    "lineNumber": 178,
     "undocument": true,
     "type": {
       "types": [
@@ -14347,7 +14347,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 176,
+    "lineNumber": 180,
     "undocument": true,
     "type": {
       "types": [
@@ -14368,7 +14368,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 178,
+    "lineNumber": 182,
     "undocument": true,
     "type": {
       "types": [
@@ -14389,7 +14389,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 180,
+    "lineNumber": 184,
     "undocument": true,
     "type": {
       "types": [
@@ -14410,7 +14410,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 182,
+    "lineNumber": 186,
     "undocument": true,
     "type": {
       "types": [
@@ -14431,48 +14431,6 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 184,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    },
-    "ignore": true
-  },
-  {
-    "__docId__": 672,
-    "kind": "variable",
-    "name": "_make_content_cipher_stream",
-    "memberof": "lib/storage/src/crypto.js",
-    "static": true,
-    "longname": "lib/storage/src/crypto.js~_make_content_cipher_stream",
-    "access": "private",
-    "export": false,
-    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
-    "importStyle": null,
-    "description": null,
-    "lineNumber": 186,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    },
-    "ignore": true
-  },
-  {
-    "__docId__": 673,
-    "kind": "variable",
-    "name": "_make_content_decipher_stream",
-    "memberof": "lib/storage/src/crypto.js",
-    "static": true,
-    "longname": "lib/storage/src/crypto.js~_make_content_decipher_stream",
-    "access": "private",
-    "export": false,
-    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
-    "importStyle": null,
-    "description": null,
     "lineNumber": 188,
     "undocument": true,
     "type": {
@@ -14483,7 +14441,7 @@
     "ignore": true
   },
   {
-    "__docId__": 674,
+    "__docId__": 672,
     "kind": "variable",
     "name": "_crypto_content_transform",
     "memberof": "lib/storage/src/crypto.js",
@@ -14504,7 +14462,7 @@
     "ignore": true
   },
   {
-    "__docId__": 675,
+    "__docId__": 673,
     "kind": "variable",
     "name": "_encrypt_content",
     "memberof": "lib/storage/src/crypto.js",
@@ -14525,7 +14483,7 @@
     "ignore": true
   },
   {
-    "__docId__": 676,
+    "__docId__": 674,
     "kind": "variable",
     "name": "_decrypt_content",
     "memberof": "lib/storage/src/crypto.js",
@@ -14546,7 +14504,7 @@
     "ignore": true
   },
   {
-    "__docId__": 677,
+    "__docId__": 675,
     "kind": "variable",
     "name": "_encrypt_content_str",
     "memberof": "lib/storage/src/crypto.js",
@@ -14567,7 +14525,7 @@
     "ignore": true
   },
   {
-    "__docId__": 678,
+    "__docId__": 676,
     "kind": "variable",
     "name": "_decrypt_content_str",
     "memberof": "lib/storage/src/crypto.js",
@@ -14588,7 +14546,7 @@
     "ignore": true
   },
   {
-    "__docId__": 679,
+    "__docId__": 677,
     "kind": "function",
     "name": "encrypt_object",
     "memberof": "lib/storage/src/crypto.js",
@@ -14601,7 +14559,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": "{encrypt_object}",
     "description": null,
-    "lineNumber": 27,
+    "lineNumber": 28,
     "undocument": true,
     "params": [
       {
@@ -14630,7 +14588,7 @@
     }
   },
   {
-    "__docId__": 680,
+    "__docId__": 678,
     "kind": "function",
     "name": "decrypt_object",
     "memberof": "lib/storage/src/crypto.js",
@@ -14643,7 +14601,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": "{decrypt_object}",
     "description": null,
-    "lineNumber": 40,
+    "lineNumber": 41,
     "undocument": true,
     "params": [
       {
@@ -14672,7 +14630,7 @@
     }
   },
   {
-    "__docId__": 681,
+    "__docId__": 679,
     "kind": "function",
     "name": "encrypt_buffer",
     "memberof": "lib/storage/src/crypto.js",
@@ -14685,7 +14643,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": "{encrypt_buffer}",
     "description": null,
-    "lineNumber": 53,
+    "lineNumber": 54,
     "undocument": true,
     "params": [
       {
@@ -14714,7 +14672,7 @@
     }
   },
   {
-    "__docId__": 682,
+    "__docId__": 680,
     "kind": "function",
     "name": "decrypt_buffer",
     "memberof": "lib/storage/src/crypto.js",
@@ -14727,7 +14685,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": "{decrypt_buffer}",
     "description": null,
-    "lineNumber": 66,
+    "lineNumber": 67,
     "undocument": true,
     "params": [
       {
@@ -14756,7 +14714,7 @@
     }
   },
   {
-    "__docId__": 683,
+    "__docId__": 681,
     "kind": "function",
     "name": "make_content_key",
     "memberof": "lib/storage/src/crypto.js",
@@ -14769,7 +14727,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": "{make_content_key}",
     "description": null,
-    "lineNumber": 88,
+    "lineNumber": 89,
     "undocument": true,
     "params": [],
     "return": {
@@ -14779,7 +14737,7 @@
     }
   },
   {
-    "__docId__": 684,
+    "__docId__": 682,
     "kind": "function",
     "name": "make_content_key_noencrypt",
     "memberof": "lib/storage/src/crypto.js",
@@ -14792,7 +14750,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": "{make_content_key_noencrypt}",
     "description": null,
-    "lineNumber": 103,
+    "lineNumber": 104,
     "undocument": true,
     "params": [],
     "return": {
@@ -14802,67 +14760,7 @@
     }
   },
   {
-    "__docId__": 685,
-    "kind": "function",
-    "name": "make_content_cipher_stream",
-    "memberof": "lib/storage/src/crypto.js",
-    "generator": false,
-    "async": false,
-    "static": true,
-    "longname": "lib/storage/src/crypto.js~make_content_cipher_stream",
-    "access": "public",
-    "export": true,
-    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
-    "importStyle": "{make_content_cipher_stream}",
-    "description": null,
-    "lineNumber": 114,
-    "undocument": true,
-    "params": [
-      {
-        "name": "content_key",
-        "types": [
-          "*"
-        ]
-      }
-    ],
-    "return": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 686,
-    "kind": "function",
-    "name": "make_content_decipher_stream",
-    "memberof": "lib/storage/src/crypto.js",
-    "generator": false,
-    "async": false,
-    "static": true,
-    "longname": "lib/storage/src/crypto.js~make_content_decipher_stream",
-    "access": "public",
-    "export": true,
-    "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
-    "importStyle": "{make_content_decipher_stream}",
-    "description": null,
-    "lineNumber": 126,
-    "undocument": true,
-    "params": [
-      {
-        "name": "content_key",
-        "types": [
-          "*"
-        ]
-      }
-    ],
-    "return": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 687,
+    "__docId__": 683,
     "kind": "function",
     "name": "crypto_content_transform",
     "memberof": "lib/storage/src/crypto.js",
@@ -14875,7 +14773,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": "{crypto_content_transform}",
     "description": null,
-    "lineNumber": 138,
+    "lineNumber": 115,
     "undocument": true,
     "params": [
       {
@@ -14898,7 +14796,7 @@
     }
   },
   {
-    "__docId__": 688,
+    "__docId__": 684,
     "kind": "function",
     "name": "encrypt_content",
     "memberof": "lib/storage/src/crypto.js",
@@ -14911,7 +14809,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": "{encrypt_content}",
     "description": null,
-    "lineNumber": 147,
+    "lineNumber": 124,
     "undocument": true,
     "params": [
       {
@@ -14934,7 +14832,7 @@
     }
   },
   {
-    "__docId__": 689,
+    "__docId__": 685,
     "kind": "function",
     "name": "decrypt_content",
     "memberof": "lib/storage/src/crypto.js",
@@ -14947,7 +14845,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": "{decrypt_content}",
     "description": null,
-    "lineNumber": 155,
+    "lineNumber": 146,
     "undocument": true,
     "params": [
       {
@@ -14970,7 +14868,7 @@
     }
   },
   {
-    "__docId__": 690,
+    "__docId__": 686,
     "kind": "function",
     "name": "encrypt_content_str",
     "memberof": "lib/storage/src/crypto.js",
@@ -14983,7 +14881,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": "{encrypt_content_str}",
     "description": null,
-    "lineNumber": 163,
+    "lineNumber": 167,
     "undocument": true,
     "params": [
       {
@@ -15006,7 +14904,7 @@
     }
   },
   {
-    "__docId__": 691,
+    "__docId__": 687,
     "kind": "function",
     "name": "decrypt_content_str",
     "memberof": "lib/storage/src/crypto.js",
@@ -15019,7 +14917,7 @@
     "importPath": "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js",
     "importStyle": "{decrypt_content_str}",
     "description": null,
-    "lineNumber": 170,
+    "lineNumber": 174,
     "undocument": true,
     "params": [
       {
@@ -15051,7 +14949,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n    \"name\": \"@revolutionpopuli/revpopjs\",\n    \"version\": \"0.4.5\",\n    \"description\": \"Pure JavaScript RevPop library for node.js and browsers.\",\n    \"browser\": {\n        \"ws\": false,\n        \"crypto\": false\n    },\n    \"scripts\": {\n        \"test\": \"cross-env BABEL_ENV=test mocha --require @babel/register --recursive\",\n        \"test:chain\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/chain --recursive --watch\",\n        \"test:trxbuilder\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/chain/TransactionBuilder.js --watch\",\n        \"test:ecc\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/ecc --recursive --watch\",\n        \"test:serializer\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/serializer --recursive\",\n        \"test:storage\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/storage --recursive\",\n        \"test:watch\": \"npm test -- --watch\",\n        \"clean\": \"rimraf dist build es\",\n        \"prebuild\": \"npm run clean\",\n        \"build\": \"cross-env BABEL_ENV=cjs babel lib -d dist\",\n        \"webpack\": \"webpack --config webpack.config.js\",\n        \"build-es\": \"cross-env BABEL_ENV=es babel lib -d es\",\n        \"postbuild\": \"npm run browserify && npm run build-es && npm run webpack\",\n        \"build:watch\": \"babel lib -d dist --watch\",\n        \"prebrowserify\": \"mkdirp build\",\n        \"browserify\": \"cross-env NODE_ENV=production browserify --full-paths false dist/browser.js --standalone revpop_js -o build/revpopjs.js -d\",\n        \"postbrowserify\": \"cross-env NODE_ENV=production minify build/revpopjs.js --mangle --outFile build/revpopjs.min.js\",\n        \"precommit\": \"pretty-quick --staged && npm run test\",\n        \"doc\": \"esdoc -c esdoc.json\",\n        \"example:asset\": \"babel-node examples/updateAsset\",\n        \"example:transfer\": \"babel-node examples/transfer\",\n        \"example:feed\": \"babel-node examples/publishFeed\",\n        \"example:co-update\": \"babel-node examples/callOrderUpdate\",\n        \"example:chainStore\": \"babel-node examples/chainStore\",\n        \"example:privKey\": \"babel-node examples/privKey\",\n        \"example:anything\": \"babel-node examples/anything\",\n        \"example:broadcast\": \"babel-node examples/broadcast\",\n        \"prepare\": \"npm run build\"\n    },\n    \"repository\": {\n        \"type\": \"git\",\n        \"url\": \"https://github.com/Revolution-Populi/revpop-js.git\"\n    },\n    \"author\": \"Revolution Populi Limited <robert.b.rosenthal@gmail.com>\",\n    \"contributors\": [\n        \"Robert Rosenthal <robert.b.rosenthal@gmail.com> (https://github.com/Revolution-Populi)\",\n        \"Sigve Kvalsvik <bitsharesblocks@gmail.com> (https://github.com/svk31)\",\n        \"James Calfee <james@jcalfee.info> (https://github.com/jcalfee/)\",\n        \"Daniel Larimer <dan@cryptonomex.com> (https://github.com/bytemaster/)\",\n        \"Valentine Zavgorodnev <valentine.zavgorodnev@gmail.com> (https://github.com/valzav/)\"\n    ],\n    \"license\": \"GPLv3\",\n    \"bugs\": {\n        \"url\": \"https://github.com/Revolution-Populi/revpop-js/issues\"\n    },\n    \"engines\": {\n        \"node\": \">= 6.0.0\"\n    },\n    \"main\": \"./dist/index.js\",\n    \"jsnext:main\": \"./es/index.js\",\n    \"dependencies\": {\n        \"@revolutionpopuli/revpopjs-ws\": \"0.4.5\",\n        \"aws-sdk\": \"^2.810.0\",\n        \"bigi\": \"1.4.2\",\n        \"bs58\": \"4.0.1\",\n        \"bytebuffer\": \"5.0.1\",\n        \"create-hash\": \"1.2.0\",\n        \"create-hmac\": \"1.1.7\",\n        \"crypto-js\": \"3.1.9-1\",\n        \"deep-equal\": \"1.0.1\",\n        \"ecurve\": \"1.0.6\",\n        \"event-emitter\": \"0.3.5\",\n        \"immutable\": \"3.8.2\",\n        \"ipfs-http-client\": \"^48.2.2\",\n        \"safe-buffer\": \"^5.2.1\",\n        \"secure-random\": \"1.1.1\"\n    },\n    \"devDependencies\": {\n        \"@babel/cli\": \"^7.11.6\",\n        \"@babel/core\": \"^7.11.6\",\n        \"@babel/node\": \"^7.10.5\",\n        \"@babel/plugin-transform-runtime\": \"^7.12.10\",\n        \"@babel/preset-env\": \"^7.11.5\",\n        \"@babel/register\": \"^7.11.5\",\n        \"assert\": \"^2.0.0\",\n        \"babel-minify\": \"^0.5.1\",\n        \"babel-plugin-add-module-exports\": \"^1.0.4\",\n        \"babel-preset-minify\": \"^0.5.1\",\n        \"browserify\": \"^16.5.2\",\n        \"cross-env\": \"^5.2.1\",\n        \"esdoc\": \"^1.1.0\",\n        \"esdoc-standard-plugin\": \"^1.0.0\",\n        \"mocha\": \"^6.2.3\",\n        \"prettier\": \"^1.19.1\",\n        \"pretty-quick\": \"^1.11.1\",\n        \"rimraf\": \"^2.7.1\",\n        \"webpack\": \"^4.44.2\",\n        \"webpack-cli\": \"^3.3.12\"\n    }\n}\n",
+    "content": "{\n    \"name\": \"@revolutionpopuli/revpopjs\",\n    \"version\": \"0.4.7\",\n    \"description\": \"Pure JavaScript RevPop library for node.js and browsers.\",\n    \"browser\": {\n        \"ws\": false,\n        \"crypto\": false\n    },\n    \"scripts\": {\n        \"test\": \"cross-env BABEL_ENV=test mocha --require @babel/register --recursive\",\n        \"test:chain\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/chain --recursive --watch\",\n        \"test:trxbuilder\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/chain/TransactionBuilder.js --watch\",\n        \"test:ecc\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/ecc --recursive --watch\",\n        \"test:serializer\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/serializer --recursive\",\n        \"test:storage\": \"cross-env BABEL_ENV=test mocha --require @babel/register ./test/storage --recursive\",\n        \"test:watch\": \"npm test -- --watch\",\n        \"clean\": \"rimraf dist build es\",\n        \"prebuild\": \"npm run clean\",\n        \"build\": \"cross-env BABEL_ENV=cjs babel lib -d dist\",\n        \"webpack\": \"webpack --config webpack.config.js\",\n        \"build-es\": \"cross-env BABEL_ENV=es babel lib -d es\",\n        \"postbuild\": \"npm run browserify && npm run build-es && npm run webpack\",\n        \"build:watch\": \"babel lib -d dist --watch\",\n        \"prebrowserify\": \"mkdirp build\",\n        \"browserify\": \"cross-env NODE_ENV=production browserify --full-paths false dist/browser.js --standalone revpop_js -o build/revpopjs.js -d\",\n        \"postbrowserify\": \"cross-env NODE_ENV=production minify build/revpopjs.js --mangle --outFile build/revpopjs.min.js\",\n        \"precommit\": \"pretty-quick --staged && npm run test\",\n        \"doc\": \"esdoc -c esdoc.json\",\n        \"example:asset\": \"babel-node examples/updateAsset\",\n        \"example:transfer\": \"babel-node examples/transfer\",\n        \"example:feed\": \"babel-node examples/publishFeed\",\n        \"example:co-update\": \"babel-node examples/callOrderUpdate\",\n        \"example:chainStore\": \"babel-node examples/chainStore\",\n        \"example:privKey\": \"babel-node examples/privKey\",\n        \"example:anything\": \"babel-node examples/anything\",\n        \"example:broadcast\": \"babel-node examples/broadcast\",\n        \"prepare\": \"npm run build\"\n    },\n    \"repository\": {\n        \"type\": \"git\",\n        \"url\": \"https://github.com/Revolution-Populi/revpop-js.git\"\n    },\n    \"author\": \"Revolution Populi Limited <robert.b.rosenthal@gmail.com>\",\n    \"contributors\": [\n        \"Robert Rosenthal <robert.b.rosenthal@gmail.com> (https://github.com/Revolution-Populi)\",\n        \"Sigve Kvalsvik <bitsharesblocks@gmail.com> (https://github.com/svk31)\",\n        \"James Calfee <james@jcalfee.info> (https://github.com/jcalfee/)\",\n        \"Daniel Larimer <dan@cryptonomex.com> (https://github.com/bytemaster/)\",\n        \"Valentine Zavgorodnev <valentine.zavgorodnev@gmail.com> (https://github.com/valzav/)\"\n    ],\n    \"license\": \"GPLv3\",\n    \"bugs\": {\n        \"url\": \"https://github.com/Revolution-Populi/revpop-js/issues\"\n    },\n    \"engines\": {\n        \"node\": \">= 6.0.0\"\n    },\n    \"main\": \"./dist/index.js\",\n    \"jsnext:main\": \"./es/index.js\",\n    \"dependencies\": {\n        \"@revolutionpopuli/revpopjs-ws\": \"0.4.5\",\n        \"aws-sdk\": \"^2.810.0\",\n        \"bigi\": \"1.4.2\",\n        \"bs58\": \"4.0.1\",\n        \"bytebuffer\": \"5.0.1\",\n        \"create-hash\": \"1.2.0\",\n        \"create-hmac\": \"1.1.7\",\n        \"crypto-js\": \"3.1.9-1\",\n        \"deep-equal\": \"1.0.1\",\n        \"ecurve\": \"1.0.6\",\n        \"event-emitter\": \"0.3.5\",\n        \"immutable\": \"3.8.2\",\n        \"ipfs-http-client\": \"^48.2.2\",\n        \"safe-buffer\": \"^5.2.1\",\n        \"secure-random\": \"1.1.1\"\n    },\n    \"devDependencies\": {\n        \"@babel/cli\": \"^7.11.6\",\n        \"@babel/core\": \"^7.11.6\",\n        \"@babel/node\": \"^7.10.5\",\n        \"@babel/plugin-transform-runtime\": \"^7.12.10\",\n        \"@babel/preset-env\": \"^7.11.5\",\n        \"@babel/register\": \"^7.11.5\",\n        \"assert\": \"^2.0.0\",\n        \"babel-minify\": \"^0.5.1\",\n        \"babel-plugin-add-module-exports\": \"^1.0.4\",\n        \"babel-preset-minify\": \"^0.5.1\",\n        \"browserify\": \"^16.5.2\",\n        \"cross-env\": \"^5.2.1\",\n        \"esdoc\": \"^1.1.0\",\n        \"esdoc-standard-plugin\": \"^1.0.0\",\n        \"mocha\": \"^6.2.3\",\n        \"prettier\": \"^1.19.1\",\n        \"pretty-quick\": \"^1.11.1\",\n        \"rimraf\": \"^2.7.1\",\n        \"webpack\": \"^4.44.2\",\n        \"webpack-cli\": \"^3.3.12\"\n    }\n}\n",
     "longname": "/home/santer/work/revpop/revpopjs/package.json",
     "name": "package.json",
     "static": true,

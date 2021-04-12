@@ -774,18 +774,6 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
-    "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js~make_content_cipher_stream",
-    "function/index.html#static-function-make_content_cipher_stream",
-    "<span>make_content_cipher_stream</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/crypto.js</span>",
-    "function"
-  ],
-  [
-    "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js~make_content_decipher_stream",
-    "function/index.html#static-function-make_content_decipher_stream",
-    "<span>make_content_decipher_stream</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/crypto.js</span>",
-    "function"
-  ],
-  [
     "@revolutionpopuli/revpopjs/lib/storage/src/crypto.js~make_content_key",
     "function/index.html#static-function-make_content_key",
     "<span>make_content_key</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/crypto.js</span>",

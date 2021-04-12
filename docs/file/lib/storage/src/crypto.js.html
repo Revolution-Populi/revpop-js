@@ -229,8 +229,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-encrypt_content">encrypt_content</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-encrypt_content_str">encrypt_content_str</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-encrypt_object">encrypt_object</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-make_content_cipher_stream">make_content_cipher_stream</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-make_content_decipher_stream">make_content_decipher_stream</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-make_content_key">make_content_key</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-make_content_key_noencrypt">make_content_key_noencrypt</a></span></span></li>
 </ul>
@@ -256,8 +254,9 @@
  * along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
  */
 
-import { randomBytes, createCipheriv, createDecipheriv } from &apos;crypto&apos;;
-import { PassThrough } from &apos;stream&apos;;
+import secureRandom from &quot;secure-random&quot;;
+import AES from &quot;crypto-js/aes&quot;;
+import encHex from &quot;crypto-js/enc-hex&quot;;
 import { key, Aes } from &apos;../../ecc&apos;;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -329,10 +328,10 @@ function make_content_key() {
     return {
         algo: CONTENT_CIPHER_ALGORITHM,
         key: (CONTENT_CIPHER_ALGORITHM_KEY_SIZE &gt; 0) ?
-            randomBytes(CONTENT_CIPHER_ALGORITHM_KEY_SIZE).toString(&apos;hex&apos;) :
+            secureRandom.randomBuffer(CONTENT_CIPHER_ALGORITHM_KEY_SIZE).toString(&apos;hex&apos;) :
             null,
         iv: (CONTENT_CIPHER_ALGORITHM_IV_SIZE &gt; 0) ?
-            randomBytes(CONTENT_CIPHER_ALGORITHM_IV_SIZE).toString(&apos;hex&apos;) :
+            secureRandom.randomBuffer(CONTENT_CIPHER_ALGORITHM_IV_SIZE).toString(&apos;hex&apos;) :
             null
     };
 }
@@ -349,30 +348,6 @@ function make_content_key_noencrypt() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Create content encryption transform stream
-////////////////////////////////////////////////////////////////////////////////////////////////////
-function make_content_cipher_stream(content_key) {
-    if (content_key.algo === CONTENT_CIPHER_ALGORITHM_NOENCRYPT)
-        return new PassThrough();
-    return createCipheriv(
-        content_key.algo,
-        Buffer.from(content_key.key, &apos;hex&apos;),
-        content_key.iv ? Buffer.from(content_key.iv, &apos;hex&apos;) : null);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Create content decryption transform stream
-////////////////////////////////////////////////////////////////////////////////////////////////////
-function make_content_decipher_stream(content_key) {
-    if (content_key.algo === CONTENT_CIPHER_ALGORITHM_NOENCRYPT)
-        return new PassThrough();
-    return createDecipheriv(
-        content_key.algo,
-        Buffer.from(content_key.key, &apos;hex&apos;),
-        content_key.iv ? Buffer.from(content_key.iv, &apos;hex&apos;) : null);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
 // Transform content buffer using cipher/decipher transform
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 function crypto_content_transform(transform, input) {
@@ -385,16 +360,43 @@ function crypto_content_transform(transform, input) {
 // Encrypt content buffer using key
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 function encrypt_content(plain_content_buf, content_key) {
-    const cipher = make_content_cipher_stream(content_key);
-    return crypto_content_transform(cipher, plain_content_buf);
+    if (content_key.algo === CONTENT_CIPHER_ALGORITHM_NOENCRYPT) {
+        return plain_content_buf;
+    }
+    if (content_key.algo !== CONTENT_CIPHER_ALGORITHM) {
+        throw &apos;Unsupported cipher algorithm &apos; + content_key.algo;
+    }
+    const key_WA = encHex.parse(content_key.key);
+    // if (key.length !== CONTENT_CIPHER_ALGORITHM_KEY_SIZE) {
+    //     throw &apos;Unsupported cipher key size&apos; + key.length;
+    // }
+    const plain_content_WA = encHex.parse(plain_content_buf.toString(&apos;hex&apos;));
+    const result_CP = content_key.iv ?
+        AES.encrypt(plain_content_WA, key_WA, {iv: encHex.parse(content_key.iv)}) :
+        AES.encrypt(plain_content_WA, key_WA);
+    const result_WA = result_CP.ciphertext;
+    return Buffer.from(result_WA.toString(encHex), &apos;hex&apos;);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Decrypt content buffer using key
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 function decrypt_content(cipher_content_buf, content_key) {
-    const decipher = make_content_decipher_stream(content_key);
-    return crypto_content_transform(decipher, cipher_content_buf);
+    if (content_key.algo === CONTENT_CIPHER_ALGORITHM_NOENCRYPT) {
+        return cipher_content_buf;
+    }
+    if (content_key.algo !== CONTENT_CIPHER_ALGORITHM) {
+        throw &apos;Unsupported cipher algorithm &apos; + content_key.algo;
+    }
+    const key_WA = encHex.parse(content_key.key);
+    // if (key.length !== CONTENT_CIPHER_ALGORITHM_KEY_SIZE) {
+    //     throw &apos;Unsupported cipher key size&apos; + key.length;
+    // }
+    const cipher_content_WA = encHex.parse(cipher_content_buf.toString(&apos;hex&apos;));
+    const result_WA = content_key.iv ?
+        AES.decrypt({ciphertext: cipher_content_WA, salt: null}, key_WA, {iv: encHex.parse(content_key.iv)}) :
+        AES.decrypt({ciphertext: cipher_content_WA, salt: null}, key_WA);
+    return Buffer.from(result_WA.toString(encHex), &apos;hex&apos;);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -423,10 +425,6 @@ const _make_content_key = make_content_key;
 export { _make_content_key as make_content_key };
 const _make_content_key_noencrypt = make_content_key_noencrypt;
 export { _make_content_key_noencrypt as make_content_key_noencrypt };
-const _make_content_cipher_stream = make_content_cipher_stream;
-export { _make_content_cipher_stream as make_content_cipher_stream };
-const _make_content_decipher_stream = make_content_decipher_stream;
-export { _make_content_decipher_stream as make_content_decipher_stream };
 const _crypto_content_transform = crypto_content_transform;
 export { _crypto_content_transform as crypto_content_transform };
 const _encrypt_content = encrypt_content;
