@@ -510,6 +510,18 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~commit_create_v2",
+    "variable/index.html#static-variable-commit_create_v2",
+    "<span>commit_create_v2</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~commit_create_v2_operation_fee_parameters",
+    "variable/index.html#static-variable-commit_create_v2_operation_fee_parameters",
+    "<span>commit_create_v2_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
     "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~committee_member_create",
     "variable/index.html#static-variable-committee_member_create",
     "<span>committee_member_create</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
@@ -945,6 +957,18 @@ window.esdocSearchIndex = [
     "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~reveal_create_operation_fee_parameters",
     "variable/index.html#static-variable-reveal_create_operation_fee_parameters",
     "<span>reveal_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~reveal_create_v2",
+    "variable/index.html#static-variable-reveal_create_v2",
+    "<span>reveal_create_v2</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~reveal_create_v2_operation_fee_parameters",
+    "variable/index.html#static-variable-reveal_create_v2_operation_fee_parameters",
+    "<span>reveal_create_v2_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
