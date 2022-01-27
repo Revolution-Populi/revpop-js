@@ -40,6 +40,25 @@ describe("PersonalData", () => {
             assert.deepStrictEqual(pd1.getPhoto(), PersonalData.makeReference('url2', 'image/png', 'hash', 'storage_data'));
         });
 
+        it ("Check assign", function() {
+            let pd3 = new PersonalData();
+            pd3.assign({
+                first_name: 'Sherlock',
+                last_name: 'Holmes',
+                name_title: 'Mr',
+                email: 'sh.holmes@mail.uk',
+                phone: '+44987654321',
+                photo: PersonalData.makeReference('url3', 'image/png', 'hash3', 'storage_data3')
+            });
+            assert.strictEqual(pd3.getFirstName(), 'Sherlock');
+            assert.strictEqual(pd3.getLastName(), 'Holmes');
+            assert.strictEqual(pd3.getMiddleName(), '');
+            assert.strictEqual(pd3.getNameTitle(), 'Mr');
+            assert.strictEqual(pd3.getEmail(), 'sh.holmes@mail.uk');
+            assert.strictEqual(pd3.getPhone(), '+44987654321');
+            assert.deepStrictEqual(pd3.getPhoto(), PersonalData.makeReference('url3', 'image/png', 'hash3', 'storage_data3'));
+        });
+
         it ("Serialization / deserialization", function() {
             const pd1_hash = pd1.getRootHash();
             const serialized = pd1.stringify();
