@@ -72,6 +72,10 @@ describe("PersonalData", () => {
             assert.strictEqual(pd2.getEmail(), 'bond@mi5.gov.uk');
             assert.strictEqual(pd2.getPhone(), '+44123456789');            
             assert.strictEqual(pd2.getRootHash(), pd1_hash);
+
+            const buffer = pd1.toBuffer();
+            const pd3 = PersonalData.fromBuffer(buffer);
+            assert.strictEqual(pd3.getRootHash(), pd1_hash);
         });
 
         it ("Check partial data", function() {
