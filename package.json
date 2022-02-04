@@ -59,6 +59,7 @@
     "jsnext:main": "./es/index.js",
     "dependencies": {
         "@revolutionpopuli/revpopjs-ws": "0.4.5",
+        "async": "^3.2.2",
         "aws-sdk": "^2.810.0",
         "bigi": "1.4.2",
         "bs58": "4.0.1",
@@ -69,6 +70,8 @@
         "deep-equal": "1.0.1",
         "ecurve": "1.0.6",
         "event-emitter": "0.3.5",
+        "googleapis": "^91.0.0",
+        "http2": "^3.3.7",
         "immutable": "3.8.2",
         "ipfs-http-client": "^48.2.2",
         "safe-buffer": "^5.2.1",
