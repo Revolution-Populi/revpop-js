@@ -56,3 +56,17 @@ export declare class GoogleDriveAdapter implements Adapter {
 
     remove(key: string, options?: Object): Promise<boolean>;
 }
+
+export declare class CloudStorage {
+    constructor(adapter: Adapter);
+    client: Adapter;
+    connect(): Promise<any>;
+    disconnect(): Promise<any>;
+    crypto_save_object(obj: any, subject_private_key: any, operator_public_key: any): Promise<any>;
+    crypto_load_object(id: any, subject_public_key: any, operator_private_key: any): Promise<any>;
+    crypto_save_buffer(buf: any, subject_private_key: any, operator_public_key: any): Promise<any>;
+    crypto_load_buffer(id: any, subject_public_key: any, operator_private_key: any): Promise<any>;
+    crypto_save_content(content_buf: any, content_key: any): Promise<any>;
+    crypto_load_content(id: any, content_key: any): Promise<any>;
+    del(id: any): Promise<any>;
+}

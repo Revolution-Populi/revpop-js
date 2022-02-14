@@ -1,12 +1,12 @@
-import { StorageWorld } from '../../world';
-import {After, Given, Then, When} from '@cucumber/cucumber';
-import GoogleDriveAdapterFactory from "../../../lib/storage/src/GoogleDriveAdapterFactory";
-import sinon from 'sinon';
+import {StorageWorld} from "../../world";
+import {After, Given, Then, When} from "@cucumber/cucumber";
+import sinon from "sinon";
 import fs from "fs";
 import os from "os";
-import { expect } from "chai";
-import { Credentials } from "aws-sdk";
-import { GoogleDriveAdapter } from "../../../lib";
+import {expect} from "chai";
+import {Credentials} from "aws-sdk";
+import {CloudStorage, GoogleDriveAdapter} from "../../../lib";
+import GoogleDriveNodeStorageFactory from "../../../lib/storage/src/GoogleDriveNodeStorageFactory";
 
 After(async function (this: StorageWorld) {
     if (fs.existsSync(this.tokenFile)) {
@@ -33,7 +33,7 @@ Given('I have a credentials in json format', async function (this: StorageWorld)
 })
 
 Given('google drive storage factory', async function (this: StorageWorld) {
-    this.googleDriveAdapterFactory = new GoogleDriveAdapterFactory();
+    this.googleDriveNodeStorageFactory = new GoogleDriveNodeStorageFactory();
     this.fakeToken = {
         "access_token": "fake_access_token",
         "refresh_token": "fake_refresh_token",
@@ -41,11 +41,11 @@ Given('google drive storage factory', async function (this: StorageWorld) {
         "token_type": "Bearer",
         "expiry_date": 1644338594649,
     }
-    sinon.replace(this.googleDriveAdapterFactory, 'getAccessToken' as any, sinon.fake.returns(this.fakeToken));
+    sinon.replace(this.googleDriveNodeStorageFactory, 'getAccessToken' as any, sinon.fake.returns(this.fakeToken));
 });
 
 When('I create storage', async function (this: StorageWorld) {
-    this.adapter = await this.googleDriveAdapterFactory.create(
+    this.storage = await this.googleDriveNodeStorageFactory.create(
         this.credentials,
         this.tokenFile
     )
@@ -57,5 +57,6 @@ Then('I should get storage with google drive adapter', function (this: StorageWo
     const token: Credentials = JSON.parse(fs.readFileSync(this.tokenFile).toString())
     expect(token).to.deep.equal(this.fakeToken)
 
-    expect(this.adapter).to.be.instanceof(GoogleDriveAdapter);
+    expect(this.storage).to.be.instanceof(CloudStorage);
+    expect(this.storage.client).to.be.instanceof(GoogleDriveAdapter);
 });

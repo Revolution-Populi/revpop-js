@@ -1,12 +1,12 @@
-import {setWorldConstructor, World} from '@cucumber/cucumber';
-import GoogleDriveAdapterFactory, { NodeCredentials } from "../../lib/storage/src/GoogleDriveAdapterFactory";
-import { Credentials } from "google-auth-library/build/src/auth/credentials";
-import { Adapter } from "../../lib";
+import {setWorldConstructor, World} from "@cucumber/cucumber";
+import {Credentials} from "google-auth-library/build/src/auth/credentials";
+import {CloudStorage} from "../../lib";
+import GoogleDriveNodeStorageFactory, {NodeCredentials} from "../../lib/storage/src/GoogleDriveNodeStorageFactory";
 
 export class StorageWorld extends World {
     public credentials: NodeCredentials;
-    public googleDriveAdapterFactory: GoogleDriveAdapterFactory;
-    public adapter: Adapter;
+    public googleDriveNodeStorageFactory: GoogleDriveNodeStorageFactory;
+    public storage: CloudStorage;
     public tokenFile: string;
     public fakeToken: Credentials;
 }

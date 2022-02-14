@@ -16,13 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import "colors";
+import {CloudStorage, GoogleDriveAdapter} from "../../index";
+import {Credentials} from "google-auth-library/build/src/auth/credentials";
+import {OAuth2Client} from "google-auth-library/build/src/auth/oauth2client";
+import {auth} from "@googleapis/drive";
 import fs from "fs";
 import readline from "readline";
-import {auth} from '@googleapis/drive';
-import {OAuth2Client} from "google-auth-library/build/src/auth/oauth2client";
-import {Credentials} from "google-auth-library/build/src/auth/credentials";
-import "colors"
-import { GoogleDriveAdapter } from "../../index";
 
 export interface NodeCredentials {
     installed: {
@@ -39,8 +39,8 @@ export interface NodeCredentials {
 /**
  * Google Drive client adapter for CloudStorage class.
  */
-class GoogleDriveAdapterFactory {
-    public async create(credentials: NodeCredentials, tokenPath: string): Promise<GoogleDriveAdapter> {
+class GoogleDriveNodeStorageFactory {
+    public async create(credentials: NodeCredentials, tokenPath: string): Promise<CloudStorage> {
         const {client_secret, client_id, redirect_uris} = credentials.installed;
         const oAuth2Client = new auth.OAuth2(client_id, client_secret, redirect_uris[0]);
 
@@ -57,7 +57,7 @@ class GoogleDriveAdapterFactory {
             }
         }
 
-        return new GoogleDriveAdapter({ auth: oAuth2Client, folder: "revpop" })
+        return new CloudStorage(new GoogleDriveAdapter({ auth: oAuth2Client, folder: "revpop" }))
     }
 
     private async getAccessToken(oAuth2Client: OAuth2Client): Promise<Credentials> {
@@ -89,4 +89,4 @@ class GoogleDriveAdapterFactory {
     }
 }
 
-export default GoogleDriveAdapterFactory;
+export default GoogleDriveNodeStorageFactory;
