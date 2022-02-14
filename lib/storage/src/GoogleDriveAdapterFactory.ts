@@ -22,7 +22,7 @@ import {auth} from '@googleapis/drive';
 import {OAuth2Client} from "google-auth-library/build/src/auth/oauth2client";
 import {Credentials} from "google-auth-library/build/src/auth/credentials";
 import "colors"
-import GoogleDriveAdapter from "./GoogleDriveAdapter";
+import { GoogleDriveAdapter } from "../../index";
 
 export interface NodeCredentials {
     installed: {
