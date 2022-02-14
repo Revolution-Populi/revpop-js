@@ -1,11 +1,20 @@
 import { StorageWorld } from '../../world';
-import {Given, Then, When} from '@cucumber/cucumber';
+import {After, Given, Then, When} from '@cucumber/cucumber';
 import GoogleDriveAdapterFactory from "../../../lib/storage/src/GoogleDriveAdapterFactory";
-import * as os from "os";
-// @ts-ignore
-// import assert from 'assert';
+import sinon from 'sinon';
+import fs from "fs";
+import os from "os";
+import { GoogleDriveAdapter } from "../../../lib";
+import { expect } from "chai";
+
+After(async function (this: StorageWorld) {
+    if (fs.existsSync(this.tokenFile)) {
+        fs.unlinkSync(this.tokenFile)
+    }
+});
 
 Given('I have a credentials in json format', async function (this: StorageWorld) {
+    this.tokenFile = `${os.tmpdir()}/google_token.json`;
     this.credentials = {
         installed: {
             client_id: "000000000000-here-should-be-real-client-id.apps.googleusercontent.com",
@@ -23,13 +32,25 @@ Given('I have a credentials in json format', async function (this: StorageWorld)
 });
 
 Given('google drive storage factory', async function (this: StorageWorld) {
-    this.googleDriveAdapterFactory = new GoogleDriveAdapterFactory()
+    this.googleDriveAdapterFactory = new GoogleDriveAdapterFactory();
+    const fakeTokens = {
+        "access_token": "fake_access_token",
+        "refresh_token": "fake_refresh_token",
+        "scope": "https://www.googleapis.com/auth/drive.file",
+        "token_type": "Bearer",
+        "expiry_date": 1644338594649
+    };
+    sinon.replace(this.googleDriveAdapterFactory, 'getAccessToken' as any, sinon.fake.returns(fakeTokens));
 });
 
 When('I create storage', async function (this: StorageWorld) {
-    this.googleDriveAdapterFactory.create(this.credentials, `${os.tmpdir()}/google_token.json`)
+    this.adapter = await this.googleDriveAdapterFactory.create(
+        this.credentials,
+        this.tokenFile
+    )
 });
 
 Then('I should get storage with google drive adapter', function (this: StorageWorld) {
-
+    expect(fs.existsSync(this.tokenFile)).to.be.true
+    expect(this.adapter).to.be.instanceof(GoogleDriveAdapter);
 });

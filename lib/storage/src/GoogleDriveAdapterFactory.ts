@@ -48,7 +48,7 @@ class GoogleDriveAdapterFactory {
             const token: Buffer = fs.readFileSync(tokenPath);
             oAuth2Client.setCredentials(JSON.parse(token.toString()));
         } catch (err) {
-            const tokens =  await this.getAccessToken(oAuth2Client);
+            const tokens = await this.getAccessToken(oAuth2Client);
 
             try {
                 fs.writeFileSync(tokenPath, JSON.stringify(tokens));
