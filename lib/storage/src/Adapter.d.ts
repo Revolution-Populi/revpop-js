@@ -1,6 +1,4 @@
-export default Adapter;
 declare class Adapter {
-    constructor(options?: {});
     open(): Promise<void>;
     close(): Promise<void>;
     /**
@@ -28,3 +26,5 @@ declare class Adapter {
      */
     remove(key: string, options?: Object): Promise<boolean>;
 }
+
+export default Adapter

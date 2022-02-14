@@ -18,13 +18,13 @@
 
 import fs from "fs";
 import readline from "readline";
-import google from '@googleapis/drive';
+import {auth} from '@googleapis/drive';
 import {OAuth2Client} from "google-auth-library/build/src/auth/oauth2client";
 import {Credentials} from "google-auth-library/build/src/auth/credentials";
 import "colors"
 import GoogleDriveAdapter from "./GoogleDriveAdapter";
 
-interface NodeCredentials {
+export interface NodeCredentials {
     installed: {
         client_id: string,
         project_id: string,
@@ -42,7 +42,7 @@ interface NodeCredentials {
 class GoogleDriveAdapterFactory {
     public async create(credentials: NodeCredentials, tokenPath: string): Promise<GoogleDriveAdapter> {
         const {client_secret, client_id, redirect_uris} = credentials.installed;
-        const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
+        const oAuth2Client = new auth.OAuth2(client_id, client_secret, redirect_uris[0]);
 
         try {
             const token: Buffer = fs.readFileSync(tokenPath);
@@ -59,19 +59,6 @@ class GoogleDriveAdapterFactory {
 
         return new GoogleDriveAdapter({ auth: oAuth2Client, folder: "revpop" })
     }
-
-    // private async authorize(credentials: NodeCredentials): Promise<any> {
-    //     const {client_secret, client_id, redirect_uris} = credentials.installed;
-    //     const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
-    //
-    //     try {
-    //         const token = fs.readFileSync(TOKEN_PATH);
-    //         oAuth2Client.setCredentials(JSON.parse(token));
-    //         return oAuth2Client;
-    //     } catch (err) {
-    //         return await this.getAccessToken(oAuth2Client);
-    //     }
-    // }
 
     private async getAccessToken(oAuth2Client: OAuth2Client): Promise<Credentials> {
         const authorizeUrl = oAuth2Client.generateAuthUrl({
