@@ -1,6 +1,7 @@
 {
     "presets": [
-        "./tools/es2015Preset"
+        "./tools/es2015Preset",
+        "@babel/preset-typescript"
     ],
     "env": {
         "cjs": {

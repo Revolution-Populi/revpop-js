@@ -1,12 +1,12 @@
-import {StorageWorld} from "../../world";
 import {After, Given, Then, When} from "@cucumber/cucumber";
-import sinon from "sinon";
+import {CloudStorage, GoogleDriveAdapter} from "../../../lib";
+import {Credentials} from "aws-sdk";
+import GoogleDriveNodeStorageFactory from "../../../lib/storage/src/GoogleDriveNodeStorageFactory";
+import {StorageWorld} from "../../world";
+import {expect} from "chai";
 import fs from "fs";
 import os from "os";
-import {expect} from "chai";
-import {Credentials} from "aws-sdk";
-import {CloudStorage, GoogleDriveAdapter} from "../../../lib";
-import GoogleDriveNodeStorageFactory from "../../../lib/storage/src/GoogleDriveNodeStorageFactory";
+import sinon from "sinon";
 
 After(async function (this: StorageWorld) {
     if (fs.existsSync(this.tokenFile)) {
