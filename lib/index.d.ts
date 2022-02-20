@@ -1,4 +1,6 @@
-export declare class Adapter {
+import {OAuth2Client} from "google-auth-library/build/src/auth/oauth2client";
+
+export declare interface Adapter {
     open(): Promise<void>;
     close(): Promise<void>;
     /**
@@ -8,7 +10,7 @@ export declare class Adapter {
      * @param {Object} options
      * @returns {Promise<String>}
      */
-    put(val: Uint8Array, options?: Object): Promise<string>;
+    put(val: Uint8Array, options?: any): Promise<string>;
     /**
      * Retrieve the value for the passed key
      *
@@ -16,7 +18,7 @@ export declare class Adapter {
      * @param {Object} options
      * @returns {Promise<Uint8Array>}
      */
-    get(key: string, options?: Object): Promise<Uint8Array>;
+    get(key: string, options?: any): Promise<Uint8Array>;
     /**
      * Remove the record for the passed key
      *
@@ -24,13 +26,45 @@ export declare class Adapter {
      * @param {Object} options
      * @returns {Promise<boolean>}
      */
-    remove(key: string, options?: Object): Promise<boolean>;
+    remove(key: string, options?: any): Promise<boolean>;
 }
 
-export declare class GoogleDriveAdapter implements Adapter {
-    constructor(options?: any);
-    folder: any;
-    drive: any;
+declare class IPFSAdapter implements Adapter {
+    close(): Promise<void>;
+
+    open(): Promise<void>;
+
+    /**
+     * Store the passed value
+     *
+     * @param {string|Buffer} val
+     * @param {Object} options
+     * @returns {Promise<String>}
+     */
+    put(val: Uint8Array, options?: any): Promise<any>;
+    /**
+     * Retrieve the value for the passed key
+     *
+     * @param {String} key
+     * @param {Object} options
+     * @returns {Promise<Buffer>}
+     */
+    get(key: string, options?: any): Promise<Buffer>;
+    /**
+     * Remove the record for the passed key
+     *
+     * @param {String} key
+     * @param {Object} options
+     * @returns {Promise<boolean>}
+     */
+    remove(key: string, options?: any): Promise<boolean>;
+}
+
+export declare class GoogleDriveNodeAdapter implements Adapter {
+    folder: string;
+    auth: OAuth2Client;
+
+    constructor(auth: OAuth2Client, folder: string);
 
     close(): Promise<void>;
 
@@ -43,7 +77,7 @@ export declare class GoogleDriveAdapter implements Adapter {
      * @param {Object} options
      * @returns {Promise<String>}
      */
-    put(val: Uint8Array, options?: Object): Promise<string>;
+    put(val: Uint8Array, options?: any): Promise<any>;
 
     /**
      * Retrieve the value for the passed key
@@ -52,9 +86,9 @@ export declare class GoogleDriveAdapter implements Adapter {
      * @param {Object} options
      * @returns {Promise<Buffer>}
      */
-    get(key: string, options?: Object): Promise<Buffer>;
+    get(key: string, options?: any): Promise<Buffer>;
 
-    remove(key: string, options?: Object): Promise<boolean>;
+    remove(key: string, options?: any): Promise<boolean>;
 }
 
 export declare class CloudStorage {
@@ -69,4 +103,42 @@ export declare class CloudStorage {
     crypto_save_content(content_buf: any, content_key: any): Promise<any>;
     crypto_load_content(id: any, content_key: any): Promise<any>;
     del(id: any): Promise<any>;
+}
+
+export declare class Storage {
+    public id: string;
+    public name: string;
+    type: string;
+    active: boolean;
+    options: StorageConnection;
+}
+
+declare type StorageConnection = StorageConnectionIpfs | StorageConnectionGoogleDriveWeb |
+    StorageConnectionGoogleDriveNode;
+
+declare interface StorageConnectionIpfs {
+    host: string;
+    port: number;
+    protocol: string;
+    headers?: {
+        authorization: string
+    }
+}
+
+declare interface StorageConnectionGoogleDriveWeb {
+    apiKey: string;
+    clientId: string;
+}
+
+export interface StorageConnectionGoogleDriveNode {
+    tokenPath: string,
+    installed: {
+        client_id: string,
+        project_id: string,
+        auth_uri: string,
+        token_uri: string,
+        auth_provider_x509_cert_url: string,
+        client_secret: string,
+        redirect_uris: Array<string>
+    }
 }

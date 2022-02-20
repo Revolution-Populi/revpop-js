@@ -17,47 +17,36 @@
  */
 
 import "colors";
-import {CloudStorage, GoogleDriveAdapter} from "../../index";
+import {CloudStorage, GoogleDriveNodeAdapter, StorageConnectionGoogleDriveNode} from "../../index";
 import {Credentials} from "google-auth-library/build/src/auth/credentials";
 import {OAuth2Client} from "google-auth-library/build/src/auth/oauth2client";
 import {auth} from "@googleapis/drive";
 import fs from "fs";
 import readline from "readline";
 
-export interface NodeCredentials {
-    installed: {
-        client_id: string,
-        project_id: string,
-        auth_uri: string,
-        token_uri: string,
-        auth_provider_x509_cert_url: string,
-        client_secret: string,
-        redirect_uris: Array<string>
-    }
-}
-
 /**
  * Google Drive client adapter for CloudStorage class.
  */
-class GoogleDriveNodeStorageFactory {
-    public async create(credentials: NodeCredentials, tokenPath: string): Promise<CloudStorage> {
+export default class GoogleDriveNodeStorageFactory {
+    public async create(credentials: StorageConnectionGoogleDriveNode, tokenPath: string): Promise<CloudStorage> {
         const {client_secret, client_id, redirect_uris} = credentials.installed;
         const oAuth2Client = new auth.OAuth2(client_id, client_secret, redirect_uris[0]);
 
-        try {
+        if (fs.existsSync(tokenPath)) {
             const token: Buffer = fs.readFileSync(tokenPath);
             oAuth2Client.setCredentials(JSON.parse(token.toString()));
-        } catch (err) {
-            const tokens = await this.getAccessToken(oAuth2Client);
-
-            try {
-                fs.writeFileSync(tokenPath, JSON.stringify(tokens));
-            } catch (error) {
-                throw('An error occurred while saving token.');
-            }
+            return new CloudStorage(new GoogleDriveNodeAdapter(oAuth2Client, "revpop"));
         }
 
-        return new CloudStorage(new GoogleDriveAdapter({ auth: oAuth2Client, folder: "revpop" }))
+        const tokens = await this.getAccessToken(oAuth2Client);
+
+        try {
+            fs.writeFileSync(tokenPath, JSON.stringify(tokens));
+        } catch (error) {
+            throw('An error occurred while saving token.');
+        }
+
+        return new CloudStorage(new GoogleDriveNodeAdapter(oAuth2Client, "revpop"));
     }
 
     private async getAccessToken(oAuth2Client: OAuth2Client): Promise<Credentials> {
@@ -88,5 +77,3 @@ class GoogleDriveNodeStorageFactory {
         return (await oAuth2Client.getToken(code)).tokens;
     }
 }
-
-export default GoogleDriveNodeStorageFactory;

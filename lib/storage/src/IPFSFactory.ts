@@ -16,7 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import PersonalData from './src/PersonalData'
-import cloudStorageFactory from './src/CloudStorageFactory'
+import {CloudStorage, StorageConnectionIpfs} from "../../index";
+import IPFSAdapter from "./IPFSAdapter";
 
-export { PersonalData, cloudStorageFactory }
+export default class IPFSStorageFactory {
+    public async create(connection: StorageConnectionIpfs): Promise<CloudStorage> {
+        return new Promise((resolve) => {
+            resolve(new CloudStorage(new IPFSAdapter(connection)));
+        });
+    }
+}

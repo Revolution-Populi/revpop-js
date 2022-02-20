@@ -1,12 +1,12 @@
-Feature: Google drive node storage
-  In order to upload files to google storage
+Feature: Google Drive node storage
+  In order to upload files to Google Drive storage
   As a user
-  I want to get storage class with google drive adapter
+  I want to get storage class with Google Drive node adapter
 
   Background: Credentials
-    Given I have a credentials in json format
+    Given I have a credentials for Google Drive node adapter
 
-  Scenario: get storage with google drive adapter
-    Given google drive storage factory
-    When I create storage
-    Then I should get storage with google drive adapter
+  Scenario: get storage with Google Drive node adapter
+    Given Google Drive node storage factory
+    When I create Google Drive node storage
+    Then I should get storage with Google Drive node adapter
