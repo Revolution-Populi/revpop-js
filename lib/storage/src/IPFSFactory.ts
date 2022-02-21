@@ -16,8 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {CloudStorage, StorageConnectionIpfs} from "../../index";
+import CloudStorage from "./CloudStorage";
 import IPFSAdapter from "./IPFSAdapter";
+import {StorageConnectionIpfs} from "../../index";
 
 export default class IPFSStorageFactory {
     public async create(connection: StorageConnectionIpfs): Promise<CloudStorage> {

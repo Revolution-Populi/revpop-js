@@ -17,9 +17,11 @@
  */
 
 import "colors";
-import {CloudStorage, GoogleDriveNodeAdapter, StorageConnectionGoogleDriveNode} from "../../index";
+import CloudStorage from "./CloudStorage";
 import {Credentials} from "google-auth-library/build/src/auth/credentials";
+import GoogleDriveNodeAdapter from "./GoogleDriveNodeAdapter";
 import {OAuth2Client} from "google-auth-library/build/src/auth/oauth2client";
+import {StorageConnectionGoogleDriveNode} from "../../index";
 import {auth} from "@googleapis/drive";
 import fs from "fs";
 import readline from "readline";

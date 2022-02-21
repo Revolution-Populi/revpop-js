@@ -6,7 +6,9 @@
         "ws": false,
         "crypto": false,
         "http2": false,
-        "@googleapis/drive": false
+        "@googleapis/drive": false,
+        "fs": false,
+        "readline": false
     },
     "scripts": {
         "test": "cross-env BABEL_ENV=test mocha --require @babel/register --recursive",
