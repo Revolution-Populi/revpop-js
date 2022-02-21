@@ -3,8 +3,8 @@ import {
     StorageConnectionIpfs
 } from "../../../lib";
 import {Given, Then, When} from "@cucumber/cucumber";
-import {IPFSAdapter} from "../../../lib";
-import IPFSStorageFactory from "../../../lib/storage/src/IPFSFactory";
+import IPFSAdapter from "../../../lib/storage/src/IPFSAdapter";
+import IPFSStorageFactory from "../../../lib/storage/src/IPFSStorageFactory";
 import {StorageWorld} from "../../world";
 import {expect} from "chai";
 import {ipfs} from "./credentials";

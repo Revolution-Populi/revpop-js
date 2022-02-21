@@ -1,7 +1,9 @@
 import {After, Given, Then, When} from "@cucumber/cucumber";
-import {CloudStorage, GoogleDriveNodeAdapter, StorageConnectionGoogleDriveNode} from "../../../lib";
+import {CloudStorage} from "../../../lib/storage";
 import {Credentials} from "aws-sdk";
+import GoogleDriveNodeAdapter from "../../../lib/storage/src/GoogleDriveNodeAdapter";
 import GoogleDriveNodeStorageFactory from "../../../lib/storage/src/GoogleDriveNodeStorageFactory";
+import {StorageConnectionGoogleDriveNode} from "../../../lib";
 import {StorageWorld} from "../../world";
 import {expect} from "chai";
 import fs from "fs";

@@ -3,7 +3,7 @@ import cloudStorageFactory, {AdapterType} from "../../../lib/storage/src/CloudSt
 import {googleDriveNode, googleDriveWeb, ipfs} from "./credentials";
 import GoogleDriveNodeStorageFactory from "../../../lib/storage/src/GoogleDriveNodeStorageFactory";
 import GoogleDriveWebStorageFactory from "../../../lib/storage/src/GoogleDriveWebStorageFactory";
-import IPFSFactory from "../../../lib/storage/src/IPFSFactory";
+import IPFSStorageFactory from "../../../lib/storage/src/IPFSStorageFactory";
 import {StorageConnection} from "../../../lib";
 import {StorageWorld} from "../../world";
 import {expect} from "chai";
@@ -23,7 +23,7 @@ When(/^I use storage factory to create cloud storage$/, async function (this: St
     
     switch (this.adapterType) {
         case AdapterType.IPFS:
-            fakeCreate = sinon.replace(IPFSFactory.prototype, 'create' as any, sinon.fake.returns(null));
+            fakeCreate = sinon.replace(IPFSStorageFactory.prototype, 'create' as any, sinon.fake.returns(null));
             break;
         case AdapterType.GOOGLE_DRIVE_WEB:
             fakeCreate = sinon.replace(GoogleDriveWebStorageFactory.prototype, 'create' as any, sinon.fake.returns(null));

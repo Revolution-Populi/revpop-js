@@ -5,7 +5,7 @@ import {
 import CloudStorage from "./CloudStorage";
 import GoogleDriveNodeStorageFactory from "./GoogleDriveNodeStorageFactory";
 import GoogleDriveWebStorageFactory from "./GoogleDriveWebStorageFactory";
-import IPFSFactory from "./IPFSFactory";
+import IPFSStorageFactory from "./IPFSStorageFactory";
 
 export enum AdapterType {
     IPFS = 'ipfs',
@@ -17,7 +17,7 @@ class CloudStorageFactory {
     async create(type: AdapterType, connection: StorageConnection): Promise<CloudStorage> {
         switch (type) {
             case AdapterType.IPFS:
-                return await (new IPFSFactory()).create(<StorageConnectionIpfs>connection)
+                return await (new IPFSStorageFactory()).create(<StorageConnectionIpfs>connection)
             case AdapterType.GOOGLE_DRIVE_WEB:
                 return await (new GoogleDriveWebStorageFactory()).create(<StorageConnectionGoogleDriveWeb>connection)
             case AdapterType.GOOGLE_DRIVE_NODE:
