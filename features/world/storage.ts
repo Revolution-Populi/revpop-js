@@ -3,11 +3,11 @@ import {World, setWorldConstructor} from "@cucumber/cucumber";
 import {AdapterType} from "../../lib/storage/src/CloudStorageFactory";
 import {Credentials} from "google-auth-library/build/src/auth/credentials";
 import GoogleDriveNodeStorageFactory from "../../lib/storage/src/GoogleDriveNodeStorageFactory";
-import IPFSFactory from "../../lib/storage/src/IPFSFactory";
+import IPFSStorageFactory from "../../lib/storage/src/IPFSStorageFactory";
 
 export class StorageWorld extends World {
     public credentials: StorageConnection;
-    public IPFSStorageFactory: IPFSFactory;
+    public IPFSStorageFactory: IPFSStorageFactory;
     public googleDriveNodeStorageFactory: GoogleDriveNodeStorageFactory;
     public googleDriveWebStorageFactory: GoogleDriveNodeStorageFactory;
     public storage: CloudStorage;
