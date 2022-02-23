@@ -90,6 +90,7 @@
         "@babel/preset-typescript": "^7.16.7",
         "@babel/register": "^7.11.5",
         "@types/chai": "^4.3.0",
+        "@types/ecurve": "^1.0.0",
         "@types/gapi": "0.0.41",
         "@types/gapi.auth2": "0.0.56",
         "@types/mocha": "^9.1.0",
