@@ -39,7 +39,6 @@
         "example:anything": "babel-node examples/anything",
         "example:broadcast": "babel-node examples/broadcast",
         "prepare": "npm run build",
-        "cucumber": "node ./node_modules/@cucumber/cucumber/bin/cucumber-js features/**/*.feature --require \"features/steps/**/*.ts\" --require-module ts-node/register --require features/hooks/**/*.ts --format cucumber-console-formatter --publish-quiet"
     },
     "repository": {
         "type": "git",
@@ -90,7 +89,6 @@
         "@babel/preset-env": "^7.11.5",
         "@babel/preset-typescript": "^7.16.7",
         "@babel/register": "^7.11.5",
-        "@cucumber/cucumber": "^7.3.2",
         "@types/chai": "^4.3.0",
         "@types/gapi": "0.0.41",
         "@types/gapi.auth2": "0.0.56",
@@ -106,7 +104,6 @@
         "browserify": "^16.5.2",
         "chai": "^4.3.6",
         "cross-env": "^5.2.1",
-        "cucumber-console-formatter": "^1.0.0",
         "esdoc": "^1.1.0",
         "esdoc-standard-plugin": "^1.0.0",
         "eslint": "^8.9.0",
