@@ -56,7 +56,7 @@ describe("PersonalDataRepository", () => {
         )));
 
         const personalDataRepository: PersonalDataRepository = new PersonalDataRepository(Apis, storage)
-        const personalData = await personalDataRepository.findBySubjectAndOperator(account, account);
+        const personalData = await personalDataRepository.findBySubjectAndOperator(account, "", account, "");
 
         expect(execFake.callCount).to.equal(1);
         expect(execFake.getCall(0).firstArg).to.equal('get_last_personal_data_v2');
