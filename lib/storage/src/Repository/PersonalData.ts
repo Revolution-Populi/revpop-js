@@ -11,10 +11,15 @@ export default class PersonalDataRepository {
         this.storage = storage
     }
 
-    async findBySubjectAndOperator(subjectAccount: any, operatorAccount: any): Promise<PersonalData> {
+    async findBySubjectAndOperator(subjectAccount: any, subjectPublicKey: any,
+                                   operatorAccount: any, operatorPrivateKey: any): Promise<PersonalData> {
         const personalDataBlockchain = await this.loadFromBlockchain(subjectAccount, operatorAccount);
         const personalDataCid = this.getPersonalDataCid(personalDataBlockchain.storage_data);
-        const personalDataBuffer = this.loadPersonalDataFromStorage(personalDataCid, subjectAccount, operatorAccount)
+        const personalDataBuffer = await this.loadPersonalDataFromStorage(
+            personalDataCid,
+            subjectPublicKey,
+            operatorPrivateKey
+        )
 
         return PersonalData.fromBuffer(personalDataBuffer);
     }
@@ -22,8 +27,7 @@ export default class PersonalDataRepository {
     private async loadFromBlockchain(subjectAccount: any, operatorAccount: any) {
         return await this.api.db_api().exec(
             'get_last_personal_data_v2',
-            subjectAccount.id,
-            operatorAccount.id
+            [subjectAccount.get("id"), operatorAccount.get("id")]
         );
     }
 
@@ -32,11 +36,11 @@ export default class PersonalDataRepository {
         return personalDataStorageData[2]
     }
 
-    private loadPersonalDataFromStorage(cid: string, subjectAccount: any, operatorAccount: any) {
-        return this.storage.crypto_load_buffer(
+    private async loadPersonalDataFromStorage(cid: string, subjectPublicKey: any, operatorPrivateKey: any) {
+        return await this.storage.crypto_load_buffer(
             cid,
-            subjectAccount.key.toPublicKey(),
-            operatorAccount.key
+            subjectPublicKey,
+            operatorPrivateKey
         )
     }
 }
