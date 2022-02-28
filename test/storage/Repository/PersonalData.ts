@@ -1,15 +1,14 @@
 import {CloudStorage} from "../../../lib";
 import MemoryAdapter from "../../../lib/storage/src/MemoryAdapter";
 import PersonalDataRepository from "../../../lib/storage/src/Repository/PersonalData";
-import {PrivateKey} from "../../../lib/ecc";
+// import {PrivateKey} from "../../../lib/ecc";
 import {expect} from "chai";
 import sinon from "sinon";
 
 describe("PersonalDataRepository", () => {
     describe("findBySubjectAndOperator", async () => {
-        const account: any = {
-            key: PrivateKey.fromWif('5KXbCDyCPL3eGX6xX5uJHVwoAYheF7L5fKf67oQocgJA8kNvVHF')
-        }
+        const account: Map<string, string> = new Map()
+        account.set('id', 'fake_id')
 
         const apisResponse: any = {
             "id": "1.27.12",
@@ -60,7 +59,7 @@ describe("PersonalDataRepository", () => {
 
         expect(execFake.callCount).to.equal(1);
         expect(execFake.getCall(0).firstArg).to.equal('get_last_personal_data_v2');
-        expect(execFake.calledOnceWith('get_last_personal_data_v2', account.id, account.id)).to.be.true
+        expect(execFake.calledOnceWith('get_last_personal_data_v2', account.get('id'), account.get('id'))).to.be.true
 
         expect(personalData.getFirstName()).to.equal('James');
         expect(personalData.getLastName()).to.equal('Bond');
