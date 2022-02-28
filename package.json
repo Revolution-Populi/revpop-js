@@ -11,12 +11,12 @@
         "readline": false
     },
     "scripts": {
-        "test": "cross-env BABEL_ENV=test mocha --require @babel/register --recursive",
-        "test:chain": "cross-env BABEL_ENV=test mocha --require @babel/register ./test/chain --recursive --watch",
-        "test:trxbuilder": "cross-env BABEL_ENV=test mocha --require @babel/register ./test/chain/TransactionBuilder.js --watch",
-        "test:ecc": "cross-env BABEL_ENV=test mocha --require @babel/register ./test/ecc --recursive --watch",
-        "test:serializer": "cross-env BABEL_ENV=test mocha --require @babel/register ./test/serializer --recursive",
-        "test:storage": "cross-env BABEL_ENV=test mocha -r ts-node/register --require @babel/register ./test/storage --recursive",
+        "test": "cross-env BABEL_ENV=test mocha --require ts-node/register --recursive",
+        "test:chain": "cross-env BABEL_ENV=test mocha --require ts-node/register ./test/chain --recursive --watch",
+        "test:trxbuilder": "cross-env BABEL_ENV=test mocha --require ts-node/register ./test/chain/TransactionBuilder.js --watch",
+        "test:ecc": "cross-env BABEL_ENV=test mocha --require ts-node/register ./test/ecc --recursive --watch",
+        "test:serializer": "cross-env BABEL_ENV=test mocha --require ts-node/register ./test/serializer --recursive",
+        "test:storage": "cross-env BABEL_ENV=test mocha --require ts-node/register ./test/storage --recursive",
         "test:watch": "npm test -- --watch",
         "clean": "rimraf dist build es",
         "prebuild": "npm run clean",
@@ -38,7 +38,7 @@
         "example:privKey": "babel-node examples/privKey",
         "example:anything": "babel-node examples/anything",
         "example:broadcast": "babel-node examples/broadcast",
-        "prepare": "npm run build",
+        "prepare": "npm run build"
     },
     "repository": {
         "type": "git",

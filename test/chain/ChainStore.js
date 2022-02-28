@@ -1,11 +1,11 @@
-import assert from "assert";
 import {Apis, ChainConfig} from "@revolutionpopuli/revpopjs-ws";
 import {ChainStore} from "../../lib";
+import assert from "assert";
 // var objs = require("./testObjects.json");
 
 var coreAsset;
 
-xdescribe("ChainStore", () => {
+describe("ChainStore", () => {
     // Connect once for all tests
     before(function() {
         return Apis.instance(
