@@ -1,7 +1,7 @@
 import {
     StorageConnection, StorageConnectionAmazonS3Web, StorageConnectionGoogleDriveNode,
     StorageConnectionGoogleDriveWeb, StorageConnectionIpfs
-} from "../../index";
+} from "../index";
 import AmazonS3WebStorageFactory from "./AmazonS3WebStorageFactory";
 import CloudStorage from "./CloudStorage";
 import GoogleDriveNodeStorageFactory from "./GoogleDriveNodeStorageFactory";

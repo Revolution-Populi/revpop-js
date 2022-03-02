@@ -1,7 +1,7 @@
 import "colors";
 import CloudStorage from "./CloudStorage";
 import GoogleDriveWebAdapter from "./GoogleDriveWebAdapter";
-import {StorageConnectionGoogleDriveWeb} from "../../index";
+import {StorageConnectionGoogleDriveWeb} from "../index";
 
 /**
  * TODO:complete this factory

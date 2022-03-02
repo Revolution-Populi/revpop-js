@@ -1,4 +1,4 @@
-import {Adapter} from "../../index";
+import {Adapter} from "../index";
 
 /**
  * TODO:complete this adapter
