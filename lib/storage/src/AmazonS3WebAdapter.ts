@@ -1,5 +1,6 @@
+import {Adapter, PutResponse} from "../index";
 import S3, {PutObjectRequest} from "aws-sdk/clients/s3";
-import {Adapter, PutResponse} from "../../index";
+import {sha1} from "../../ecc/src/hash";
 
 const AMAZON_S3_VERSION = "1.0"
 
@@ -22,7 +23,7 @@ export default class AmazonS3WebAdapter implements Adapter {
 
     async put(val: Uint8Array): Promise<PutResponse> {
         const request: PutObjectRequest = {
-            Key: 'qwer',
+            Key: sha1(val.toString(), 'hex'),
             Bucket: this.bucketName,
             Body: val
         }
@@ -30,7 +31,7 @@ export default class AmazonS3WebAdapter implements Adapter {
         const sendData = await managedUpload.promise()
 
         const response: PutResponse = {
-            url: 'webContentLink',
+            url: sendData.Location,
             storage_data: JSON.stringify([
                 "AMAZON_S3", AMAZON_S3_VERSION, sendData.Key
             ])
@@ -40,12 +41,24 @@ export default class AmazonS3WebAdapter implements Adapter {
     }
 
     async get(key: string): Promise<Uint8Array> {
-        console.log(key);
-        return Promise.resolve(new Uint8Array());
+        const params = {
+            Bucket: this.bucketName,
+            Key: key
+        };
+        const request = await this.s3.getObject(params);
+        const result = await request.promise();
+
+        return Promise.resolve(result.Body as Uint8Array);
     }
 
-    remove(key: string): Promise<boolean> {
-        console.log(key);
-        return Promise.resolve(false);
+    async remove(key: string): Promise<boolean> {
+        const params = {
+            Bucket: this.bucketName,
+            Key: key
+        };
+        const request = await this.s3.deleteObject(params);
+        const result = await request.promise();
+
+        return Promise.resolve(true);
     }
 }

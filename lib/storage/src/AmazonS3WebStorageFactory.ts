@@ -2,7 +2,7 @@ import "colors";
 import AWS from 'aws-sdk';
 import AmazonS3WebAdapter from "./AmazonS3WebAdapter";
 import CloudStorage from "./CloudStorage";
-import {StorageConnectionAmazonS3Web} from "../../index";
+import {StorageConnectionAmazonS3Web} from "../index";
 
 export default class AmazonS3WebStorageFactory {
     public async create(credentials: StorageConnectionAmazonS3Web): Promise<CloudStorage> {
