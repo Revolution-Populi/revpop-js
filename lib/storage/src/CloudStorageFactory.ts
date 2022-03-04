@@ -1,17 +1,14 @@
 import {
-    StorageConnection, StorageConnectionGoogleDriveNode,
-    StorageConnectionGoogleDriveWeb, StorageConnectionIpfs
+    StorageConnection,
+    StorageConnectionGoogleDriveNode,
+    StorageConnectionGoogleDriveWeb,
+    StorageConnectionIpfs
 } from "../index";
+import {AdapterType} from "./AdapterType";
 import CloudStorage from "./CloudStorage";
 import GoogleDriveNodeStorageFactory from "./GoogleDriveNodeStorageFactory";
 import GoogleDriveWebStorageFactory from "./GoogleDriveWebStorageFactory";
 import IPFSStorageFactory from "./IPFSStorageFactory";
-
-export enum AdapterType {
-    IPFS = 'ipfs',
-    GOOGLE_DRIVE_WEB = 'google_drive_web',
-    GOOGLE_DRIVE_NODE = 'google_drive_node'
-}
 
 class CloudStorageFactory {
     async create(type: AdapterType, connection: StorageConnection): Promise<CloudStorage> {
