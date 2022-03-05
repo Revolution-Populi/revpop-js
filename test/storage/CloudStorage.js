@@ -1,6 +1,7 @@
+import {CloudStorage, PrivateKey} from "../../lib";
+import MemoryAdapter from "../../lib/storage/src/MemoryAdapter";
 import assert from "assert";
 import secureRandom from "secure-random";
-import {CloudStorage, MemoryAdapter, PrivateKey} from "../../lib";
 
 describe("CloudStorage", () => {
 
