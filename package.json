@@ -11,12 +11,12 @@
         "readline": false
     },
     "scripts": {
-        "test": "cross-env BABEL_ENV=test mocha --require ts-node/register --recursive",
+        "test": "cross-env BABEL_ENV=test mocha --require ts-node/register --recursive --extension js,ts",
         "test:chain": "cross-env BABEL_ENV=test mocha --require ts-node/register ./test/chain --recursive --watch",
         "test:trxbuilder": "cross-env BABEL_ENV=test mocha --require ts-node/register ./test/chain/TransactionBuilder.js --watch",
         "test:ecc": "cross-env BABEL_ENV=test mocha --require ts-node/register ./test/ecc --recursive --watch",
         "test:serializer": "cross-env BABEL_ENV=test mocha --require ts-node/register ./test/serializer --recursive",
-        "test:storage": "cross-env BABEL_ENV=test mocha --require ts-node/register ./test/storage --recursive",
+        "test:storage": "cross-env BABEL_ENV=test mocha --require ts-node/register ./test/storage --recursive --extension js,ts",
         "test:watch": "npm test -- --watch",
         "clean": "rimraf dist build es",
         "prebuild": "npm run clean",
@@ -90,6 +90,7 @@
         "@babel/preset-typescript": "^7.16.7",
         "@babel/register": "^7.11.5",
         "@types/chai": "^4.3.0",
+        "@types/ecurve": "^1.0.0",
         "@types/gapi": "0.0.41",
         "@types/gapi.auth2": "0.0.56",
         "@types/mocha": "^9.1.0",
