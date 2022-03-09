@@ -1,8 +1,9 @@
 import {
-    StorageConnection, StorageConnectionAmazonS3Web, StorageConnectionGoogleDriveNode,
+    StorageConnection, StorageConnectionAmazonS3Node, StorageConnectionAmazonS3Web, StorageConnectionGoogleDriveNode,
     StorageConnectionGoogleDriveWeb, StorageConnectionIpfs
 } from "../index";
 import {AdapterType} from "./AdapterType";
+import AmazonS3NodeStorageFactory from "./AmazonS3NodeStorageFactory";
 import AmazonS3WebStorageFactory from "./AmazonS3WebStorageFactory";
 import CloudStorage from "./CloudStorage";
 import GoogleDriveNodeStorageFactory from "./GoogleDriveNodeStorageFactory";
@@ -24,6 +25,8 @@ class CloudStorageFactory {
                 )
             case AdapterType.AMAZON_S3_WEB:
                 return await (new AmazonS3WebStorageFactory()).create(connection as StorageConnectionAmazonS3Web)
+            case AdapterType.AMAZON_S3_NODE:
+                return await (new AmazonS3NodeStorageFactory()).create(connection as StorageConnectionAmazonS3Node)
         }
     }
 }

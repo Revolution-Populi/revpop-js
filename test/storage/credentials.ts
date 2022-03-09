@@ -1,5 +1,5 @@
 import {
-    StorageConnection,
+    StorageConnection, StorageConnectionAmazonS3Node, StorageConnectionAmazonS3Web,
     StorageConnectionGoogleDriveNode,
     StorageConnectionGoogleDriveWeb,
     StorageConnectionIpfs
@@ -34,6 +34,19 @@ const googleDriveWeb: StorageConnectionGoogleDriveWeb = {
     clientId: 'fake_client_id',
 }
 
+const amazonS3Node: StorageConnectionAmazonS3Node = {
+    region: 'fake_region',
+    access_key_id: 'fake_access_key_id',
+    secret_access_key: 'fake_secret_access_key',
+    bucket: 'bucket'
+}
+
+const amazonS3Web: StorageConnectionAmazonS3Web = {
+    region: 'fake_region',
+    identity_pool_id: 'fake_identity_pool_id',
+    bucket: 'bucket'
+}
+
 export function getCredentials(type: AdapterType): StorageConnection {
     switch (type) {
         case AdapterType.IPFS:
@@ -42,6 +55,10 @@ export function getCredentials(type: AdapterType): StorageConnection {
             return googleDriveNode;
         case AdapterType.GOOGLE_DRIVE_WEB:
             return googleDriveWeb;
+        case AdapterType.AMAZON_S3_NODE:
+            return amazonS3Node;
+        case AdapterType.AMAZON_S3_WEB:
+            return amazonS3Web;
     }
 
     throw new Error(`Invalid AdapterType: ${AdapterType}`)

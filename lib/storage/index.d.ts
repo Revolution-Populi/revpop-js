@@ -114,7 +114,7 @@ export declare class Storage {
 }
 
 declare type StorageConnection = StorageConnectionIpfs | StorageConnectionGoogleDriveWeb |
-    StorageConnectionGoogleDriveNode | StorageConnectionAmazonS3Web;
+    StorageConnectionGoogleDriveNode | StorageConnectionAmazonS3Web | StorageConnectionAmazonS3Node;
 
 declare interface StorageConnectionIpfs {
     host: string;
@@ -146,6 +146,13 @@ export interface StorageConnectionGoogleDriveNode {
 export interface StorageConnectionAmazonS3Web {
     region: string,
     identity_pool_id: string,
+    bucket: string
+}
+
+export interface StorageConnectionAmazonS3Node {
+    region: string,
+    access_key_id: string,
+    secret_access_key: string,
     bucket: string
 }
 

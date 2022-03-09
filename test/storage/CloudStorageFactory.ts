@@ -1,4 +1,6 @@
 import {AdapterType} from "../../lib/storage/src/AdapterType";
+import AmazonS3NodeStorageFactory from "../../lib/storage/src/AmazonS3NodeStorageFactory";
+import AmazonS3WebStorageFactory from "../../lib/storage/src/AmazonS3WebStorageFactory";
 import CloudStorageFactory from "../../lib/storage/src/CloudStorageFactory";
 import GoogleDriveNodeStorageFactory from "../../lib/storage/src/GoogleDriveNodeStorageFactory";
 import GoogleDriveWebStorageFactory from "../../lib/storage/src/GoogleDriveWebStorageFactory";
@@ -21,6 +23,14 @@ describe("CloudStorageFactory", () => {
             {
                 adapterType: AdapterType.GOOGLE_DRIVE_NODE,
                 factory: GoogleDriveNodeStorageFactory,
+            },
+            {
+                adapterType: AdapterType.AMAZON_S3_WEB,
+                factory: AmazonS3WebStorageFactory,
+            },
+            {
+                adapterType: AdapterType.AMAZON_S3_NODE,
+                factory: AmazonS3NodeStorageFactory,
             }
         ];
 
