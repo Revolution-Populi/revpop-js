@@ -1,8 +1,5 @@
-import {Adapter} from "../index";
+import {Adapter, PutResponse} from "../index";
 
-/**
- * TODO:complete this adapter
- */
 export default class GoogleDriveWebAdapter implements Adapter {
     private readonly auth: any;
     private readonly folder: string;
@@ -20,12 +17,20 @@ export default class GoogleDriveWebAdapter implements Adapter {
         return Promise.resolve(undefined);
     }
 
-    async put(val: Uint8Array): Promise<string> {
+    async put(val: Uint8Array): Promise<PutResponse> {
         console.log(this.auth);
         console.log(this.folder);
         console.log(val);
+
+        const response: PutResponse = {
+            url: 'webContentLink',
+            storage_data: JSON.stringify([
+                "GOOGLE_DRIVE", "", "Key"
+            ])
+        }
+
         return new Promise((resolve) => {
-            resolve('Ok')
+            resolve(response)
         })
     }
 

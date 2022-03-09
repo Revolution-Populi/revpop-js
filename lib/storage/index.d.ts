@@ -10,7 +10,7 @@ export declare interface Adapter {
      * @param {Object} options
      * @returns {Promise<String>}
      */
-    put(val: Uint8Array, options?: any): Promise<string>;
+    put(val: Uint8Array, options?: any): Promise<PutResponse>;
     /**
      * Retrieve the value for the passed key
      *
@@ -77,7 +77,7 @@ export declare class GoogleDriveNodeAdapter implements Adapter {
      * @param {Object} options
      * @returns {Promise<String>}
      */
-    put(val: Uint8Array, options?: any): Promise<any>;
+    put(val: Uint8Array, options?: any): Promise<PutResponse>;
 
     /**
      * Retrieve the value for the passed key
@@ -114,7 +114,7 @@ export declare class Storage {
 }
 
 declare type StorageConnection = StorageConnectionIpfs | StorageConnectionGoogleDriveWeb |
-    StorageConnectionGoogleDriveNode;
+    StorageConnectionGoogleDriveNode | StorageConnectionAmazonS3Web;
 
 declare interface StorageConnectionIpfs {
     host: string;
@@ -141,4 +141,15 @@ export interface StorageConnectionGoogleDriveNode {
         client_secret: string,
         redirect_uris: Array<string>
     }
+}
+
+export interface StorageConnectionAmazonS3Web {
+    region: string,
+    identity_pool_id: string,
+    bucket: string
+}
+
+export interface PutResponse {
+    url: string,
+    storage_data: string
 }
