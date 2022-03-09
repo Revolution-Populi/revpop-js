@@ -1,28 +1,28 @@
 {
   "type": "File",
   "start": 0,
-  "end": 1086,
+  "end": 663,
   "loc": {
     "start": {
       "line": 1,
       "column": 0
     },
     "end": {
-      "line": 27,
+      "line": 13,
       "column": 0
     }
   },
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 1086,
+    "end": 663,
     "loc": {
       "start": {
         "line": 1,
         "column": 0
       },
       "end": {
-        "line": 27,
+        "line": 13,
         "column": 0
       }
     },
@@ -30,133 +30,44 @@
     "body": [
       {
         "type": "ImportDeclaration",
-        "start": 739,
-        "end": 774,
+        "start": 0,
+        "end": 45,
         "loc": {
           "start": {
-            "line": 19,
+            "line": 1,
             "column": 0
           },
           "end": {
-            "line": 19,
-            "column": 35
-          }
-        },
-        "specifiers": [
-          {
-            "type": "ImportDefaultSpecifier",
-            "start": 746,
-            "end": 753,
-            "loc": {
-              "start": {
-                "line": 19,
-                "column": 7
-              },
-              "end": {
-                "line": 19,
-                "column": 14
-              }
-            },
-            "local": {
-              "type": "Identifier",
-              "start": 746,
-              "end": 753,
-              "loc": {
-                "start": {
-                  "line": 19,
-                  "column": 7
-                },
-                "end": {
-                  "line": 19,
-                  "column": 14
-                },
-                "identifierName": "Adapter"
-              },
-              "name": "Adapter",
-              "leadingComments": null
-            },
-            "leadingComments": null
-          }
-        ],
-        "source": {
-          "type": "StringLiteral",
-          "start": 759,
-          "end": 774,
-          "loc": {
-            "start": {
-              "line": 19,
-              "column": 20
-            },
-            "end": {
-              "line": 19,
-              "column": 35
-            }
-          },
-          "extra": {
-            "rawValue": "./src/Adapter",
-            "raw": "'./src/Adapter'"
-          },
-          "value": "./src/Adapter"
-        },
-        "leadingComments": [
-          {
-            "type": "CommentBlock",
-            "value": "*\n * The Revolution Populi Project\n * Copyright (C) 2020 Revolution Populi Limited\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n ",
-            "start": 0,
-            "end": 737,
-            "loc": {
-              "start": {
-                "line": 1,
-                "column": 0
-              },
-              "end": {
-                "line": 17,
-                "column": 3
-              }
-            }
-          }
-        ]
-      },
-      {
-        "type": "ImportDeclaration",
-        "start": 775,
-        "end": 820,
-        "loc": {
-          "start": {
-            "line": 20,
-            "column": 0
-          },
-          "end": {
-            "line": 20,
+            "line": 1,
             "column": 45
           }
         },
         "specifiers": [
           {
             "type": "ImportDefaultSpecifier",
-            "start": 782,
-            "end": 794,
+            "start": 7,
+            "end": 19,
             "loc": {
               "start": {
-                "line": 20,
+                "line": 1,
                 "column": 7
               },
               "end": {
-                "line": 20,
+                "line": 1,
                 "column": 19
               }
             },
             "local": {
               "type": "Identifier",
-              "start": 782,
-              "end": 794,
+              "start": 7,
+              "end": 19,
               "loc": {
                 "start": {
-                  "line": 20,
+                  "line": 1,
                   "column": 7
                 },
                 "end": {
-                  "line": 20,
+                  "line": 1,
                   "column": 19
                 },
                 "identifierName": "CloudStorage"
@@ -167,15 +78,15 @@
         ],
         "source": {
           "type": "StringLiteral",
-          "start": 800,
-          "end": 820,
+          "start": 25,
+          "end": 45,
           "loc": {
             "start": {
-              "line": 20,
+              "line": 1,
               "column": 25
             },
             "end": {
-              "line": 20,
+              "line": 1,
               "column": 45
             }
           },
@@ -188,44 +99,113 @@
       },
       {
         "type": "ImportDeclaration",
-        "start": 821,
-        "end": 864,
+        "start": 46,
+        "end": 105,
         "loc": {
           "start": {
-            "line": 21,
+            "line": 2,
             "column": 0
           },
           "end": {
-            "line": 21,
+            "line": 2,
+            "column": 59
+          }
+        },
+        "specifiers": [
+          {
+            "type": "ImportDefaultSpecifier",
+            "start": 53,
+            "end": 72,
+            "loc": {
+              "start": {
+                "line": 2,
+                "column": 7
+              },
+              "end": {
+                "line": 2,
+                "column": 26
+              }
+            },
+            "local": {
+              "type": "Identifier",
+              "start": 53,
+              "end": 72,
+              "loc": {
+                "start": {
+                  "line": 2,
+                  "column": 7
+                },
+                "end": {
+                  "line": 2,
+                  "column": 26
+                },
+                "identifierName": "CloudStorageFactory"
+              },
+              "name": "CloudStorageFactory"
+            }
+          }
+        ],
+        "source": {
+          "type": "StringLiteral",
+          "start": 78,
+          "end": 105,
+          "loc": {
+            "start": {
+              "line": 2,
+              "column": 32
+            },
+            "end": {
+              "line": 2,
+              "column": 59
+            }
+          },
+          "extra": {
+            "rawValue": "./src/CloudStorageFactory",
+            "raw": "'./src/CloudStorageFactory'"
+          },
+          "value": "./src/CloudStorageFactory"
+        }
+      },
+      {
+        "type": "ImportDeclaration",
+        "start": 106,
+        "end": 149,
+        "loc": {
+          "start": {
+            "line": 3,
+            "column": 0
+          },
+          "end": {
+            "line": 3,
             "column": 43
           }
         },
         "specifiers": [
           {
             "type": "ImportDefaultSpecifier",
-            "start": 828,
-            "end": 839,
+            "start": 113,
+            "end": 124,
             "loc": {
               "start": {
-                "line": 21,
+                "line": 3,
                 "column": 7
               },
               "end": {
-                "line": 21,
+                "line": 3,
                 "column": 18
               }
             },
             "local": {
               "type": "Identifier",
-              "start": 828,
-              "end": 839,
+              "start": 113,
+              "end": 124,
               "loc": {
                 "start": {
-                  "line": 21,
+                  "line": 3,
                   "column": 7
                 },
                 "end": {
-                  "line": 21,
+                  "line": 3,
                   "column": 18
                 },
                 "identifierName": "IPFSAdapter"
@@ -236,15 +216,15 @@
         ],
         "source": {
           "type": "StringLiteral",
-          "start": 845,
-          "end": 864,
+          "start": 130,
+          "end": 149,
           "loc": {
             "start": {
-              "line": 21,
+              "line": 3,
               "column": 24
             },
             "end": {
-              "line": 21,
+              "line": 3,
               "column": 43
             }
           },
@@ -257,113 +237,44 @@
       },
       {
         "type": "ImportDeclaration",
-        "start": 865,
-        "end": 912,
+        "start": 150,
+        "end": 195,
         "loc": {
           "start": {
-            "line": 22,
+            "line": 4,
             "column": 0
           },
           "end": {
-            "line": 22,
-            "column": 47
-          }
-        },
-        "specifiers": [
-          {
-            "type": "ImportDefaultSpecifier",
-            "start": 872,
-            "end": 885,
-            "loc": {
-              "start": {
-                "line": 22,
-                "column": 7
-              },
-              "end": {
-                "line": 22,
-                "column": 20
-              }
-            },
-            "local": {
-              "type": "Identifier",
-              "start": 872,
-              "end": 885,
-              "loc": {
-                "start": {
-                  "line": 22,
-                  "column": 7
-                },
-                "end": {
-                  "line": 22,
-                  "column": 20
-                },
-                "identifierName": "MemoryAdapter"
-              },
-              "name": "MemoryAdapter"
-            }
-          }
-        ],
-        "source": {
-          "type": "StringLiteral",
-          "start": 891,
-          "end": 912,
-          "loc": {
-            "start": {
-              "line": 22,
-              "column": 26
-            },
-            "end": {
-              "line": 22,
-              "column": 47
-            }
-          },
-          "extra": {
-            "rawValue": "./src/MemoryAdapter",
-            "raw": "'./src/MemoryAdapter'"
-          },
-          "value": "./src/MemoryAdapter"
-        }
-      },
-      {
-        "type": "ImportDeclaration",
-        "start": 913,
-        "end": 958,
-        "loc": {
-          "start": {
-            "line": 23,
-            "column": 0
-          },
-          "end": {
-            "line": 23,
+            "line": 4,
             "column": 45
           }
         },
         "specifiers": [
           {
             "type": "ImportDefaultSpecifier",
-            "start": 920,
-            "end": 932,
+            "start": 157,
+            "end": 169,
             "loc": {
               "start": {
-                "line": 23,
+                "line": 4,
                 "column": 7
               },
               "end": {
-                "line": 23,
+                "line": 4,
                 "column": 19
               }
             },
             "local": {
               "type": "Identifier",
-              "start": 920,
-              "end": 932,
+              "start": 157,
+              "end": 169,
               "loc": {
                 "start": {
-                  "line": 23,
+                  "line": 4,
                   "column": 7
                 },
                 "end": {
-                  "line": 23,
+                  "line": 4,
                   "column": 19
                 },
                 "identifierName": "PersonalData"
@@ -374,15 +285,15 @@
         ],
         "source": {
           "type": "StringLiteral",
-          "start": 938,
-          "end": 958,
+          "start": 175,
+          "end": 195,
           "loc": {
             "start": {
-              "line": 23,
+              "line": 4,
               "column": 25
             },
             "end": {
-              "line": 23,
+              "line": 4,
               "column": 45
             }
           },
@@ -395,311 +306,184 @@
       },
       {
         "type": "ImportDeclaration",
-        "start": 959,
-        "end": 998,
+        "start": 196,
+        "end": 282,
         "loc": {
           "start": {
-            "line": 24,
+            "line": 5,
             "column": 0
           },
           "end": {
-            "line": 24,
-            "column": 39
+            "line": 5,
+            "column": 86
           }
         },
         "specifiers": [
           {
             "type": "ImportDefaultSpecifier",
-            "start": 966,
-            "end": 975,
+            "start": 203,
+            "end": 235,
             "loc": {
               "start": {
-                "line": 24,
+                "line": 5,
                 "column": 7
               },
               "end": {
-                "line": 24,
-                "column": 16
+                "line": 5,
+                "column": 39
               }
             },
             "local": {
               "type": "Identifier",
-              "start": 966,
-              "end": 975,
+              "start": 203,
+              "end": 235,
               "loc": {
                 "start": {
-                  "line": 24,
+                  "line": 5,
                   "column": 7
                 },
                 "end": {
-                  "line": 24,
-                  "column": 16
+                  "line": 5,
+                  "column": 39
                 },
-                "identifierName": "S3Adapter"
+                "identifierName": "PersonalDataBlockchainRepository"
               },
-              "name": "S3Adapter"
+              "name": "PersonalDataBlockchainRepository"
             }
           }
         ],
         "source": {
           "type": "StringLiteral",
-          "start": 981,
-          "end": 998,
+          "start": 241,
+          "end": 282,
           "loc": {
             "start": {
-              "line": 24,
-              "column": 22
+              "line": 5,
+              "column": 45
             },
             "end": {
-              "line": 24,
-              "column": 39
+              "line": 5,
+              "column": 86
             }
           },
           "extra": {
-            "rawValue": "./src/S3Adapter",
-            "raw": "'./src/S3Adapter'"
+            "rawValue": "./src/Repository/PersonalDataBlockchain",
+            "raw": "'./src/Repository/PersonalDataBlockchain'"
           },
-          "value": "./src/S3Adapter"
+          "value": "./src/Repository/PersonalDataBlockchain"
+        }
+      },
+      {
+        "type": "ImportDeclaration",
+        "start": 283,
+        "end": 363,
+        "loc": {
+          "start": {
+            "line": 6,
+            "column": 0
+          },
+          "end": {
+            "line": 6,
+            "column": 80
+          }
+        },
+        "specifiers": [
+          {
+            "type": "ImportDefaultSpecifier",
+            "start": 290,
+            "end": 319,
+            "loc": {
+              "start": {
+                "line": 6,
+                "column": 7
+              },
+              "end": {
+                "line": 6,
+                "column": 36
+              }
+            },
+            "local": {
+              "type": "Identifier",
+              "start": 290,
+              "end": 319,
+              "loc": {
+                "start": {
+                  "line": 6,
+                  "column": 7
+                },
+                "end": {
+                  "line": 6,
+                  "column": 36
+                },
+                "identifierName": "PersonalDataStorageRepository"
+              },
+              "name": "PersonalDataStorageRepository"
+            }
+          }
+        ],
+        "source": {
+          "type": "StringLiteral",
+          "start": 325,
+          "end": 363,
+          "loc": {
+            "start": {
+              "line": 6,
+              "column": 42
+            },
+            "end": {
+              "line": 6,
+              "column": 80
+            }
+          },
+          "extra": {
+            "rawValue": "./src/Repository/PersonalDataStorage",
+            "raw": "'./src/Repository/PersonalDataStorage'"
+          },
+          "value": "./src/Repository/PersonalDataStorage"
         }
       },
       {
         "type": "ExportNamedDeclaration",
-        "start": 1000,
-        "end": 1085,
+        "start": 365,
+        "end": 547,
         "loc": {
           "start": {
-            "line": 26,
+            "line": 8,
             "column": 0
           },
           "end": {
-            "line": 26,
-            "column": 85
+            "line": 9,
+            "column": 89
           }
         },
         "declaration": null,
         "specifiers": [
           {
             "type": "ExportSpecifier",
-            "start": 1009,
-            "end": 1016,
+            "start": 374,
+            "end": 386,
             "loc": {
               "start": {
-                "line": 26,
+                "line": 8,
                 "column": 9
               },
               "end": {
-                "line": 26,
-                "column": 16
+                "line": 8,
+                "column": 21
               }
             },
             "local": {
               "type": "Identifier",
-              "start": 1009,
-              "end": 1016,
+              "start": 374,
+              "end": 386,
               "loc": {
                 "start": {
-                  "line": 26,
+                  "line": 8,
                   "column": 9
                 },
                 "end": {
-                  "line": 26,
-                  "column": 16
-                },
-                "identifierName": "Adapter"
-              },
-              "name": "Adapter"
-            },
-            "exported": {
-              "type": "Identifier",
-              "start": 1009,
-              "end": 1016,
-              "loc": {
-                "start": {
-                  "line": 26,
-                  "column": 9
-                },
-                "end": {
-                  "line": 26,
-                  "column": 16
-                },
-                "identifierName": "Adapter"
-              },
-              "name": "Adapter"
-            }
-          },
-          {
-            "type": "ExportSpecifier",
-            "start": 1018,
-            "end": 1030,
-            "loc": {
-              "start": {
-                "line": 26,
-                "column": 18
-              },
-              "end": {
-                "line": 26,
-                "column": 30
-              }
-            },
-            "local": {
-              "type": "Identifier",
-              "start": 1018,
-              "end": 1030,
-              "loc": {
-                "start": {
-                  "line": 26,
-                  "column": 18
-                },
-                "end": {
-                  "line": 26,
-                  "column": 30
-                },
-                "identifierName": "CloudStorage"
-              },
-              "name": "CloudStorage"
-            },
-            "exported": {
-              "type": "Identifier",
-              "start": 1018,
-              "end": 1030,
-              "loc": {
-                "start": {
-                  "line": 26,
-                  "column": 18
-                },
-                "end": {
-                  "line": 26,
-                  "column": 30
-                },
-                "identifierName": "CloudStorage"
-              },
-              "name": "CloudStorage"
-            }
-          },
-          {
-            "type": "ExportSpecifier",
-            "start": 1032,
-            "end": 1043,
-            "loc": {
-              "start": {
-                "line": 26,
-                "column": 32
-              },
-              "end": {
-                "line": 26,
-                "column": 43
-              }
-            },
-            "local": {
-              "type": "Identifier",
-              "start": 1032,
-              "end": 1043,
-              "loc": {
-                "start": {
-                  "line": 26,
-                  "column": 32
-                },
-                "end": {
-                  "line": 26,
-                  "column": 43
-                },
-                "identifierName": "IPFSAdapter"
-              },
-              "name": "IPFSAdapter"
-            },
-            "exported": {
-              "type": "Identifier",
-              "start": 1032,
-              "end": 1043,
-              "loc": {
-                "start": {
-                  "line": 26,
-                  "column": 32
-                },
-                "end": {
-                  "line": 26,
-                  "column": 43
-                },
-                "identifierName": "IPFSAdapter"
-              },
-              "name": "IPFSAdapter"
-            }
-          },
-          {
-            "type": "ExportSpecifier",
-            "start": 1045,
-            "end": 1058,
-            "loc": {
-              "start": {
-                "line": 26,
-                "column": 45
-              },
-              "end": {
-                "line": 26,
-                "column": 58
-              }
-            },
-            "local": {
-              "type": "Identifier",
-              "start": 1045,
-              "end": 1058,
-              "loc": {
-                "start": {
-                  "line": 26,
-                  "column": 45
-                },
-                "end": {
-                  "line": 26,
-                  "column": 58
-                },
-                "identifierName": "MemoryAdapter"
-              },
-              "name": "MemoryAdapter"
-            },
-            "exported": {
-              "type": "Identifier",
-              "start": 1045,
-              "end": 1058,
-              "loc": {
-                "start": {
-                  "line": 26,
-                  "column": 45
-                },
-                "end": {
-                  "line": 26,
-                  "column": 58
-                },
-                "identifierName": "MemoryAdapter"
-              },
-              "name": "MemoryAdapter"
-            }
-          },
-          {
-            "type": "ExportSpecifier",
-            "start": 1060,
-            "end": 1072,
-            "loc": {
-              "start": {
-                "line": 26,
-                "column": 60
-              },
-              "end": {
-                "line": 26,
-                "column": 72
-              }
-            },
-            "local": {
-              "type": "Identifier",
-              "start": 1060,
-              "end": 1072,
-              "loc": {
-                "start": {
-                  "line": 26,
-                  "column": 60
-                },
-                "end": {
-                  "line": 26,
-                  "column": 72
+                  "line": 8,
+                  "column": 21
                 },
                 "identifierName": "PersonalData"
               },
@@ -707,16 +491,16 @@
             },
             "exported": {
               "type": "Identifier",
-              "start": 1060,
-              "end": 1072,
+              "start": 374,
+              "end": 386,
               "loc": {
                 "start": {
-                  "line": 26,
-                  "column": 60
+                  "line": 8,
+                  "column": 9
                 },
                 "end": {
-                  "line": 26,
-                  "column": 72
+                  "line": 8,
+                  "column": 21
                 },
                 "identifierName": "PersonalData"
               },
@@ -725,225 +509,355 @@
           },
           {
             "type": "ExportSpecifier",
-            "start": 1074,
-            "end": 1083,
+            "start": 388,
+            "end": 456,
             "loc": {
               "start": {
-                "line": 26,
-                "column": 74
+                "line": 8,
+                "column": 23
               },
               "end": {
-                "line": 26,
-                "column": 83
+                "line": 8,
+                "column": 91
               }
             },
             "local": {
               "type": "Identifier",
-              "start": 1074,
-              "end": 1083,
+              "start": 388,
+              "end": 420,
               "loc": {
                 "start": {
-                  "line": 26,
-                  "column": 74
+                  "line": 8,
+                  "column": 23
                 },
                 "end": {
-                  "line": 26,
-                  "column": 83
+                  "line": 8,
+                  "column": 55
                 },
-                "identifierName": "S3Adapter"
+                "identifierName": "PersonalDataBlockchainRepository"
               },
-              "name": "S3Adapter"
+              "name": "PersonalDataBlockchainRepository"
             },
             "exported": {
               "type": "Identifier",
-              "start": 1074,
-              "end": 1083,
+              "start": 424,
+              "end": 456,
               "loc": {
                 "start": {
-                  "line": 26,
-                  "column": 74
+                  "line": 8,
+                  "column": 59
                 },
                 "end": {
-                  "line": 26,
-                  "column": 83
+                  "line": 8,
+                  "column": 91
                 },
-                "identifierName": "S3Adapter"
+                "identifierName": "PersonalDataBlockchainRepository"
               },
-              "name": "S3Adapter"
+              "name": "PersonalDataBlockchainRepository"
+            }
+          },
+          {
+            "type": "ExportSpecifier",
+            "start": 462,
+            "end": 524,
+            "loc": {
+              "start": {
+                "line": 9,
+                "column": 4
+              },
+              "end": {
+                "line": 9,
+                "column": 66
+              }
+            },
+            "local": {
+              "type": "Identifier",
+              "start": 462,
+              "end": 491,
+              "loc": {
+                "start": {
+                  "line": 9,
+                  "column": 4
+                },
+                "end": {
+                  "line": 9,
+                  "column": 33
+                },
+                "identifierName": "PersonalDataStorageRepository"
+              },
+              "name": "PersonalDataStorageRepository"
+            },
+            "exported": {
+              "type": "Identifier",
+              "start": 495,
+              "end": 524,
+              "loc": {
+                "start": {
+                  "line": 9,
+                  "column": 37
+                },
+                "end": {
+                  "line": 9,
+                  "column": 66
+                },
+                "identifierName": "PersonalDataStorageRepository"
+              },
+              "name": "PersonalDataStorageRepository"
+            }
+          },
+          {
+            "type": "ExportSpecifier",
+            "start": 526,
+            "end": 545,
+            "loc": {
+              "start": {
+                "line": 9,
+                "column": 68
+              },
+              "end": {
+                "line": 9,
+                "column": 87
+              }
+            },
+            "local": {
+              "type": "Identifier",
+              "start": 526,
+              "end": 545,
+              "loc": {
+                "start": {
+                  "line": 9,
+                  "column": 68
+                },
+                "end": {
+                  "line": 9,
+                  "column": 87
+                },
+                "identifierName": "CloudStorageFactory"
+              },
+              "name": "CloudStorageFactory"
+            },
+            "exported": {
+              "type": "Identifier",
+              "start": 526,
+              "end": 545,
+              "loc": {
+                "start": {
+                  "line": 9,
+                  "column": 68
+                },
+                "end": {
+                  "line": 9,
+                  "column": 87
+                },
+                "identifierName": "CloudStorageFactory"
+              },
+              "name": "CloudStorageFactory"
             }
           }
         ],
-        "source": null
+        "source": null,
+        "trailingComments": [
+          {
+            "type": "CommentLine",
+            "value": " TODO: remove next line. Use only CloudStorageFactory for storage creating",
+            "start": 549,
+            "end": 625,
+            "loc": {
+              "start": {
+                "line": 11,
+                "column": 0
+              },
+              "end": {
+                "line": 11,
+                "column": 76
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "ExportNamedDeclaration",
+        "start": 626,
+        "end": 662,
+        "loc": {
+          "start": {
+            "line": 12,
+            "column": 0
+          },
+          "end": {
+            "line": 12,
+            "column": 36
+          }
+        },
+        "declaration": null,
+        "specifiers": [
+          {
+            "type": "ExportSpecifier",
+            "start": 635,
+            "end": 647,
+            "loc": {
+              "start": {
+                "line": 12,
+                "column": 9
+              },
+              "end": {
+                "line": 12,
+                "column": 21
+              }
+            },
+            "local": {
+              "type": "Identifier",
+              "start": 635,
+              "end": 647,
+              "loc": {
+                "start": {
+                  "line": 12,
+                  "column": 9
+                },
+                "end": {
+                  "line": 12,
+                  "column": 21
+                },
+                "identifierName": "CloudStorage"
+              },
+              "name": "CloudStorage",
+              "leadingComments": null
+            },
+            "exported": {
+              "type": "Identifier",
+              "start": 635,
+              "end": 647,
+              "loc": {
+                "start": {
+                  "line": 12,
+                  "column": 9
+                },
+                "end": {
+                  "line": 12,
+                  "column": 21
+                },
+                "identifierName": "CloudStorage"
+              },
+              "name": "CloudStorage"
+            },
+            "leadingComments": null
+          },
+          {
+            "type": "ExportSpecifier",
+            "start": 649,
+            "end": 660,
+            "loc": {
+              "start": {
+                "line": 12,
+                "column": 23
+              },
+              "end": {
+                "line": 12,
+                "column": 34
+              }
+            },
+            "local": {
+              "type": "Identifier",
+              "start": 649,
+              "end": 660,
+              "loc": {
+                "start": {
+                  "line": 12,
+                  "column": 23
+                },
+                "end": {
+                  "line": 12,
+                  "column": 34
+                },
+                "identifierName": "IPFSAdapter"
+              },
+              "name": "IPFSAdapter"
+            },
+            "exported": {
+              "type": "Identifier",
+              "start": 649,
+              "end": 660,
+              "loc": {
+                "start": {
+                  "line": 12,
+                  "column": 23
+                },
+                "end": {
+                  "line": 12,
+                  "column": 34
+                },
+                "identifierName": "IPFSAdapter"
+              },
+              "name": "IPFSAdapter"
+            }
+          }
+        ],
+        "source": null,
+        "leadingComments": [
+          {
+            "type": "CommentLine",
+            "value": " TODO: remove next line. Use only CloudStorageFactory for storage creating",
+            "start": 549,
+            "end": 625,
+            "loc": {
+              "start": {
+                "line": 11,
+                "column": 0
+              },
+              "end": {
+                "line": 11,
+                "column": 76
+              }
+            }
+          }
+        ]
       }
     ],
     "directives": []
   },
   "comments": [
     {
-      "type": "CommentBlock",
-      "value": "*\n * The Revolution Populi Project\n * Copyright (C) 2020 Revolution Populi Limited\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n ",
-      "start": 0,
-      "end": 737,
+      "type": "CommentLine",
+      "value": " TODO: remove next line. Use only CloudStorageFactory for storage creating",
+      "start": 549,
+      "end": 625,
       "loc": {
         "start": {
-          "line": 1,
+          "line": 11,
           "column": 0
         },
         "end": {
-          "line": 17,
-          "column": 3
+          "line": 11,
+          "column": 76
         }
       }
     }
   ],
   "tokens": [
     {
-      "type": "CommentBlock",
-      "value": "*\n * The Revolution Populi Project\n * Copyright (C) 2020 Revolution Populi Limited\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n ",
+      "type": {
+        "label": "import",
+        "keyword": "import",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "import",
       "start": 0,
-      "end": 737,
+      "end": 6,
       "loc": {
         "start": {
           "line": 1,
           "column": 0
         },
         "end": {
-          "line": 17,
-          "column": 3
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "import",
-        "keyword": "import",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "import",
-      "start": 739,
-      "end": 745,
-      "loc": {
-        "start": {
-          "line": 19,
-          "column": 0
-        },
-        "end": {
-          "line": 19,
-          "column": 6
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "Adapter",
-      "start": 746,
-      "end": 753,
-      "loc": {
-        "start": {
-          "line": 19,
-          "column": 7
-        },
-        "end": {
-          "line": 19,
-          "column": 14
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "from",
-      "start": 754,
-      "end": 758,
-      "loc": {
-        "start": {
-          "line": 19,
-          "column": 15
-        },
-        "end": {
-          "line": 19,
-          "column": 19
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "string",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "./src/Adapter",
-      "start": 759,
-      "end": 774,
-      "loc": {
-        "start": {
-          "line": 19,
-          "column": 20
-        },
-        "end": {
-          "line": 19,
-          "column": 35
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "import",
-        "keyword": "import",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "import",
-      "start": 775,
-      "end": 781,
-      "loc": {
-        "start": {
-          "line": 20,
-          "column": 0
-        },
-        "end": {
-          "line": 20,
+          "line": 1,
           "column": 6
         }
       }
@@ -961,15 +875,15 @@
         "binop": null
       },
       "value": "CloudStorage",
-      "start": 782,
-      "end": 794,
+      "start": 7,
+      "end": 19,
       "loc": {
         "start": {
-          "line": 20,
+          "line": 1,
           "column": 7
         },
         "end": {
-          "line": 20,
+          "line": 1,
           "column": 19
         }
       }
@@ -987,15 +901,15 @@
         "binop": null
       },
       "value": "from",
-      "start": 795,
-      "end": 799,
+      "start": 20,
+      "end": 24,
       "loc": {
         "start": {
-          "line": 20,
+          "line": 1,
           "column": 20
         },
         "end": {
-          "line": 20,
+          "line": 1,
           "column": 24
         }
       }
@@ -1014,15 +928,15 @@
         "updateContext": null
       },
       "value": "./src/CloudStorage",
-      "start": 800,
-      "end": 820,
+      "start": 25,
+      "end": 45,
       "loc": {
         "start": {
-          "line": 20,
+          "line": 1,
           "column": 25
         },
         "end": {
-          "line": 20,
+          "line": 1,
           "column": 45
         }
       }
@@ -1042,15 +956,122 @@
         "updateContext": null
       },
       "value": "import",
-      "start": 821,
-      "end": 827,
+      "start": 46,
+      "end": 52,
       "loc": {
         "start": {
-          "line": 21,
+          "line": 2,
           "column": 0
         },
         "end": {
-          "line": 21,
+          "line": 2,
+          "column": 6
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "CloudStorageFactory",
+      "start": 53,
+      "end": 72,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 7
+        },
+        "end": {
+          "line": 2,
+          "column": 26
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "from",
+      "start": 73,
+      "end": 77,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 27
+        },
+        "end": {
+          "line": 2,
+          "column": 31
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "string",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "./src/CloudStorageFactory",
+      "start": 78,
+      "end": 105,
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 32
+        },
+        "end": {
+          "line": 2,
+          "column": 59
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "import",
+        "keyword": "import",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "import",
+      "start": 106,
+      "end": 112,
+      "loc": {
+        "start": {
+          "line": 3,
+          "column": 0
+        },
+        "end": {
+          "line": 3,
           "column": 6
         }
       }
@@ -1068,15 +1089,15 @@
         "binop": null
       },
       "value": "IPFSAdapter",
-      "start": 828,
-      "end": 839,
+      "start": 113,
+      "end": 124,
       "loc": {
         "start": {
-          "line": 21,
+          "line": 3,
           "column": 7
         },
         "end": {
-          "line": 21,
+          "line": 3,
           "column": 18
         }
       }
@@ -1094,15 +1115,15 @@
         "binop": null
       },
       "value": "from",
-      "start": 840,
-      "end": 844,
+      "start": 125,
+      "end": 129,
       "loc": {
         "start": {
-          "line": 21,
+          "line": 3,
           "column": 19
         },
         "end": {
-          "line": 21,
+          "line": 3,
           "column": 23
         }
       }
@@ -1121,15 +1142,15 @@
         "updateContext": null
       },
       "value": "./src/IPFSAdapter",
-      "start": 845,
-      "end": 864,
+      "start": 130,
+      "end": 149,
       "loc": {
         "start": {
-          "line": 21,
+          "line": 3,
           "column": 24
         },
         "end": {
-          "line": 21,
+          "line": 3,
           "column": 43
         }
       }
@@ -1149,122 +1170,15 @@
         "updateContext": null
       },
       "value": "import",
-      "start": 865,
-      "end": 871,
+      "start": 150,
+      "end": 156,
       "loc": {
         "start": {
-          "line": 22,
+          "line": 4,
           "column": 0
         },
         "end": {
-          "line": 22,
-          "column": 6
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "MemoryAdapter",
-      "start": 872,
-      "end": 885,
-      "loc": {
-        "start": {
-          "line": 22,
-          "column": 7
-        },
-        "end": {
-          "line": 22,
-          "column": 20
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "from",
-      "start": 886,
-      "end": 890,
-      "loc": {
-        "start": {
-          "line": 22,
-          "column": 21
-        },
-        "end": {
-          "line": 22,
-          "column": 25
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "string",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "./src/MemoryAdapter",
-      "start": 891,
-      "end": 912,
-      "loc": {
-        "start": {
-          "line": 22,
-          "column": 26
-        },
-        "end": {
-          "line": 22,
-          "column": 47
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "import",
-        "keyword": "import",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "import",
-      "start": 913,
-      "end": 919,
-      "loc": {
-        "start": {
-          "line": 23,
-          "column": 0
-        },
-        "end": {
-          "line": 23,
+          "line": 4,
           "column": 6
         }
       }
@@ -1282,15 +1196,15 @@
         "binop": null
       },
       "value": "PersonalData",
-      "start": 920,
-      "end": 932,
+      "start": 157,
+      "end": 169,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 4,
           "column": 7
         },
         "end": {
-          "line": 23,
+          "line": 4,
           "column": 19
         }
       }
@@ -1308,15 +1222,15 @@
         "binop": null
       },
       "value": "from",
-      "start": 933,
-      "end": 937,
+      "start": 170,
+      "end": 174,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 4,
           "column": 20
         },
         "end": {
-          "line": 23,
+          "line": 4,
           "column": 24
         }
       }
@@ -1335,15 +1249,15 @@
         "updateContext": null
       },
       "value": "./src/PersonalData",
-      "start": 938,
-      "end": 958,
+      "start": 175,
+      "end": 195,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 4,
           "column": 25
         },
         "end": {
-          "line": 23,
+          "line": 4,
           "column": 45
         }
       }
@@ -1363,15 +1277,15 @@
         "updateContext": null
       },
       "value": "import",
-      "start": 959,
-      "end": 965,
+      "start": 196,
+      "end": 202,
       "loc": {
         "start": {
-          "line": 24,
+          "line": 5,
           "column": 0
         },
         "end": {
-          "line": 24,
+          "line": 5,
           "column": 6
         }
       }
@@ -1388,17 +1302,17 @@
         "postfix": false,
         "binop": null
       },
-      "value": "S3Adapter",
-      "start": 966,
-      "end": 975,
+      "value": "PersonalDataBlockchainRepository",
+      "start": 203,
+      "end": 235,
       "loc": {
         "start": {
-          "line": 24,
+          "line": 5,
           "column": 7
         },
         "end": {
-          "line": 24,
-          "column": 16
+          "line": 5,
+          "column": 39
         }
       }
     },
@@ -1415,16 +1329,16 @@
         "binop": null
       },
       "value": "from",
-      "start": 976,
-      "end": 980,
+      "start": 236,
+      "end": 240,
       "loc": {
         "start": {
-          "line": 24,
-          "column": 17
+          "line": 5,
+          "column": 40
         },
         "end": {
-          "line": 24,
-          "column": 21
+          "line": 5,
+          "column": 44
         }
       }
     },
@@ -1441,17 +1355,124 @@
         "binop": null,
         "updateContext": null
       },
-      "value": "./src/S3Adapter",
-      "start": 981,
-      "end": 998,
+      "value": "./src/Repository/PersonalDataBlockchain",
+      "start": 241,
+      "end": 282,
       "loc": {
         "start": {
-          "line": 24,
-          "column": 22
+          "line": 5,
+          "column": 45
         },
         "end": {
-          "line": 24,
-          "column": 39
+          "line": 5,
+          "column": 86
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "import",
+        "keyword": "import",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "import",
+      "start": 283,
+      "end": 289,
+      "loc": {
+        "start": {
+          "line": 6,
+          "column": 0
+        },
+        "end": {
+          "line": 6,
+          "column": 6
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "PersonalDataStorageRepository",
+      "start": 290,
+      "end": 319,
+      "loc": {
+        "start": {
+          "line": 6,
+          "column": 7
+        },
+        "end": {
+          "line": 6,
+          "column": 36
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "from",
+      "start": 320,
+      "end": 324,
+      "loc": {
+        "start": {
+          "line": 6,
+          "column": 37
+        },
+        "end": {
+          "line": 6,
+          "column": 41
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "string",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "./src/Repository/PersonalDataStorage",
+      "start": 325,
+      "end": 363,
+      "loc": {
+        "start": {
+          "line": 6,
+          "column": 42
+        },
+        "end": {
+          "line": 6,
+          "column": 80
         }
       }
     },
@@ -1470,15 +1491,15 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 1000,
-      "end": 1006,
+      "start": 365,
+      "end": 371,
       "loc": {
         "start": {
-          "line": 26,
+          "line": 8,
           "column": 0
         },
         "end": {
-          "line": 26,
+          "line": 8,
           "column": 6
         }
       }
@@ -1495,15 +1516,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1007,
-      "end": 1008,
+      "start": 372,
+      "end": 373,
       "loc": {
         "start": {
-          "line": 26,
+          "line": 8,
           "column": 7
         },
         "end": {
-          "line": 26,
+          "line": 8,
           "column": 8
         }
       }
@@ -1520,17 +1541,17 @@
         "postfix": false,
         "binop": null
       },
-      "value": "Adapter",
-      "start": 1009,
-      "end": 1016,
+      "value": "PersonalData",
+      "start": 374,
+      "end": 386,
       "loc": {
         "start": {
-          "line": 26,
+          "line": 8,
           "column": 9
         },
         "end": {
-          "line": 26,
-          "column": 16
+          "line": 8,
+          "column": 21
         }
       }
     },
@@ -1547,16 +1568,344 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1016,
-      "end": 1017,
+      "start": 386,
+      "end": 387,
       "loc": {
         "start": {
-          "line": 26,
-          "column": 16
+          "line": 8,
+          "column": 21
         },
         "end": {
-          "line": 26,
-          "column": 17
+          "line": 8,
+          "column": 22
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "PersonalDataBlockchainRepository",
+      "start": 388,
+      "end": 420,
+      "loc": {
+        "start": {
+          "line": 8,
+          "column": 23
+        },
+        "end": {
+          "line": 8,
+          "column": 55
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "as",
+      "start": 421,
+      "end": 423,
+      "loc": {
+        "start": {
+          "line": 8,
+          "column": 56
+        },
+        "end": {
+          "line": 8,
+          "column": 58
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "PersonalDataBlockchainRepository",
+      "start": 424,
+      "end": 456,
+      "loc": {
+        "start": {
+          "line": 8,
+          "column": 59
+        },
+        "end": {
+          "line": 8,
+          "column": 91
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ",",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 456,
+      "end": 457,
+      "loc": {
+        "start": {
+          "line": 8,
+          "column": 91
+        },
+        "end": {
+          "line": 8,
+          "column": 92
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "PersonalDataStorageRepository",
+      "start": 462,
+      "end": 491,
+      "loc": {
+        "start": {
+          "line": 9,
+          "column": 4
+        },
+        "end": {
+          "line": 9,
+          "column": 33
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "as",
+      "start": 492,
+      "end": 494,
+      "loc": {
+        "start": {
+          "line": 9,
+          "column": 34
+        },
+        "end": {
+          "line": 9,
+          "column": 36
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "PersonalDataStorageRepository",
+      "start": 495,
+      "end": 524,
+      "loc": {
+        "start": {
+          "line": 9,
+          "column": 37
+        },
+        "end": {
+          "line": 9,
+          "column": 66
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ",",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 524,
+      "end": 525,
+      "loc": {
+        "start": {
+          "line": 9,
+          "column": 66
+        },
+        "end": {
+          "line": 9,
+          "column": 67
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "CloudStorageFactory",
+      "start": 526,
+      "end": 545,
+      "loc": {
+        "start": {
+          "line": 9,
+          "column": 68
+        },
+        "end": {
+          "line": 9,
+          "column": 87
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "}",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 546,
+      "end": 547,
+      "loc": {
+        "start": {
+          "line": 9,
+          "column": 88
+        },
+        "end": {
+          "line": 9,
+          "column": 89
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": " TODO: remove next line. Use only CloudStorageFactory for storage creating",
+      "start": 549,
+      "end": 625,
+      "loc": {
+        "start": {
+          "line": 11,
+          "column": 0
+        },
+        "end": {
+          "line": 11,
+          "column": 76
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "export",
+        "keyword": "export",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "export",
+      "start": 626,
+      "end": 632,
+      "loc": {
+        "start": {
+          "line": 12,
+          "column": 0
+        },
+        "end": {
+          "line": 12,
+          "column": 6
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "{",
+        "beforeExpr": true,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 633,
+      "end": 634,
+      "loc": {
+        "start": {
+          "line": 12,
+          "column": 7
+        },
+        "end": {
+          "line": 12,
+          "column": 8
         }
       }
     },
@@ -1573,16 +1922,16 @@
         "binop": null
       },
       "value": "CloudStorage",
-      "start": 1018,
-      "end": 1030,
+      "start": 635,
+      "end": 647,
       "loc": {
         "start": {
-          "line": 26,
-          "column": 18
+          "line": 12,
+          "column": 9
         },
         "end": {
-          "line": 26,
-          "column": 30
+          "line": 12,
+          "column": 21
         }
       }
     },
@@ -1599,16 +1948,16 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1030,
-      "end": 1031,
+      "start": 647,
+      "end": 648,
       "loc": {
         "start": {
-          "line": 26,
-          "column": 30
+          "line": 12,
+          "column": 21
         },
         "end": {
-          "line": 26,
-          "column": 31
+          "line": 12,
+          "column": 22
         }
       }
     },
@@ -1625,172 +1974,16 @@
         "binop": null
       },
       "value": "IPFSAdapter",
-      "start": 1032,
-      "end": 1043,
+      "start": 649,
+      "end": 660,
       "loc": {
         "start": {
-          "line": 26,
-          "column": 32
+          "line": 12,
+          "column": 23
         },
         "end": {
-          "line": 26,
-          "column": 43
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ",",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "start": 1043,
-      "end": 1044,
-      "loc": {
-        "start": {
-          "line": 26,
-          "column": 43
-        },
-        "end": {
-          "line": 26,
-          "column": 44
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "MemoryAdapter",
-      "start": 1045,
-      "end": 1058,
-      "loc": {
-        "start": {
-          "line": 26,
-          "column": 45
-        },
-        "end": {
-          "line": 26,
-          "column": 58
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ",",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "start": 1058,
-      "end": 1059,
-      "loc": {
-        "start": {
-          "line": 26,
-          "column": 58
-        },
-        "end": {
-          "line": 26,
-          "column": 59
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "PersonalData",
-      "start": 1060,
-      "end": 1072,
-      "loc": {
-        "start": {
-          "line": 26,
-          "column": 60
-        },
-        "end": {
-          "line": 26,
-          "column": 72
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ",",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "start": 1072,
-      "end": 1073,
-      "loc": {
-        "start": {
-          "line": 26,
-          "column": 72
-        },
-        "end": {
-          "line": 26,
-          "column": 73
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "S3Adapter",
-      "start": 1074,
-      "end": 1083,
-      "loc": {
-        "start": {
-          "line": 26,
-          "column": 74
-        },
-        "end": {
-          "line": 26,
-          "column": 83
+          "line": 12,
+          "column": 34
         }
       }
     },
@@ -1806,16 +1999,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1084,
-      "end": 1085,
+      "start": 661,
+      "end": 662,
       "loc": {
         "start": {
-          "line": 26,
-          "column": 84
+          "line": 12,
+          "column": 35
         },
         "end": {
-          "line": 26,
-          "column": 85
+          "line": 12,
+          "column": 36
         }
       }
     },
@@ -1832,15 +2025,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1086,
-      "end": 1086,
+      "start": 663,
+      "end": 663,
       "loc": {
         "start": {
-          "line": 27,
+          "line": 13,
           "column": 0
         },
         "end": {
-          "line": 27,
+          "line": 13,
           "column": 0
         }
       }

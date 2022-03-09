@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../">
+  <title data-ice="title">lib/storage/src/GoogleDriveNodeAdapter.js | RevPopJS Docs</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Pure JavaScript RevPop library for node.js and browsers."><meta property="twitter:card" content="summary"><meta property="twitter:title" content="RevPopJS Docs"><meta property="twitter:description" content="Pure JavaScript RevPop library for node.js and browsers."></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/Revolution-Populi/revpop-js.git"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#chain-src">chain/src</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/chain/src/AccountLogin.js~AccountLogin.html">AccountLogin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/chain/src/ChainStore.js~ChainStore.html">ChainStore</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/chain/src/ObjectId.js~ObjectId.html">ObjectId</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/chain/src/TransactionBuilder.js~TransactionBuilder.html">TransactionBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-emitter">emitter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-get">get</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-set">set</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-accountLogin">accountLogin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-chain_store">chain_store</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ChainTypes">ChainTypes</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-chainValidation">chainValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-NumberUtils">NumberUtils</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-helper">helper</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#ecc-src">ecc/src</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/ecc/src/PrivateKey.js~PrivateKey.html">PrivateKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/ecc/src/PublicKey.js~PublicKey.html">PublicKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/ecc/src/address.js~Address.html">Address</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/ecc/src/aes.js~Aes.html">Aes</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/ecc/src/signature.js~Signature.html">Signature</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-normalize">normalize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-calcPubKeyRecoveryParam">calcPubKeyRecoveryParam</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-deterministicGenerateK">deterministicGenerateK</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-recoverPubKey">recoverPubKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sign">sign</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-verify">verify</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-verifyRaw">verifyRaw</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ECSignature">ECSignature</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-enforce">enforce</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-HmacSHA256">HmacSHA256</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ripemd160">ripemd160</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sha1">sha1</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sha256">sha256</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sha512">sha512</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-key">key</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#serializer-src">serializer/src</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/serializer/src/FastParser.js~FastParser.html">FastParser</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/serializer/src/error_with_cause.js~ErrorWithCause.html">ErrorWithCause</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/serializer/src/serializer.js~Serializer.html">Serializer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-convert">convert</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-template">template</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_my">_my</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-account_create">account_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-account_create_operation_fee_parameters">account_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-account_name_eq_lit_predicate">account_name_eq_lit_predicate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-account_options">account_options</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-account_transfer">account_transfer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-account_transfer_operation_fee_parameters">account_transfer_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-account_update">account_update</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-account_update_operation_fee_parameters">account_update_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-account_upgrade">account_upgrade</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-account_upgrade_operation_fee_parameters">account_upgrade_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-account_whitelist">account_whitelist</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-account_whitelist_operation_fee_parameters">account_whitelist_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-assert">assert</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-assert_operation_fee_parameters">assert_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset">asset</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_claim_fees">asset_claim_fees</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_claim_fees_operation_fee_parameters">asset_claim_fees_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_claim_pool">asset_claim_pool</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_claim_pool_operation_fee_parameters">asset_claim_pool_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_create">asset_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_create_operation_fee_parameters">asset_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_fund_fee_pool">asset_fund_fee_pool</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_fund_fee_pool_operation_fee_parameters">asset_fund_fee_pool_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_global_settle">asset_global_settle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_global_settle_operation_fee_parameters">asset_global_settle_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_issue">asset_issue</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_issue_operation_fee_parameters">asset_issue_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_options">asset_options</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_publish_feed">asset_publish_feed</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_publish_feed_operation_fee_parameters">asset_publish_feed_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_reserve">asset_reserve</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_reserve_operation_fee_parameters">asset_reserve_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_settle">asset_settle</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_settle_cancel">asset_settle_cancel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_settle_cancel_operation_fee_parameters">asset_settle_cancel_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_settle_operation_fee_parameters">asset_settle_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_symbol_eq_lit_predicate">asset_symbol_eq_lit_predicate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_update">asset_update</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_update_bitasset">asset_update_bitasset</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_update_bitasset_operation_fee_parameters">asset_update_bitasset_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_update_feed_producers">asset_update_feed_producers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_update_feed_producers_operation_fee_parameters">asset_update_feed_producers_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_update_issuer">asset_update_issuer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_update_issuer_operation_fee_parameters">asset_update_issuer_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asset_update_operation_fee_parameters">asset_update_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-authority">authority</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-balance_claim">balance_claim</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-balance_claim_operation_fee_parameters">balance_claim_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-bitasset_options">bitasset_options</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-blind_input">blind_input</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-blind_output">blind_output</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-blind_transfer">blind_transfer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-blind_transfer_operation_fee_parameters">blind_transfer_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-block_header">block_header</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-block_id_predicate">block_id_predicate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-cdd_vesting_policy_initializer">cdd_vesting_policy_initializer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-chain_parameters">chain_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-commit_create">commit_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-commit_create_operation_fee_parameters">commit_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-commit_create_v2">commit_create_v2</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-commit_create_v2_operation_fee_parameters">commit_create_v2_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-commit_create_v3">commit_create_v3</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-commit_create_v3_operation_fee_parameters">commit_create_v3_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-committee_member_create">committee_member_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-committee_member_create_operation_fee_parameters">committee_member_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-committee_member_update">committee_member_update</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-committee_member_update_global_parameters">committee_member_update_global_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-committee_member_update_global_parameters_operation_fee_parameters">committee_member_update_global_parameters_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-committee_member_update_operation_fee_parameters">committee_member_update_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_card_create">content_card_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_card_create_operation_fee_parameters">content_card_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_card_remove">content_card_remove</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_card_remove_operation_fee_parameters">content_card_remove_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_card_update">content_card_update</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_card_update_operation_fee_parameters">content_card_update_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_card_v2_create">content_card_v2_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_card_v2_create_operation_fee_parameters">content_card_v2_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_card_v2_remove">content_card_v2_remove</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_card_v2_remove_operation_fee_parameters">content_card_v2_remove_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_card_v2_update">content_card_v2_update</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_card_v2_update_operation_fee_parameters">content_card_v2_update_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_vote_create">content_vote_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_vote_create_operation_fee_parameters">content_vote_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_vote_remove">content_vote_remove</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-content_vote_remove_operation_fee_parameters">content_vote_remove_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom">custom</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_create">custom_authority_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_create_operation_fee_parameters">custom_authority_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_delete">custom_authority_delete</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_delete_operation_fee_parameters">custom_authority_delete_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_update">custom_authority_update</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_authority_update_operation_fee_parameters">custom_authority_update_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-custom_operation_fee_parameters">custom_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-fba_distribute">fba_distribute</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-fba_distribute_operation_fee_parameters">fba_distribute_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-fee_schedule">fee_schedule</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-linear_vesting_policy_initializer">linear_vesting_policy_initializer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-memo_data">memo_data</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-op_wrapper">op_wrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-operation">operation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-override_transfer">override_transfer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-override_transfer_operation_fee_parameters">override_transfer_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-permission_create">permission_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-permission_create_operation_fee_parameters">permission_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-permission_remove">permission_remove</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-permission_remove_operation_fee_parameters">permission_remove_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-personal_data_create">personal_data_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-personal_data_create_operation_fee_parameters">personal_data_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-personal_data_remove">personal_data_remove</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-personal_data_remove_operation_fee_parameters">personal_data_remove_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-personal_data_v2_create">personal_data_v2_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-personal_data_v2_create_operation_fee_parameters">personal_data_v2_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-personal_data_v2_remove">personal_data_v2_remove</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-personal_data_v2_remove_operation_fee_parameters">personal_data_v2_remove_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-price">price</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-price_feed">price_feed</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-processed_transaction">processed_transaction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-proposal_create">proposal_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-proposal_create_operation_fee_parameters">proposal_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-proposal_delete">proposal_delete</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-proposal_delete_operation_fee_parameters">proposal_delete_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-proposal_update">proposal_update</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-proposal_update_operation_fee_parameters">proposal_update_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-restriction">restriction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-reveal_create">reveal_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-reveal_create_operation_fee_parameters">reveal_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-reveal_create_v2">reveal_create_v2</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-reveal_create_v2_operation_fee_parameters">reveal_create_v2_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-reveal_create_v3">reveal_create_v3</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-reveal_create_v3_operation_fee_parameters">reveal_create_v3_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-signed_block">signed_block</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-signed_block_header">signed_block_header</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-signed_transaction">signed_transaction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-stealth_confirmation">stealth_confirmation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-stealth_memo_data">stealth_memo_data</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ticket_create">ticket_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ticket_create_operation_fee_parameters">ticket_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ticket_update">ticket_update</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ticket_update_operation_fee_parameters">ticket_update_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-transaction">transaction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-transfer">transfer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-transfer_from_blind">transfer_from_blind</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-transfer_from_blind_operation_fee_parameters">transfer_from_blind_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-transfer_operation_fee_parameters">transfer_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-transfer_to_blind">transfer_to_blind</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-transfer_to_blind_operation_fee_parameters">transfer_to_blind_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-vesting_balance_create">vesting_balance_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-vesting_balance_create_operation_fee_parameters">vesting_balance_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-vesting_balance_withdraw">vesting_balance_withdraw</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-vesting_balance_withdraw_operation_fee_parameters">vesting_balance_withdraw_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-void_result">void_result</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-vote_counter_update">vote_counter_update</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-vote_counter_update_operation_fee_parameters">vote_counter_update_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-withdraw_permission_claim">withdraw_permission_claim</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-withdraw_permission_claim_operation_fee_parameters">withdraw_permission_claim_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-withdraw_permission_create">withdraw_permission_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-withdraw_permission_create_operation_fee_parameters">withdraw_permission_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-withdraw_permission_delete">withdraw_permission_delete</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-withdraw_permission_delete_operation_fee_parameters">withdraw_permission_delete_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-withdraw_permission_update">withdraw_permission_update</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-withdraw_permission_update_operation_fee_parameters">withdraw_permission_update_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-witness_create">witness_create</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-witness_create_operation_fee_parameters">witness_create_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-witness_update">witness_update</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-witness_update_operation_fee_parameters">witness_update_operation_fee_parameters</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Types">Types</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#storage-src">storage/src</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/storage/src/Adapter.js~Adapter.html">Adapter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/storage/src/AmazonS3NodeAdapter.js~S3Adapter.html">S3Adapter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/storage/src/CloudStorage.js~CloudStorage.html">CloudStorage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter.html">GoogleDriveNodeAdapter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/storage/src/MemoryAdapter.js~MemoryAdapter.html">MemoryAdapter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/lib/storage/src/PersonalData.js~PersonalData.html">PersonalData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-MultiPartBuilder">MultiPartBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-crypto_content_transform">crypto_content_transform</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-decrypt_buffer">decrypt_buffer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-decrypt_content">decrypt_content</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-decrypt_content_str">decrypt_content_str</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-decrypt_object">decrypt_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-encrypt_buffer">encrypt_buffer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-encrypt_content">encrypt_content</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-encrypt_content_str">encrypt_content_str</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-encrypt_object">encrypt_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-make_content_key">make_content_key</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-make_content_key_noencrypt">make_content_key_noencrypt</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">lib/storage/src/GoogleDriveNodeAdapter.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import Adapter from &quot;./Adapter&quot;;
+import {Readable} from &quot;stream&quot;;
+import {drive} from &quot;@googleapis/drive&quot;;
+
+const GD_VERSION = &quot;1.0&quot;
+
+/**
+ * Google Drive client adapter for CloudStorage class.
+ */
+export default class GoogleDriveNodeAdapter extends Adapter {
+    constructor(auth, folder) {
+        super();
+
+        this.folder = folder;
+        this.drive = drive({version: &apos;v3&apos;, auth});
+    }
+
+    close() {
+        return Promise.resolve(undefined);
+    }
+
+    open() {
+        return Promise.resolve(undefined);
+    }
+
+    async put(val) {
+        let folder_id = await this.searchFolder(this.drive, this.folder);
+
+        if (!folder_id) {
+            try {
+                folder_id = await this.createFolder(this.drive, this.folder);
+            } catch (err) {
+                console.log(&apos;Google Drive folder creation error: &apos;, err);
+                return null;
+            }
+        }
+
+        let file;
+        try {
+            file = await this.uploadToFolder(this.drive, val, folder_id);
+        }  catch (err) {
+            console.log(&apos;Google Drive file upload error: &apos;, err);
+            return null;
+        }
+
+        let webContentLink;
+        try {
+            await this.shareFile(this.drive, file.data.id);
+
+            webContentLink = await this.drive.files.get({
+                fileId: file.data.id,
+                fields: &apos;webContentLink&apos;
+            }).then(response =&gt; response.data.webContentLink);
+        } catch (err) {
+            console.log(&apos;Google Drive share file error: &apos;, err);
+            return null;
+        }
+
+        const ret = {
+            url: webContentLink,
+            storage_data: &quot;[\&quot;GD\&quot;,\&quot;&quot; + `${GD_VERSION}` + &quot;\&quot;,\&quot;&quot; + `${file.data.id}` + &quot;\&quot;]&quot;
+        }
+        return ret;
+    }
+
+    async get(key) {
+        return await this.downloadFile(this.drive, key);
+    }
+
+    async remove(key) {
+        try {
+            await this.drive.files.delete({fileId: key});
+            return true;
+        } catch (err) {
+            console.log(&apos;Google Drive file deleting error: &apos;, err);
+            return false;
+        }
+    }
+
+    /**
+     * Searches for a folder in Drive.
+     * @param {Object} googleDrive Initialized google.drive object with auth.
+     * @param {string} folderName folder name to search in user Google Drive
+     * @return {Promise} A promise to return folder id.
+     */
+    async searchFolder(googleDrive, folderName) {
+        return new Promise((resolve, reject) =&gt; {
+            googleDrive.files.list({
+                q: `mimeType=&apos;application/vnd.google-apps.folder&apos; and name = &apos;${folderName}&apos;`,
+                fields: &apos;files(id, name)&apos;,
+                spaces: &apos;drive&apos;,
+            }).then(response =&gt; {
+                const files = response.result.files;
+                if (files.length &gt; 0) {
+                    resolve(files[0].id);
+                } else {
+                    resolve(null);
+                }
+            }).catch(err =&gt; {
+                console.log(err);
+                reject(err);
+            });
+        });
+    }
+
+    /**
+     * Creates a Drive folder.
+     * @param {Object} googleDrive Initialized google.drive object with auth.
+     * @param {string} folderName folder name to create in user Google Drive
+     * @return {Promise} A promise to return the folder ID.
+     */
+    async createFolder(googleDrive, folderName) {
+        return new Promise((resolve, reject) =&gt; {
+            googleDrive.files.create({
+                resource: {
+                    name: `${folderName}`,
+                    mimeType: &apos;application/vnd.google-apps.folder&apos;,
+                },
+                fields: &apos;id&apos;,
+            }, (err, file) =&gt; {
+                if (err) {
+                    // Handle error
+                    console.error(err);
+                    reject(err);
+                } else {
+                    // console.log(&apos;Folder Id: &apos;, file.data.id);
+                    resolve(file.data.id);
+                }
+            });
+        })
+    }
+
+    /**
+     * Upload a buffer to a file to a Google Drive folder.
+     * File name would be creation date/time like 2021-12-03T08:35:30.455Z
+     * @param {Object} googleDrive Initialized google.drive object with auth.
+     * @param {string|Buffer} val buffer to write
+     * @param {string} folderId The folder ID.
+     * @return {Promise} A promise to return a Google Drive file.
+     */
+    async uploadToFolder(googleDrive, val, folderId) {
+        return new Promise((resolve, reject) =&gt; {
+            const readable = Readable.from(val);
+            const resource = {
+                name: new Date().toISOString(),
+                parents: [folderId],
+            };
+            const media = {
+                body: readable,
+            };
+            googleDrive.files.create({
+                resource,
+                media,
+                fields: &apos;id&apos;,
+            }).then(file =&gt; {
+                resolve(file);
+            }).catch(err =&gt; {
+                reject(err);
+            });
+        });
+    }
+
+    /**
+     * Shares a file to anyone who has link.
+     * @param {Object} googleDrive Initialized google.drive object with auth.
+     * @param {string} fileId The file ID.
+     * @return {Promise} A promise to return the permission IDs.
+     */
+    async shareFile(googleDrive, fileId) {
+        return new Promise((resolve, reject) =&gt; {
+            let ids = [];
+            const permissions = {
+                type: &apos;anyone&apos;,
+                role: &apos;reader&apos;,
+            };
+            googleDrive.permissions.create({
+                resource: permissions,
+                fileId: fileId,
+                fields: &apos;id&apos;,
+            }, (err, res) =&gt; {
+                if (err) {
+                    // Handle error...
+                    console.error(err);
+                    reject(err);
+                } else {
+                    // console.log(&apos;Permission ID: &apos;, res.id);
+                    resolve(res.id)
+                }
+            });
+        });
+    }
+
+    /**
+     * Downloads a file and returns the contents in a Promise.
+     * @param {Object} googleDrive Initialized google.drive object with auth.
+     * @param {string} fileId A Drive file ID.
+     * @return {Promise} A promise to return the Drive file as a string.
+     */
+    async downloadFile(googleDrive, fileId) {
+        return googleDrive.files
+            .get({fileId, alt: &apos;media&apos;}, {responseType: &apos;stream&apos;})
+            .then(res =&gt; {
+                return new Promise((resolve, reject) =&gt; {
+                    const buffers = [];
+                    res.data
+                        .on(&apos;end&apos;, () =&gt; {
+                            console.log(&apos;Done downloading file.&apos;);
+                            resolve(Buffer.concat(buffers));
+                        })
+                        .on(&apos;error&apos;, err =&gt; {
+                            console.error(&apos;Error downloading file.&apos;);
+                            resolve(null);
+                        })
+                        .on(&apos;data&apos;, chunk =&gt; {
+                            buffers.push(chunk);
+                        })
+                });
+            });
+    }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
