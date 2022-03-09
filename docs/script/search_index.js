@@ -60,6 +60,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "@revolutionpopuli/revpopjs/lib/storage/src/googledrivenodeadapter.js~googledrivenodeadapter",
+    "class/lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter.html",
+    "<span>GoogleDriveNodeAdapter</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/GoogleDriveNodeAdapter.js</span>",
+    "class"
+  ],
+  [
     "@revolutionpopuli/revpopjs/lib/ecc/src/hash.js~hmacsha256",
     "function/index.html#static-function-HmacSHA256",
     "<span>HmacSHA256</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/ecc/src/hash.js</span>",
@@ -70,6 +76,12 @@ window.esdocSearchIndex = [
     "class/lib/storage/src/MemoryAdapter.js~MemoryAdapter.html",
     "<span>MemoryAdapter</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/MemoryAdapter.js</span>",
     "class"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/storage/src/multipart.js~multipartbuilder",
+    "function/index.html#static-function-MultiPartBuilder",
+    "<span>MultiPartBuilder</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/Multipart.js</span>",
+    "function"
   ],
   [
     "@revolutionpopuli/revpopjs/lib/chain/src/numberutils.js~numberutils",
@@ -99,6 +111,12 @@ window.esdocSearchIndex = [
     "@revolutionpopuli/revpopjs/lib/ecc/src/publickey.js~publickey",
     "class/lib/ecc/src/PublicKey.js~PublicKey.html",
     "<span>PublicKey</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/ecc/src/PublicKey.js</span>",
+    "class"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/storage/src/amazons3nodeadapter.js~s3adapter",
+    "class/lib/storage/src/AmazonS3NodeAdapter.js~S3Adapter.html",
+    "<span>S3Adapter</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/storage/src/AmazonS3NodeAdapter.js</span>",
     "class"
   ],
   [
@@ -606,6 +624,42 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~content_card_v2_create",
+    "variable/index.html#static-variable-content_card_v2_create",
+    "<span>content_card_v2_create</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~content_card_v2_create_operation_fee_parameters",
+    "variable/index.html#static-variable-content_card_v2_create_operation_fee_parameters",
+    "<span>content_card_v2_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~content_card_v2_remove",
+    "variable/index.html#static-variable-content_card_v2_remove",
+    "<span>content_card_v2_remove</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~content_card_v2_remove_operation_fee_parameters",
+    "variable/index.html#static-variable-content_card_v2_remove_operation_fee_parameters",
+    "<span>content_card_v2_remove_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~content_card_v2_update",
+    "variable/index.html#static-variable-content_card_v2_update",
+    "<span>content_card_v2_update</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~content_card_v2_update_operation_fee_parameters",
+    "variable/index.html#static-variable-content_card_v2_update_operation_fee_parameters",
+    "<span>content_card_v2_update_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
     "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~content_vote_create",
     "variable/index.html#static-variable-content_vote_create",
     "<span>content_vote_create</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
@@ -891,6 +945,30 @@ window.esdocSearchIndex = [
     "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~personal_data_remove_operation_fee_parameters",
     "variable/index.html#static-variable-personal_data_remove_operation_fee_parameters",
     "<span>personal_data_remove_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~personal_data_v2_create",
+    "variable/index.html#static-variable-personal_data_v2_create",
+    "<span>personal_data_v2_create</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~personal_data_v2_create_operation_fee_parameters",
+    "variable/index.html#static-variable-personal_data_v2_create_operation_fee_parameters",
+    "<span>personal_data_v2_create_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~personal_data_v2_remove",
+    "variable/index.html#static-variable-personal_data_v2_remove",
+    "<span>personal_data_v2_remove</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
+    "variable"
+  ],
+  [
+    "@revolutionpopuli/revpopjs/lib/serializer/src/operations.js~personal_data_v2_remove_operation_fee_parameters",
+    "variable/index.html#static-variable-personal_data_v2_remove_operation_fee_parameters",
+    "<span>personal_data_v2_remove_operation_fee_parameters</span> <span class=\"search-result-import-path\">@revolutionpopuli/revpopjs/lib/serializer/src/operations.js</span>",
     "variable"
   ],
   [
@@ -3000,18 +3078,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "lib/storage/src/adapter.js~adapter#constructor",
-    "class/lib/storage/src/Adapter.js~Adapter.html#instance-constructor-constructor",
-    "lib/storage/src/Adapter.js~Adapter#constructor",
-    "method"
-  ],
-  [
-    "lib/storage/src/adapter.js~adapter#delete",
-    "class/lib/storage/src/Adapter.js~Adapter.html#instance-method-delete",
-    "lib/storage/src/Adapter.js~Adapter#delete",
-    "method"
-  ],
-  [
     "lib/storage/src/adapter.js~adapter#get",
     "class/lib/storage/src/Adapter.js~Adapter.html#instance-method-get",
     "lib/storage/src/Adapter.js~Adapter#get",
@@ -3028,6 +3094,54 @@ window.esdocSearchIndex = [
     "class/lib/storage/src/Adapter.js~Adapter.html#instance-method-put",
     "lib/storage/src/Adapter.js~Adapter#put",
     "method"
+  ],
+  [
+    "lib/storage/src/adapter.js~adapter#remove",
+    "class/lib/storage/src/Adapter.js~Adapter.html#instance-method-remove",
+    "lib/storage/src/Adapter.js~Adapter#remove",
+    "method"
+  ],
+  [
+    "lib/storage/src/amazons3nodeadapter.js",
+    "file/lib/storage/src/AmazonS3NodeAdapter.js.html",
+    "lib/storage/src/AmazonS3NodeAdapter.js",
+    "file"
+  ],
+  [
+    "lib/storage/src/amazons3nodeadapter.js~s3adapter#bucketname",
+    "class/lib/storage/src/AmazonS3NodeAdapter.js~S3Adapter.html#instance-member-bucketName",
+    "lib/storage/src/AmazonS3NodeAdapter.js~S3Adapter#bucketName",
+    "member"
+  ],
+  [
+    "lib/storage/src/amazons3nodeadapter.js~s3adapter#constructor",
+    "class/lib/storage/src/AmazonS3NodeAdapter.js~S3Adapter.html#instance-constructor-constructor",
+    "lib/storage/src/AmazonS3NodeAdapter.js~S3Adapter#constructor",
+    "method"
+  ],
+  [
+    "lib/storage/src/amazons3nodeadapter.js~s3adapter#delete",
+    "class/lib/storage/src/AmazonS3NodeAdapter.js~S3Adapter.html#instance-method-delete",
+    "lib/storage/src/AmazonS3NodeAdapter.js~S3Adapter#delete",
+    "method"
+  ],
+  [
+    "lib/storage/src/amazons3nodeadapter.js~s3adapter#get",
+    "class/lib/storage/src/AmazonS3NodeAdapter.js~S3Adapter.html#instance-method-get",
+    "lib/storage/src/AmazonS3NodeAdapter.js~S3Adapter#get",
+    "method"
+  ],
+  [
+    "lib/storage/src/amazons3nodeadapter.js~s3adapter#put",
+    "class/lib/storage/src/AmazonS3NodeAdapter.js~S3Adapter.html#instance-method-put",
+    "lib/storage/src/AmazonS3NodeAdapter.js~S3Adapter#put",
+    "method"
+  ],
+  [
+    "lib/storage/src/amazons3nodeadapter.js~s3adapter#s3",
+    "class/lib/storage/src/AmazonS3NodeAdapter.js~S3Adapter.html#instance-member-s3",
+    "lib/storage/src/AmazonS3NodeAdapter.js~S3Adapter#s3",
+    "member"
   ],
   [
     "lib/storage/src/cloudstorage.js",
@@ -3102,6 +3216,90 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "lib/storage/src/googledrivenodeadapter.js",
+    "file/lib/storage/src/GoogleDriveNodeAdapter.js.html",
+    "lib/storage/src/GoogleDriveNodeAdapter.js",
+    "file"
+  ],
+  [
+    "lib/storage/src/googledrivenodeadapter.js~googledrivenodeadapter#close",
+    "class/lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter.html#instance-method-close",
+    "lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter#close",
+    "method"
+  ],
+  [
+    "lib/storage/src/googledrivenodeadapter.js~googledrivenodeadapter#constructor",
+    "class/lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter.html#instance-constructor-constructor",
+    "lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter#constructor",
+    "method"
+  ],
+  [
+    "lib/storage/src/googledrivenodeadapter.js~googledrivenodeadapter#createfolder",
+    "class/lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter.html#instance-method-createFolder",
+    "lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter#createFolder",
+    "method"
+  ],
+  [
+    "lib/storage/src/googledrivenodeadapter.js~googledrivenodeadapter#downloadfile",
+    "class/lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter.html#instance-method-downloadFile",
+    "lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter#downloadFile",
+    "method"
+  ],
+  [
+    "lib/storage/src/googledrivenodeadapter.js~googledrivenodeadapter#drive",
+    "class/lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter.html#instance-member-drive",
+    "lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter#drive",
+    "member"
+  ],
+  [
+    "lib/storage/src/googledrivenodeadapter.js~googledrivenodeadapter#folder",
+    "class/lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter.html#instance-member-folder",
+    "lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter#folder",
+    "member"
+  ],
+  [
+    "lib/storage/src/googledrivenodeadapter.js~googledrivenodeadapter#get",
+    "class/lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter.html#instance-method-get",
+    "lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter#get",
+    "method"
+  ],
+  [
+    "lib/storage/src/googledrivenodeadapter.js~googledrivenodeadapter#open",
+    "class/lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter.html#instance-method-open",
+    "lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter#open",
+    "method"
+  ],
+  [
+    "lib/storage/src/googledrivenodeadapter.js~googledrivenodeadapter#put",
+    "class/lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter.html#instance-method-put",
+    "lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter#put",
+    "method"
+  ],
+  [
+    "lib/storage/src/googledrivenodeadapter.js~googledrivenodeadapter#remove",
+    "class/lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter.html#instance-method-remove",
+    "lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter#remove",
+    "method"
+  ],
+  [
+    "lib/storage/src/googledrivenodeadapter.js~googledrivenodeadapter#searchfolder",
+    "class/lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter.html#instance-method-searchFolder",
+    "lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter#searchFolder",
+    "method"
+  ],
+  [
+    "lib/storage/src/googledrivenodeadapter.js~googledrivenodeadapter#sharefile",
+    "class/lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter.html#instance-method-shareFile",
+    "lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter#shareFile",
+    "method"
+  ],
+  [
+    "lib/storage/src/googledrivenodeadapter.js~googledrivenodeadapter#uploadtofolder",
+    "class/lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter.html#instance-method-uploadToFolder",
+    "lib/storage/src/GoogleDriveNodeAdapter.js~GoogleDriveNodeAdapter#uploadToFolder",
+    "method"
+  ],
+  [
     "lib/storage/src/memoryadapter.js",
     "file/lib/storage/src/MemoryAdapter.js.html",
     "lib/storage/src/MemoryAdapter.js",
@@ -3138,21 +3336,21 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "lib/storage/src/multipart.js",
+    "file/lib/storage/src/Multipart.js.html",
+    "lib/storage/src/Multipart.js",
+    "file"
+  ],
+  [
     "lib/storage/src/personaldata.js",
     "file/lib/storage/src/PersonalData.js.html",
     "lib/storage/src/PersonalData.js",
     "file"
   ],
   [
-    "lib/storage/src/personaldata.js~personaldata#personal_data_part_paths",
-    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-member-PERSONAL_DATA_PART_PATHS",
-    "lib/storage/src/PersonalData.js~PersonalData#PERSONAL_DATA_PART_PATHS",
-    "member"
-  ],
-  [
-    "lib/storage/src/personaldata.js~personaldata#_computehash",
-    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_computeHash",
-    "lib/storage/src/PersonalData.js~PersonalData#_computeHash",
+    "lib/storage/src/personaldata.js~personaldata#_checkandupgradedtoifneeded",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_checkAndUpgradeDtoIfNeeded",
+    "lib/storage/src/PersonalData.js~PersonalData#_checkAndUpgradeDtoIfNeeded",
     "method"
   ],
   [
@@ -3162,45 +3360,33 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "lib/storage/src/personaldata.js~personaldata#_deepclone",
-    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_deepClone",
-    "lib/storage/src/PersonalData.js~PersonalData#_deepClone",
-    "method"
-  ],
-  [
     "lib/storage/src/personaldata.js~personaldata#_deepsortobjkeys",
     "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_deepSortObjKeys",
     "lib/storage/src/PersonalData.js~PersonalData#_deepSortObjKeys",
     "method"
   ],
   [
-    "lib/storage/src/personaldata.js~personaldata#_defaultvalue",
-    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_defaultValue",
-    "lib/storage/src/PersonalData.js~PersonalData#_defaultValue",
+    "lib/storage/src/personaldata.js~personaldata#_getfieldhash",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_getFieldHash",
+    "lib/storage/src/PersonalData.js~PersonalData#_getFieldHash",
     "method"
   ],
   [
-    "lib/storage/src/personaldata.js~personaldata#_getmissed",
-    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_getMissed",
-    "lib/storage/src/PersonalData.js~PersonalData#_getMissed",
+    "lib/storage/src/personaldata.js~personaldata#_getfieldval",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_getFieldVal",
+    "lib/storage/src/PersonalData.js~PersonalData#_getFieldVal",
     "method"
   ],
   [
-    "lib/storage/src/personaldata.js~personaldata#_getobjpart",
-    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_getObjPart",
-    "lib/storage/src/PersonalData.js~PersonalData#_getObjPart",
+    "lib/storage/src/personaldata.js~personaldata#_getstringifiedval",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_getStringifiedVal",
+    "lib/storage/src/PersonalData.js~PersonalData#_getStringifiedVal",
     "method"
   ],
   [
-    "lib/storage/src/personaldata.js~personaldata#_getsalt",
-    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_getSalt",
-    "lib/storage/src/PersonalData.js~PersonalData#_getSalt",
-    "method"
-  ],
-  [
-    "lib/storage/src/personaldata.js~personaldata#_putobjpart",
-    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_putObjPart",
-    "lib/storage/src/PersonalData.js~PersonalData#_putObjPart",
+    "lib/storage/src/personaldata.js~personaldata#_settypedvalue",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-_setTypedValue",
+    "lib/storage/src/PersonalData.js~PersonalData#_setTypedValue",
     "method"
   ],
   [
@@ -3216,21 +3402,15 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "lib/storage/src/personaldata.js~personaldata#enabled_parts",
-    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-member-enabled_parts",
-    "lib/storage/src/PersonalData.js~PersonalData#enabled_parts",
+    "lib/storage/src/personaldata.js~personaldata#dto",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-member-dto",
+    "lib/storage/src/PersonalData.js~PersonalData#dto",
     "member"
   ],
   [
-    "lib/storage/src/personaldata.js~personaldata#full_structure",
-    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-member-full_structure",
-    "lib/storage/src/PersonalData.js~PersonalData#full_structure",
-    "member"
-  ],
-  [
-    "lib/storage/src/personaldata.js~personaldata#getallparts",
-    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-getAllParts",
-    "lib/storage/src/PersonalData.js~PersonalData#getAllParts",
+    "lib/storage/src/personaldata.js~personaldata#getdto",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-getDTO",
+    "lib/storage/src/PersonalData.js~PersonalData#getDTO",
     "method"
   ],
   [
@@ -3252,6 +3432,18 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "lib/storage/src/personaldata.js~personaldata#getmiddlename",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-getMiddleName",
+    "lib/storage/src/PersonalData.js~PersonalData#getMiddleName",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#getnametitle",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-getNameTitle",
+    "lib/storage/src/PersonalData.js~PersonalData#getNameTitle",
+    "method"
+  ],
+  [
     "lib/storage/src/personaldata.js~personaldata#getphone",
     "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-getPhone",
     "lib/storage/src/PersonalData.js~PersonalData#getPhone",
@@ -3270,9 +3462,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "lib/storage/src/personaldata.js~personaldata#isavailable",
-    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-isAvailable",
-    "lib/storage/src/PersonalData.js~PersonalData#isAvailable",
+    "lib/storage/src/personaldata.js~personaldata#getver",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-getVer",
+    "lib/storage/src/PersonalData.js~PersonalData#getVer",
     "method"
   ],
   [
@@ -3282,16 +3474,16 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "lib/storage/src/personaldata.js~personaldata#missings",
-    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-member-missings",
-    "lib/storage/src/PersonalData.js~PersonalData#missings",
-    "member"
+    "lib/storage/src/personaldata.js~personaldata#parse",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-parse",
+    "lib/storage/src/PersonalData.js~PersonalData#parse",
+    "method"
   ],
   [
-    "lib/storage/src/personaldata.js~personaldata#salts",
-    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-member-salts",
-    "lib/storage/src/PersonalData.js~PersonalData#salts",
-    "member"
+    "lib/storage/src/personaldata.js~personaldata#setdto",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-setDTO",
+    "lib/storage/src/PersonalData.js~PersonalData#setDTO",
+    "method"
   ],
   [
     "lib/storage/src/personaldata.js~personaldata#setemail",
@@ -3312,9 +3504,21 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "lib/storage/src/personaldata.js~personaldata#setmiddlename",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-setMiddleName",
+    "lib/storage/src/PersonalData.js~PersonalData#setMiddleName",
+    "method"
+  ],
+  [
     "lib/storage/src/personaldata.js~personaldata#setname",
     "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-setName",
     "lib/storage/src/PersonalData.js~PersonalData#setName",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#setnametitle",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-setNameTitle",
+    "lib/storage/src/PersonalData.js~PersonalData#setNameTitle",
     "method"
   ],
   [
@@ -3330,9 +3534,39 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "lib/storage/src/personaldata.js~personaldata.fromallparts",
-    "class/lib/storage/src/PersonalData.js~PersonalData.html#static-method-fromAllParts",
-    "lib/storage/src/PersonalData.js~PersonalData.fromAllParts",
+    "lib/storage/src/personaldata.js~personaldata#stringify",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-stringify",
+    "lib/storage/src/PersonalData.js~PersonalData#stringify",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#tobuffer",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-method-toBuffer",
+    "lib/storage/src/PersonalData.js~PersonalData#toBuffer",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#ver",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-member-ver",
+    "lib/storage/src/PersonalData.js~PersonalData#ver",
+    "member"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata#version",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#instance-member-version",
+    "lib/storage/src/PersonalData.js~PersonalData#version",
+    "member"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata._makeemptydto",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#static-method-_makeEmptyDto",
+    "lib/storage/src/PersonalData.js~PersonalData._makeEmptyDto",
+    "method"
+  ],
+  [
+    "lib/storage/src/personaldata.js~personaldata.frombuffer",
+    "class/lib/storage/src/PersonalData.js~PersonalData.html#static-method-fromBuffer",
+    "lib/storage/src/PersonalData.js~PersonalData.fromBuffer",
     "method"
   ],
   [
