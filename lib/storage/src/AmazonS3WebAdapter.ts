@@ -23,7 +23,7 @@ export default class AmazonS3WebAdapter implements Adapter {
 
     async put(val: Uint8Array): Promise<PutResponse> {
         const request: PutObjectRequest = {
-            Key: sha1(val.toString(), 'hex'),
+            Key: sha1(val.toString(), 'hex') as string,
             Bucket: this.bucketName,
             Body: val
         }
@@ -57,7 +57,7 @@ export default class AmazonS3WebAdapter implements Adapter {
             Key: key
         };
         const request = await this.s3.deleteObject(params);
-        const result = await request.promise();
+        await request.promise();
 
         return Promise.resolve(true);
     }
