@@ -25,16 +25,6 @@ export default class GoogleDriveWebStorageFactory {
             await googleAuth.signIn()
         }
 
-        return new CloudStorage(new GoogleDriveWebAdapter(googleAuth, 'revpop'));
+        return new CloudStorage(new GoogleDriveWebAdapter(gapi.client));
     }
-
-    // private async authenticate {
-    //     const { gapi } = window;
-    //     try {
-    //         await gapi.auth2.init({ clientId });
-    //         console.log('authenticated');
-    //     } catch (error) {
-    //         throw Error(`Error authenticating gapi client: ${error}`);
-    //     }
-    // };
 }
