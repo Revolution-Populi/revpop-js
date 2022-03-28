@@ -37,8 +37,8 @@ xdescribe("ChainStore", () => {
             ChainStore.subscribe(function() {
                 if (ChainStore.getAsset(coreAsset) !== undefined) {
                     assert(ChainStore.getAsset("NOTFOUND") === null);
-                    resolve();
                 }
+                resolve();
             });
             assert(ChainStore.getAsset("NOTFOUND") === undefined);
         });
