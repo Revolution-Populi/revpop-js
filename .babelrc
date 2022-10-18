@@ -2,12 +2,16 @@
     "presets": [
         "./tools/es2015Preset"
     ],
+    "plugins": [
+        ["@babel/plugin-transform-runtime",
+            {
+                "regenerator": true
+            }
+        ]
+    ],
     "env": {
         "cjs": {
             "plugins": ["add-module-exports"]
         }
-    },
-    "plugins": [
-        "@babel/plugin-transform-runtime"
-    ]
+    }
 }
