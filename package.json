@@ -1,6 +1,6 @@
 {
     "name": "@revolutionpopuli/revpopjs",
-    "version": "6.0.0",
+    "version": "6.0.2",
     "description": "Pure JavaScript RevPop library for node.js and browsers.",
     "browser": {
         "ws": false,
