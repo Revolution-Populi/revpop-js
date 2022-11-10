@@ -1,6 +1,6 @@
 {
     "name": "@revolutionpopuli/revpopjs",
-    "version": "6.0.2",
+    "version": "6.0.3",
     "description": "Pure JavaScript RevPop library for node.js and browsers.",
     "browser": {
         "ws": false,
@@ -22,8 +22,8 @@
         "postbuild": "yarn run browserify && yarn run build-es && yarn run webpack",
         "build:watch": "babel lib -d dist --watch",
         "prebrowserify": "mkdirp build",
-        "browserify": "cross-env NODE_ENV=production browserify --full-paths false dist/browser.js --standalone bitshares_js -o build/bitsharesjs.js -d",
-        "postbrowserify": "cross-env NODE_ENV=production minify build/bitsharesjs.js --mangle --outFile build/bitsharesjs.min.js",
+        "browserify": "cross-env NODE_ENV=production browserify --full-paths false dist/browser.js --standalone revpop_js -o build/revpopjs.js -d",
+        "postbrowserify": "cross-env NODE_ENV=production minify build/revpopjs.js --mangle --outFile build/revpopjs.min.js",
         "precommit": "pretty-quick --staged && yarn run test",
         "doc": "esdoc -c esdoc.json",
         "example:asset": "babel-node examples/updateAsset",
