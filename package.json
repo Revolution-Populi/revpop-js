@@ -50,7 +50,7 @@
         "Daniel Larimer <dan@cryptonomex.com> (https://github.com/bytemaster/)",
         "Valentine Zavgorodnev <valentine.zavgorodnev@gmail.com> (https://github.com/valzav/)"
     ],
-    "license": "GPLv3",
+    "license": "MIT",
     "bugs": {
         "url": "https://github.com/Revolution-Populi/revpop-js/issues"
     },
